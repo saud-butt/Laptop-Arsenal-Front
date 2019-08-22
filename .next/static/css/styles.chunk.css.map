@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/styles.chunk.css","sources":["webpack:///./components/layouts/basicLayout/layout.scss"],"sourcesContent":[".bgImage {\n  background-repeat: no-repeat;\n  background-image: url(\"/static/assets/images/bg/breadcrumb.jpg\"); }\n"],"mappings":"AAAA;AACA;AACA;;","sourceRoot":""}

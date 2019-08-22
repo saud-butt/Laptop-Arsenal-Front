@@ -1,0 +1,27 @@
+{
+  "name": "laptop_arsenal",
+  "version": "1.0.0",
+  "description": "FYP",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "author": "Saud Butt",
+  "license": "MIT",
+  "dependencies": {
+    "@zeit/next-css": "^1.0.1",
+    "@zeit/next-sass": "^1.0.1",
+    "bootstrap": "^4.3.1",
+    "next": "^9.0.3",
+    "next-redux-wrapper": "^3.0.0-alpha.3",
+    "node-sass": "^4.12.0",
+    "react": "^16.9.0",
+    "react-bootstrap": "^1.0.0-beta.11",
+    "react-dom": "^16.9.0",
+    "react-redux": "^7.1.0",
+    "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0"
+  }
+}
