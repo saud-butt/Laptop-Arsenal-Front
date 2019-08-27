@@ -2,9 +2,6 @@ import React from "react";
 import App, { Container } from "next/app";
 import { Provider } from "react-redux";
 import withRedux from "next-redux-wrapper";
-import ProductDetails from "../components/product/productDetail/ProductDetail";
-import ProductCompare from "../components/product/productCompare/ProductCompare";
-import ProductList from "../components/product/productList/ProductList";
 
 import initStore from "../store/store";
 
@@ -23,8 +20,7 @@ class LaptopArsenal extends App {
     return (
       <Container>
         <Provider store={store}>
-          {/* <Component {...pageProps} /> */}
-          <ProductCompare />
+          <Component {...pageProps} />
         </Provider>
       </Container>
     );

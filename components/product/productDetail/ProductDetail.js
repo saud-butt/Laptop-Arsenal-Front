@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import {connect} from "react-redux";
+import Layout from "../../layouts/basicLayout/layout";
+
 
 class ProductDetail extends Component {
     render() {
         return (
             <>
+            <Layout>
             <div className="product-details-area pt-90 pb-90">
             <div className="container">
                 <div className="row">
@@ -385,6 +387,7 @@ class ProductDetail extends Component {
                 </div>
             </div>
         </div>
+        </Layout>
         </>
         )
     }

@@ -1204,7 +1204,7 @@ class ListItem extends Component {
                     </div>
                   </div>
                   <div className="sidebar-widget shop-sidebar-border pt-40">
-                    <h4 className="sidebar-title">Shop By Categories</h4>
+                    <h4 className="sidebar-title">Search By Categories</h4>
                     <div className="shop-catigory mt-20">
                       <ul id="faq">
                         <li>
@@ -1214,27 +1214,22 @@ class ListItem extends Component {
                             data-parent="#faq"
                             href="#shop-catigory-1"
                           >
-                            Women Fashion <i className="la la-angle-down" />
+                            Acer<i className="la la-angle-down" />
                           </a>
                           <ul
                             id="shop-catigory-1"
                             className="panel-collapse collapse show"
                           >
                             <li>
-                              <a href="#">Dress </a>
+                              <a href="#">Standard Laptops </a>
                             </li>
                             <li>
-                              <a href="#">Shoes</a>
+                              <a href="#">Gaming Laptops</a>
                             </li>
                             <li>
-                              <a href="#">Sunglasses </a>
+                              <a href="#">2 in 1 </a>
                             </li>
-                            <li>
-                              <a href="#">Sweater </a>
-                            </li>
-                            <li>
-                              <a href="#">Handbag </a>
-                            </li>
+                            
                           </ul>
                         </li>
                         <li>
@@ -1244,26 +1239,88 @@ class ListItem extends Component {
                             data-parent="#faq"
                             href="#shop-catigory-2"
                           >
-                            Men Fashion <i className="la la-angle-down" />
+                            Asus <i className="la la-angle-down" />
                           </a>
                           <ul
                             id="shop-catigory-2"
                             className="panel-collapse collapse"
                           >
                             <li>
-                              <a href="#">Shirt </a>
+                              <a href="#">Standard Laptops </a>
                             </li>
                             <li>
-                              <a href="#">Shoes</a>
+                              <a href="#">2 in 1</a>
+                            </li>
+                            
+                          </ul>
+                        </li>
+                        <li>
+                          {" "}
+                          <a
+                            data-toggle="collapse"
+                            data-parent="#faq"
+                            href="#shop-catigory-2"
+                          >
+                            Apple <i className="la la-angle-down" />
+                          </a>
+                          <ul
+                            id="shop-catigory-2"
+                            className="panel-collapse collapse"
+                          >
+                            <li>
+                              <a href="#">MacBook Air </a>
                             </li>
                             <li>
-                              <a href="#">Sunglasses </a>
+                              <a href="#">MacBook Pro</a>
+                            </li>
+                            
+                          </ul>
+                        </li>
+                        <li>
+                          {" "}
+                          <a
+                            data-toggle="collapse"
+                            data-parent="#faq"
+                            href="#shop-catigory-3"
+                          >
+                            Dell <i className="la la-angle-down" />
+                          </a>
+                          <ul
+                            id="shop-catigory-3"
+                            className="panel-collapse collapse"
+                          >
+                            <li>
+                              <a href="#">Home</a>
                             </li>
                             <li>
-                              <a href="#">Sweater </a>
+                              <a href="#">Work</a>
                             </li>
                             <li>
-                              <a href="#">Jacket </a>
+                              <a href="#">2 in 1</a>
+                            </li>
+                            <li>
+                              <a href="#">Alienware</a>
+                            </li>  
+                          </ul>
+                        </li>
+                        <li>
+                          {" "}
+                          <a
+                            data-toggle="collapse"
+                            data-parent="#faq"
+                            href="#shop-catigory-3"
+                          >
+                            GigaByte <i className="la la-angle-down" />
+                          </a>
+                          <ul
+                            id="shop-catigory-3"
+                            className="panel-collapse collapse"
+                          >
+                            <li>
+                              <a href="#">Standard Laptops</a>
+                            </li>
+                            <li>
+                              <a href="#">Gaming Laptops</a>
                             </li>
                           </ul>
                         </li>
@@ -1274,48 +1331,98 @@ class ListItem extends Component {
                             data-parent="#faq"
                             href="#shop-catigory-3"
                           >
-                            Furniture <i className="la la-angle-down" />
+                            HP <i className="la la-angle-down" />
                           </a>
                           <ul
                             id="shop-catigory-3"
                             className="panel-collapse collapse"
                           >
                             <li>
-                              <a href="#"> Chair</a>
+                              <a href="#">Standard Laptops</a>
                             </li>
                             <li>
-                              <a href="#">Lift Chair</a>
+                              <a href="#">Work Laptops</a>
                             </li>
                             <li>
-                              <a href="#">Bunk Bed</a>
+                              <a href="#">Primium Laptops</a>
                             </li>
                             <li>
-                              <a href="#">Computer Desk</a>
+                              <a href="#">2 in 1</a>
                             </li>
                             <li>
-                              <a href="#">Bookcase</a>
+                              <a href="#">Workstations</a>
+                            </li>
+                            <li>
+                              <a href="#">Omen</a>
+                            </li>  
+                          </ul>
+                        </li>
+                        <li>
+                          {" "}
+                          <a
+                            data-toggle="collapse"
+                            data-parent="#faq"
+                            href="#shop-catigory-3"
+                          >
+                            Lenovo <i className="la la-angle-down" />
+                          </a>
+                          <ul
+                            id="shop-catigory-3"
+                            className="panel-collapse collapse"
+                          >
+                            <li>
+                              <a href="#">Standard Laptops</a>
+                            </li>
+                            <li>
+                              <a href="#">Workstations</a>
+                            </li>
+                            <li>
+                              <a href="#">2 in 1</a>
                             </li>
                           </ul>
                         </li>
                         <li>
                           {" "}
-                          <a href="#">Lamp</a>
+                          <a
+                            data-toggle="collapse"
+                            data-parent="#faq"
+                            href="#shop-catigory-3"
+                          >
+                            MSI <i className="la la-angle-down" />
+                          </a>
+                          <ul
+                            id="shop-catigory-3"
+                            className="panel-collapse collapse"
+                          >
+                            <li>
+                              <a href="#">Standard Laptops</a>
+                            </li>
+                            <li>
+                              <a href="#">Workstations</a>
+                            </li>
+                            <li>
+                              <a href="#">Gaming Laptops</a>
+                            </li>  
+                          </ul>
                         </li>
                         <li>
                           {" "}
-                          <a href="#">Electronics</a>{" "}
+                          <a
+                            data-toggle="collapse"
+                            data-parent="#faq"
+                            href="#shop-catigory-3"
+                          >
+                            Razer <i className="la la-angle-down" />
+                          </a>
                         </li>
-                        <li>
-                          {" "}
-                          <a href="#">Accessories</a>
-                        </li>
+                       
                       </ul>
                     </div>
                   </div>
                   <div className="shop-price-filter mt-35 shop-sidebar-border pt-40 sidebar-widget">
                     <h4 className="sidebar-title">Price Filter</h4>
                     <div className="price-filter mt-20">
-                      <span>Range: $100.00 - 1.300.00 </span>
+                      <span>Range: Rs.100.00 - 1.300.00 </span>
                       <div id="slider-range" />
                       <div className="price-slider-amount">
                         <div className="label-input">
@@ -1338,7 +1445,7 @@ class ListItem extends Component {
                           <div className="sidebar-widget-list-left">
                             <input type="checkbox" />{" "}
                             <a href="#">
-                              On Sale <span>4</span>{" "}
+                              New <span>4</span>{" "}
                             </a>
                             <span className="checkmark" />
                           </div>
@@ -1347,7 +1454,7 @@ class ListItem extends Component {
                           <div className="sidebar-widget-list-left">
                             <input type="checkbox" value="" />{" "}
                             <a href="#">
-                              New <span>5</span>
+                              Top Rated <span>5</span>
                             </a>
                             <span className="checkmark" />
                           </div>
@@ -1356,7 +1463,7 @@ class ListItem extends Component {
                           <div className="sidebar-widget-list-left">
                             <input type="checkbox" value="" />{" "}
                             <a href="#">
-                              In Stock <span>6</span>{" "}
+                              Featured <span>6</span>{" "}
                             </a>
                             <span className="checkmark" />
                           </div>
@@ -1364,49 +1471,7 @@ class ListItem extends Component {
                       </ul>
                     </div>
                   </div>
-                  <div className="sidebar-widget pt-40 mt-40 shop-sidebar-border">
-                    <h4 className="sidebar-title">Colour </h4>
-                    <div className="sidebar-widget-list mt-20">
-                      <ul>
-                        <li>
-                          <div className="sidebar-widget-list-left">
-                            <input type="checkbox" value="" />{" "}
-                            <a href="#">
-                              Green <span>7</span>{" "}
-                            </a>
-                            <span className="checkmark" />
-                          </div>
-                        </li>
-                        <li>
-                          <div className="sidebar-widget-list-left">
-                            <input type="checkbox" value="" />{" "}
-                            <a href="#">
-                              Cream <span>8</span>{" "}
-                            </a>
-                            <span className="checkmark" />
-                          </div>
-                        </li>
-                        <li>
-                          <div className="sidebar-widget-list-left">
-                            <input type="checkbox" value="" />{" "}
-                            <a href="#">
-                              Blue <span>9</span>{" "}
-                            </a>
-                            <span className="checkmark" />
-                          </div>
-                        </li>
-                        <li>
-                          <div className="sidebar-widget-list-left">
-                            <input type="checkbox" value="" />{" "}
-                            <a href="#">
-                              Black <span>3</span>{" "}
-                            </a>
-                            <span className="checkmark" />
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
+                  
                   <div className="sidebar-widget pt-40 mt-40 shop-sidebar-border">
                     <h4 className="sidebar-title">Size </h4>
                     <div className="sidebar-widget-list mt-20">
@@ -1455,19 +1520,19 @@ class ListItem extends Component {
                     <div className="sidebar-widget-tag mt-20">
                       <ul>
                         <li>
-                          <a href="#">Clothing</a>
+                          <a href="#">Gaming</a>
                         </li>
                         <li>
-                          <a href="#">Accessories</a>
+                          <a href="#">Workstations</a>
                         </li>
                         <li>
-                          <a href="#">For Men</a>
+                          <a href="#">Hp</a>
                         </li>
                         <li>
-                          <a href="#">Women</a>
+                          <a href="#">2 in 1</a>
                         </li>
                         <li>
-                          <a href="#">Fashion</a>
+                          <a href="#">Dell</a>
                         </li>
                       </ul>
                     </div>
