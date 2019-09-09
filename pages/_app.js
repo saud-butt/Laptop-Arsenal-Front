@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import withRedux from "next-redux-wrapper";
 
 import initStore from "../store/store";
+import Loader from "../components/loader/Loader";
 
 class LaptopArsenal extends App {
   static async getInitialProps({ Component, ctx }) {
@@ -16,10 +17,12 @@ class LaptopArsenal extends App {
   }
 
   render() {
-    const { Component, pageProps, store } = this.props;
+    const { Component, pageProps, store, loading } = this.props;
+
     return (
       <Container>
         <Provider store={store}>
+          <Loader />
           <Component {...pageProps} />
         </Provider>
       </Container>

@@ -1,0 +1,98 @@
+
+
+@mixin logoStyle($position, $marginLeft, $marginTop) {
+  position: $position;
+  top: 50%;
+  left: 50%;
+  margin-left: $marginLeft;
+  margin-top: $marginTop;
+  animation: spin 0.9s linear infinite;
+  animation-direction: alternate;
+}
+
+@mixin loadingTextStyle($fontSize, $position, $top, $marginLeft, $marginTop) {
+  font-size: $fontSize;
+  color: #ffffff;
+  position: $position;
+  top: $top;
+  left: 50%;
+  margin-left: $marginLeft;
+  margin-top: $marginTop;
+  opacity: 0.7;
+}
+
+.inline {
+  .logo {
+    display: inline-block;
+    width: 150px;
+    @include logoStyle(relative, -70px, 0px);
+  }
+  .loadingText {
+    display: inline-block;
+    @include loadingTextStyle(16px, relative, 35px, -95px, 0px);
+  }
+}
+
+.content {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  .logo {
+    display: block;
+    width: 100px;
+    @include logoStyle(relative, 0px, 0px);
+    top: unset;
+    left: unset;
+    margin: auto;
+  }
+  .loadingText {
+    display: block;
+    top: unset;
+    left: unset;
+    margin-left: 0;
+    font-size: 0.9rem;
+  }
+}
+
+.onOverlay {
+  .logo {
+    @include logoStyle(fixed, -130px, -60px);
+  }
+  .loadingText {
+    @include loadingTextStyle(30px, fixed, 50%, -45px, 35px);
+  }
+}
+
+.loadingText:after {
+  content: "Loading";
+  font-weight: bold;
+  animation-name: loadingText;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+@keyframes loadingText {
+  0% {
+    content: "Loading";
+  }
+  25% {
+    content: "Loading.";
+  }
+  50% {
+    content: "Loading..";
+  }
+  75% {
+    content: "Loading...";
+  }
+}

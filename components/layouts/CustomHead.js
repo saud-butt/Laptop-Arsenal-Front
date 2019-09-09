@@ -43,8 +43,8 @@ export default class CustomHead extends Head {
           crossOrigin="anonymous"
         />
 
+        <link href="/static/styles/carousal.min.css" rel="stylesheet" />
         <link href="/static/styles/style.css" rel="stylesheet" />
-        {/* <link href="/static/styles/test.css" rel="stylesheet" /> */}
         {head}
         {page !== "/_error" && (
           <link

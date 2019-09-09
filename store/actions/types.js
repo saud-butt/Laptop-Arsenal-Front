@@ -1,0 +1,4 @@
+export const GET_PRODUCTS = "GET_PRODUCTS";
+export const GET_PRODUCT = "GET_PRODUCT";
+export const TOGGLE_LOADER = "TOGGLE_LOADER";
+export const GET_RELATED_PRODUCT = "GET_RELATED_PRODUCT";

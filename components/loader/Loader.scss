@@ -1,0 +1,16 @@
+
+
+#loaderWrapper {
+  height: 100vh;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.7);
+  width: 100%;
+  display: none;
+  z-index: 99999;
+  &.show {
+    display: block;
+  }
+  &.hide {
+    display: none;
+  }
+}
