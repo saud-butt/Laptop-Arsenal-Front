@@ -1,13 +1,19 @@
 import {
   GET_PRODUCTS,
   GET_PRODUCT,
-  GET_RELATED_PRODUCT
+  GET_RELATED_PRODUCT,
+  GET_PRODUCT_BY_NAME,
+  COMPARE_PRODUCTS
 } from "../actions/types";
 
 const initialState = {
   products: [],
   pagination: {},
-  product: {}
+  product: {},
+  searchedProducts: [],
+  compare1: {},
+  compare2: {},
+  compare3: {}
 };
 
 export default function(state = initialState, action) {
@@ -27,6 +33,16 @@ export default function(state = initialState, action) {
       return {
         ...state,
         products: action.payload
+      };
+    case GET_PRODUCT_BY_NAME:
+      return {
+        ...state,
+        searchedProducts: action.payload
+      };
+    case COMPARE_PRODUCTS:
+      return {
+        ...state,
+        [action.key]: action.payload
       };
     default:
       return { ...state };

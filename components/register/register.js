@@ -1,9 +1,57 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Layout from "../layouts/basicLayout/layout";
 import Link from "next/link";
+import PropTypes from "prop-types";
+import Router from "next/router";
+
+import { toggleLoader } from "../../store/actions/loading";
+import { registerUser } from "../../store/actions/authActions";
 
 class Register extends Component {
+  constructor() {
+    super();
+    this.state = {
+      name: "",
+      email: "",
+      password: "",
+      password2: "",
+      errors: {}
+    };
+
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      Router.push("/");
+    }
+    this.props.toggleLoader(false);
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
+
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+
+    const newUser = {
+      name: this.state.name,
+      email: this.state.email,
+      password: this.state.password,
+      password2: this.state.password2
+    };
+
+    this.props.registerUser(newUser);
+  }
   render() {
+    const { errors } = this.state;
     return (
       <>
         <Layout>
@@ -18,7 +66,7 @@ class Register extends Component {
                           <h4> login </h4>
                         </a>
                       </Link>
-                      <Link href="/register">
+                      <Link href="/auth/register">
                         <a className="active" title="Register">
                           <h4> register </h4>
                         </a>
@@ -27,21 +75,37 @@ class Register extends Component {
                     <div id="lg2" className="tab-pane">
                       <div className="login-form-container">
                         <div className="login-register-form">
-                          <form action="#" method="post">
+                          <form noValidate onSubmit={this.onSubmit}>
                             <input
-                              type="text"
-                              name="user-name"
-                              placeholder="Username"
+                              placeholder="Name"
+                              name="name"
+                              value={this.state.name}
+                              onChange={this.onChange}
+                              error={errors.name}
                             />
                             <input
-                              type="password"
-                              name="user-password"
-                              placeholder="Password"
-                            />
-                            <input
-                              name="user-email"
-                              placeholder="Email"
+                              placeholder="Email Address"
+                              name="email"
                               type="email"
+                              value={this.state.email}
+                              onChange={this.onChange}
+                              error={errors.email}
+                            />
+                            <input
+                              placeholder="Password"
+                              name="password"
+                              type="password"
+                              value={this.state.password}
+                              onChange={this.onChange}
+                              error={errors.password}
+                            />
+                            <input
+                              placeholder="Confirm Password"
+                              name="password2"
+                              type="password"
+                              value={this.state.password2}
+                              onChange={this.onChange}
+                              error={errors.password}
                             />
                             <div className="button-box">
                               <button type="submit">Register</button>
@@ -60,5 +124,18 @@ class Register extends Component {
     );
   }
 }
+Register.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
 
-export default Register;
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { toggleLoader, registerUser }
+)(Register);

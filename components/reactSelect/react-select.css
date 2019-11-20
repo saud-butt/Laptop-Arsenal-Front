@@ -1,0 +1,70 @@
+.async-search .css-bg1rzq-control {
+    padding: 0 1rem;
+    color: #000000;
+    border-radius: 0px;
+    border: 1px solid #989898;
+    box-shadow: none;
+    height: calc(1.7em + 1rem + 2px);
+    min-height: 45px;
+  }
+  
+  .async-search .css-1hwfws3 {
+    padding: 0px;
+  }
+  
+  .async-search .css-16pqwjk-indicatorContainer {
+    padding: 0px;
+  }
+  
+  .async-search .css-bgvzuu-indicatorSeparator {
+    display: none;
+  }
+  
+  .async-search .css-1szy77t-control {
+    padding: 0 1rem;
+    height: calc(1.7em + 1rem + 2px);
+    border-color: #000000;
+    box-shadow: none;
+    border-radius: 0px;
+    min-height: 45px;
+  }
+  
+  .async-search .css-1szy77t-control:hover {
+    border-color: #000000;
+    box-shadow: none;
+  }
+  
+  .async-search.hasError .css-1szy77t-control,
+  .async-search.hasError .css-1szy77t-control:hover,
+  .async-search.hasError .css-bg1rzq-control {
+    border-color: #dc3545;
+  }
+  
+  .async-search.internal .css-bg1rzq-control,
+  .async-search.internal .css-1szy77t-control {
+    background: transparent;
+    border-color: #3a546f;
+    color: #7288a3;
+    font-size: 0.9rem;
+  }
+  
+  .async-search.internal .css-151xaom-placeholder,
+  .async-search.internal .css-1g6gooi,
+  .async-search.internal .css-dvua67-singleValue,
+  .async-search.internal .css-16pqwjk-indicatorContainer,
+  .async-search.internal .css-1thkkgx-indicatorContainer {
+    color: #7288a3;
+  }
+  
+  .async-search .optionWithImage img {
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 5px;
+    height: 20px;
+    width: 20px;
+  }
+  
+  .async-search .optionWithImage span {
+    position: relative;
+    top: 2px;
+  }

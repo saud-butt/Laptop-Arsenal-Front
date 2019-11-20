@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Layout from "../../layouts/basicLayout/layout";
 import { getAllProducts } from "../../../store/actions/productActions";
@@ -33,10 +34,11 @@ class ListItem extends Component {
           brand={product.brand}
           name={product.name}
           href={`/products/show?id=${product._id}`}
-          src={product.images[0]}
+          src={product.cover}
           alt={product.name}
           title="Add to Wishlist"
           price={product.price}
+          id={product._id}
         />
       </div>
     ));
@@ -64,10 +66,10 @@ class ListItem extends Component {
                     <div className="shop-topbar-left">
                       <div className="view-mode nav">
                         <a className="active" href="#shop-1" data-toggle="tab">
-                          <i className="la la-th" />
+                          <FontAwesomeIcon icon="th" />
                         </a>
                         <a href="#shop-2" data-toggle="tab">
-                          <i className="la la-list-ul" />
+                          <FontAwesomeIcon icon="list" />
                         </a>
                       </div>
                       <p>

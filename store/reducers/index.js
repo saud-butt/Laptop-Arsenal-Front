@@ -3,9 +3,15 @@ import { combineReducers } from "redux";
 import authReducer from "./authReducer";
 import loaderReducer from "./loaderReducer";
 import productReducer from "./productReducer";
+import userReducer from "./userReducer";
+import errorReducer from "./errorRdeucer";
+import reviewReducer from "./reviewReducer";
 
 export default combineReducers({
   auth: authReducer,
   loader: loaderReducer,
-  products: productReducer
+  products: productReducer,
+  user: userReducer,
+  reviews: reviewReducer,
+  errors: errorReducer
 });

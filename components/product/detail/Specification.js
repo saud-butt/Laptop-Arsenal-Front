@@ -1,5 +1,6 @@
 import React from "react";
 import * as _ from "lodash";
+import { ProductHelper } from "../../../helpers";
 
 const Specification = ({ product }) => {
   const {
@@ -28,77 +29,6 @@ const Specification = ({ product }) => {
     wireless
   } = product;
 
-  const ram = memory
-    ? Object.keys(memory).map((data, index) => (
-        <li key={index}>
-          <strong>{_.startCase(data)}</strong> : {memory[data]}
-        </li>
-      ))
-    : null;
-  const space = storage
-    ? Object.keys(storage).map((data, index) => (
-        <li key={index}>
-          <strong>{_.startCase(data)}</strong> : {storage[data]}
-        </li>
-      ))
-    : null;
-  const port = ports
-    ? Object.keys(ports).map((data, index) => (
-        <li key={index}>
-          <strong>{_.startCase(data)}</strong> : {ports[data]}
-        </li>
-      ))
-    : null;
-  const speaker = speakers
-    ? Object.keys(speakers).map((data, index) => (
-        <li key={index}>
-          <strong>{_.startCase(data)}</strong> : {speakers[data]}
-        </li>
-      ))
-    : null;
-  const cell = battery
-    ? Object.keys(battery).map((data, index) => (
-        <li key={index}>
-          <strong>{_.startCase(data)}</strong> : {battery[data]}
-        </li>
-      ))
-    : null;
-  const disp = display
-    ? Object.keys(display).map((data, index) => (
-        <li key={index}>
-          <strong>{_.startCase(data)}</strong> : {display[data]}
-        </li>
-      ))
-    : null;
-  const cpu = processor
-    ? Object.keys(processor).map((data, index) => (
-        <li key={index}>
-          <strong>{_.startCase(data)}</strong> : {processor[data]}
-        </li>
-      ))
-    : null;
-  const opsys = os
-    ? Object.keys(os).map((data, index) => (
-        <li key={index}>
-          <strong>{_.startCase(data)}</strong> : {os[data]}
-        </li>
-      ))
-    : null;
-  const video = graphics
-    ? Object.keys(graphics).map((data, index) => (
-        <li key={index}>
-          <strong>{_.startCase(data)}</strong> : {graphics[data]}
-        </li>
-      ))
-    : null;
-  const wire_less = wireless
-    ? Object.keys(wireless).map((data, index) => (
-        <li key={index}>
-          <strong>{_.startCase(data)}</strong> : {wireless[data]}
-        </li>
-      ))
-    : null;
-
   return (
     <div id="des-details2" className="tab-pane active">
       <div className="specification-wrap table-responsive">
@@ -118,15 +48,15 @@ const Specification = ({ product }) => {
             </tr>
             <tr>
               <td className="width1">Display</td>
-              <td>{disp}</td>
+              <td>{ProductHelper.getSpecs(display)}</td>
             </tr>
             <tr>
               <td className="width1">OS</td>
-              <td>{opsys}</td>
+              <td>{ProductHelper.getSpecs(os)}</td>
             </tr>
             <tr>
               <td className="width1">Processor</td>
-              <td>{cpu}</td>
+              <td>{ProductHelper.getSpecs(processor)}</td>
             </tr>
             <tr>
               <td className="width1">Chipset</td>
@@ -135,18 +65,18 @@ const Specification = ({ product }) => {
             <tr>
               <td className="width1">Memory</td>
               <td>
-                <ul>{ram}</ul>
+                <ul>{ProductHelper.getSpecs(memory)}</ul>
               </td>
             </tr>
             <tr>
               <td className="width1">Storage</td>
               <td>
-                <ul>{space}</ul>
+                <ul>{ProductHelper.getSpecs(storage)}</ul>
               </td>
             </tr>
             <tr>
               <td className="width1">Graphics</td>
-              <td>{video}</td>
+              <td>{ProductHelper.getSpecs(graphics)}</td>
             </tr>
             <tr>
               <td className="width1">Webcam</td>
@@ -159,17 +89,17 @@ const Specification = ({ product }) => {
             <tr>
               <td className="width1">Ports</td>
               <td>
-                <ul>{port}</ul>
+                <ul>{ProductHelper.getSpecs(ports)}</ul>
               </td>
             </tr>
             <tr>
               <td className="width1">Wireless</td>
-              <td>{wire_less}</td>
+              <td>{ProductHelper.getSpecs(wireless)}</td>
             </tr>
             <tr>
               <td className="width1">Speakers</td>
               <td>
-                <ul>{speaker}</ul>
+                <ul>{ProductHelper.getSpecs(speakers)}</ul>
               </td>
             </tr>
             <tr>
@@ -179,7 +109,7 @@ const Specification = ({ product }) => {
             <tr>
               <td className="width1">Battery</td>
               <td>
-                <ul>{cell}</ul>
+                <ul>{ProductHelper.getSpecs(battery)}</ul>
               </td>
             </tr>
             <tr>

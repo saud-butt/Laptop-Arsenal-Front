@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class Related extends Component {
   render() {
@@ -28,10 +29,10 @@ class Related extends Component {
                     <i className="la la-plus"></i>
                   </a>
                   <a title="Wishlist" href={`/products/show?id=${product._id}`}>
-                    <i className="la la-heart-o"></i>
+                    <FontAwesomeIcon icon={["far", "heart"]} />
                   </a>
                   <a title="Compare" href={`/products/show?id=${product._id}`}>
-                    <i className="la la-retweet"></i>
+                    <FontAwesomeIcon icon="dice-d20" />
                   </a>
                 </div>
               </div>
@@ -48,7 +49,7 @@ class Related extends Component {
                   </div>
                   <div className="product-addtocart">
                     <a
-                      title="Add To Cart"
+                      title="Add To Wishlist"
                       href={`/products/show?id=${product._id}`}
                     >
                       + Add To Wishlist

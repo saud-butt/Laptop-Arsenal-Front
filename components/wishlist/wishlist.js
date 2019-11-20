@@ -1,14 +1,59 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+
 import Layout from "../layouts/basicLayout/layout";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  getWishlist,
+  removeFromWishlist
+} from "../../store/actions/userActions";
 
 class wishlist extends Component {
+  componentDidMount() {
+    this.props.getWishlist();
+  }
+  onClick = id => {
+    this.props.removeFromWishlist(id);
+  };
   render() {
+    const { wishlist, loading } = this.props;
+
+    const items = loading
+      ? "Loading"
+      : wishlist.map((item, index) => (
+          <tr>
+            <td className="product-thumbnail">
+              <a href="#">
+                <img
+                  src={item.cover}
+                  alt={item.name}
+                  style={{ height: "70px", width: "90px" }}
+                />
+              </a>
+            </td>
+            <td className="product-name">
+              <a href="#">{item.name}</a>
+            </td>
+            <td className="product-price-cart">
+              <span className="amount">RS.{item.price}</span>
+            </td>
+            <td className="product-wishlist-cart">
+              <a href="">Add to compare</a>
+            </td>
+            <td className=" pro-remove">
+              <button onClick={() => this.onClick(item.id)}>
+                <FontAwesomeIcon icon="trash-alt" />
+              </button>
+            </td>
+          </tr>
+        ));
+
     return (
       <>
         <Layout>
           <div className="cart-main-area pt-85 pb-90">
             <div className="container">
-              <h3 className="cart-page-title">Most Wanted Laptops</h3>
+              <h3 className="cart-page-title">Your Most Wanted Laptops</h3>
               <div className="row">
                 <div className="col-lg-12 col-md-12 col-sm-12 col-12">
                   <form action="#">
@@ -18,104 +63,13 @@ class wishlist extends Component {
                           <tr>
                             <th>Image</th>
                             <th>Product Name</th>
-                            <th>Until Price</th>
-                            <th>Qty</th>
-                            <th>Subtotal</th>
+                            <th>Price</th>
                             <th>Add To Compare</th>
+                            <th>Remove From Wishlist</th>
                           </tr>
+                          {items}
                         </thead>
-                        <tbody>
-                          <tr>
-                            <td className="product-thumbnail">
-                              <a href="#">
-                                <img
-                                  src="../../../static/assets/images/cart/cart-3.jpg"
-                                  alt=""
-                                />
-                              </a>
-                            </td>
-                            <td className="product-name">
-                              <a href="#">Demo Product Name</a>
-                            </td>
-                            <td className="product-price-cart">
-                              <span className="amount">$260.00</span>
-                            </td>
-                            <td className="product-quantity">
-                              <div className="cart-plus-minus">
-                                <input
-                                  className="cart-plus-minus-box"
-                                  type="text"
-                                  name="qtybutton"
-                                  value="2"
-                                />
-                              </div>
-                            </td>
-                            <td className="product-subtotal">$110.00</td>
-                            <td className="product-wishlist-cart">
-                              <a href="#">add to cart</a>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td className="product-thumbnail">
-                              <a href="#">
-                                <img
-                                  src="../../../static/assets/images/cart/cart-4.jpg"
-                                  alt=""
-                                />
-                              </a>
-                            </td>
-                            <td className="product-name">
-                              <a href="#">Demo Product Name</a>
-                            </td>
-                            <td className="product-price-cart">
-                              <span className="amount">$150.00</span>
-                            </td>
-                            <td className="product-quantity">
-                              <div className="cart-plus-minus">
-                                <input
-                                  className="cart-plus-minus-box"
-                                  type="text"
-                                  name="qtybutton"
-                                  value="2"
-                                />
-                              </div>
-                            </td>
-                            <td className="product-subtotal">$150.00</td>
-                            <td className="product-wishlist-cart">
-                              <a href="#">add to cart</a>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td className="product-thumbnail">
-                              <a href="#">
-                                <img
-                                  src="../../../static/assets/images/cart/cart-5.jpg"
-                                  alt=""
-                                />
-                              </a>
-                            </td>
-                            <td className="product-name">
-                              <a href="#">Demo Product Name</a>
-                            </td>
-                            <td className="product-price-cart">
-                              <span className="amount">$170.00</span>
-                            </td>
-                            <td className="product-quantity">
-                              <div className="cart-plus-minus">
-                                <input
-                                  className="cart-plus-minus-box"
-                                  type="text"
-                                  name="qtybutton"
-                                  value="2"
-                                />
-                              </div>
-                            </td>
-                            <td className="product-subtotal">$170.00</td>
-                            <td className="product-wishlist-cart">
-                              <a href="#">add to cart</a>
-                            </td>
-                          </tr>
-                        </tbody>
+                        <tbody></tbody>
                       </table>
                     </div>
                   </form>
@@ -128,5 +82,12 @@ class wishlist extends Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  wishlist: state.user.wishlist,
+  loading: state.loader.loading
+});
 
-export default wishlist;
+export default connect(
+  mapStateToProps,
+  { getWishlist, removeFromWishlist }
+)(wishlist);

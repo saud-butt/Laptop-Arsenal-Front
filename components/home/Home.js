@@ -1,34 +1,89 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Link from "next/link";
+import PropTypes from "prop-types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Dropdown from "react-bootstrap/Dropdown";
 
-import { getRelatedProduct } from "../../store/actions/productActions";
+import { logoutUser } from "../../store/actions/authActions";
+import {
+  getRelatedProduct,
+  getProductByName
+} from "../../store/actions/productActions";
+import { clearCurrentUser } from "../../store/actions/userActions";
 import ListCard from "../product/list/listCard";
 import Style from "./Home.scss";
 import Footer from "../layouts/footer/footer";
+import ReactSelect from "../reactSelect/ReactSelect";
 
 class Home extends Component {
   componentDidMount() {
-    this.props.getRelatedProduct("dell");
+    const brand = "dell";
+    this.props.getRelatedProduct(brand);
   }
   onClick = brand => {
     this.props.getRelatedProduct(brand);
   };
+  onLogoutClick(e) {
+    e.preventDefault();
+    this.props.clearCurrentUser();
+    this.props.logoutUser();
+  }
+  onChange = (selectedProduct, key) => {
+    this.props.getProduct(selectedProduct.value, true, key);
+  };
   render() {
     const { products } = this.props;
+    const { isAuthenticated, user } = this.props.auth;
     const productData = products.map((product, index) => (
       <div className="col-xl-4 col-lg-6 col-md-6 col-sm-6" key={index}>
         <ListCard
           brand={product.brand}
           name={product.name}
           href={`/products/show?id=${product._id}`}
-          src={product.images[0]}
+          src={product.cover}
           alt={product.name}
           title="Add to Wishlist"
           price={product.price}
+          id={product._id}
         />
       </div>
     ));
+
+    const authLinks = (
+      <>
+        <Link href="/user/wishlist">
+          <a title="Wishlist">Wishlist</a>
+        </Link>
+        <Link href="/user/account">
+          <a title="My Account">
+            <img
+              className="rounded-circle"
+              src={user.avatar}
+              alt={user.name}
+              style={{ width: "25px", marginRight: "5px" }}
+              title="You must have a Gravatar connected to your email to display an image"
+            />
+            My Account
+          </a>
+        </Link>
+
+        <a href="" onClick={this.onLogoutClick.bind(this)}>
+          Logout <FontAwesomeIcon icon="sign-out-alt" />
+        </a>
+      </>
+    );
+    const guestLinks = (
+      <>
+        <Link href="/auth/login">
+          <a title="Sign in">Login</a>
+        </Link>
+        <Link href="/auth/register">
+          <a title="Sign in">Register</a>
+        </Link>
+      </>
+    );
+
     return (
       <>
         <div className="main-wrapper">
@@ -63,15 +118,7 @@ class Home extends Component {
                           </div>
                         </div>
                         <div className="setting-content2-right">
-                          <Link href="/user/account">
-                            <a title="My Account">My Account</a>
-                          </Link>
-                          <Link href="/user/wishlist">
-                            <a title="Wishlist">Wishlist</a>
-                          </Link>
-                          <Link href="/auth/login">
-                            <a title="Sign in">Sign in</a>
-                          </Link>
+                          {isAuthenticated ? authLinks : guestLinks}
                         </div>
                       </div>
                     </div>
@@ -91,30 +138,16 @@ class Home extends Component {
                         </a>
                       </div>
                     </div>
-                    <div className="col-xl-9 col-lg-8">
-                      <div className="header-contact-search-wrap header-contact-search-mrg">
-                        <div className="header-contact-2">
-                          <div className="header-contact-2-icon">
-                            <i className="la la-phone" />
-                          </div>
-                        </div>
-                        <div className="search-style-4">
-                          <form>
-                            <div className="form-search-4">
-                              <input
-                                id="search"
-                                className="input-text"
-                                value=""
-                                placeholder="Search Hear"
-                                type="search"
-                              />
-                              <button>
-                                <i className="la la-search" />
-                              </button>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
+                    <div className="offset-3 col-xl-7 col-lg-6 ">
+                      <ReactSelect
+                        className="input-text"
+                        onChange={this.onChange}
+                        liberateOptions={this.props.getProductByName}
+                        placeholder={`Search`}
+                        searchedOptions={this.props.searchedProducts}
+                      >
+                        <FontAwesomeIcon icon="search" />
+                      </ReactSelect>
                     </div>
                   </div>
                 </div>
@@ -123,27 +156,85 @@ class Home extends Component {
                 <div className="container">
                   <div className="row align-items-center">
                     <div className="col-lg-4">
-                      <div className="category-menu-wrap">
-                        <h3 className="showcat">
-                          <a href="#">
+                      <div className="category-menu-wrap dropdown">
+                        <Dropdown>
+                          <Dropdown.Toggle
+                            variant="none"
+                            id="dropdown-basic"
+                            className="showcat"
+                            style={{ color: "#ffff", fontWeight: "500" }}
+                          >
                             <img
-                              className="category-menu-non-stick"
+                              className="category-menu-non-stick "
                               src="../../static/assets/images/icon-img/category-menu.png"
                               alt="icon"
                             />
+                            {"  "}
+                            Dropdown Button
+                          </Dropdown.Toggle>
+
+                          <Dropdown.Menu>
+                            <Dropdown.Item
+                              href="#/action-1"
+                              className="dropdown-item"
+                            >
+                              Acer
+                              <Dropdown.Item href="#/action-5">
+                                In Acer
+                              </Dropdown.Item>
+                            </Dropdown.Item>
+                            <Dropdown.Item href="#/action-2">
+                              Asus
+                            </Dropdown.Item>
+                            <Dropdown.Item href="#/action-3">
+                              Apple
+                            </Dropdown.Item>
+                            <Dropdown.Item href="#/action-3">
+                              Dell
+                            </Dropdown.Item>
+                            <Dropdown.Item href="#/action-3">
+                              GigaByte
+                            </Dropdown.Item>
+                            <Dropdown.Item href="#/action-3">HP</Dropdown.Item>
+                            <Dropdown.Item href="#/action-3">
+                              Lenovo
+                            </Dropdown.Item>
+                            <Dropdown.Item href="#/action-3">MSI</Dropdown.Item>
+                            <Dropdown.Item href="#/action-3">
+                              Razer
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </div>
+                    </div>
+                    {/* <div className="col-lg-4">
+                      <div className="category-menu-wrap dropdown">
+                        <h3 className="showcat">
+                          <button
+                            href="#"
+                            className="btn dropdown-toggle "
+                            type="button"
+                            id="dropdownMenuButton"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                          >
                             <img
-                              className="category-menu-stick"
-                              src="../../static/assets/images/icon-img/category-menu-stick.png"
+                              className="category-menu-non-stick "
+                              src="../../static/assets/images/icon-img/category-menu.png"
                               alt="icon"
                             />
-                            All Companies <i className="la la-angle-down" />
-                          </a>
+                            {"  "}All Companies
+                          </button>
                         </h3>
-                        <div className="category-menu hidecat">
+                        <div
+                          className="category-menu hidecat dropdown-menu"
+                          aria-labelledby="dropdownMenuButton"
+                        >
                           <nav>
                             <ul>
                               <li className="cr-dropdown">
-                                <a href="#">
+                                <a href="#" class="dropdown-item">
                                   Acer <span className="la la-angle-right" />
                                 </a>
                                 <div className="category-menu-dropdown ct-menu-res-height-1">
@@ -163,7 +254,7 @@ class Home extends Component {
                                 </div>
                               </li>
                               <li className="cr-dropdown">
-                                <a href="#">
+                                <a href="#" class="dropdown-item">
                                   Asus <span className="la la-angle-right" />
                                 </a>
                                 <div className="category-menu-dropdown ct-menu-res-height-2">
@@ -180,7 +271,7 @@ class Home extends Component {
                                 </div>
                               </li>
                               <li className="cr-dropdown">
-                                <a href="#">
+                                <a href="#" class="dropdown-item">
                                   Apple <span className="la la-angle-right" />
                                 </a>
                                 <div className="category-menu-dropdown ct-menu-res-height-1">
@@ -197,7 +288,7 @@ class Home extends Component {
                                 </div>
                               </li>
                               <li className="cr-dropdown">
-                                <a href="#">
+                                <a href="#" class="dropdown-item">
                                   Dell <span className="la la-angle-right" />
                                 </a>
                                 <div className="category-menu-dropdown ct-menu-res-height-2">
@@ -220,7 +311,7 @@ class Home extends Component {
                                 </div>
                               </li>
                               <li className="cr-dropdown">
-                                <a href="#">
+                                <a href="#" class="dropdown-item">
                                   GigaByte{" "}
                                   <span className="la la-angle-right" />
                                 </a>
@@ -238,7 +329,7 @@ class Home extends Component {
                                 </div>
                               </li>
                               <li className="cr-dropdown">
-                                <a href="#">
+                                <a href="#" class="dropdown-item">
                                   HP <span className="la la-angle-right" />
                                 </a>
                                 <div className="category-menu-dropdown ct-menu-res-height-2">
@@ -268,7 +359,7 @@ class Home extends Component {
                                 </div>
                               </li>
                               <li className="cr-dropdown">
-                                <a href="#">
+                                <a href="#" class="dropdown-item">
                                   Lenovo <span className="la la-angle-right" />
                                 </a>
                                 <div className="category-menu-dropdown ct-menu-res-height-2">
@@ -288,7 +379,7 @@ class Home extends Component {
                                 </div>
                               </li>
                               <li className="cr-dropdown">
-                                <a href="#">
+                                <a href="#" class="dropdown-item">
                                   MSI <span className="la la-angle-right" />
                                 </a>
                                 <div className="category-menu-dropdown ct-menu-res-height-2">
@@ -308,7 +399,7 @@ class Home extends Component {
                                 </div>
                               </li>
                               <li className="cr-dropdown">
-                                <a href="#">
+                                <a href="#" class="dropdown-item">
                                   Razer <span className="la la-angle-right" />
                                 </a>
                               </li>
@@ -316,15 +407,15 @@ class Home extends Component {
                           </nav>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                     <div className="col-md-8 d-flex justify-content-end">
                       <div className="main-menu menu-common-style menu-lh-5 menu-margin-4 menu-font-2 menu-font-2-white res-hm8-margin">
                         <nav>
                           <ul>
                             <li className="angle-shape">
                               {" "}
-                              <Link href="/product/productCompare">
-                                <a>Compare</a>
+                              <Link href="/products">
+                                <a>All Products</a>
                               </Link>
                             </li>
                             <li className="angle-shape">
@@ -376,679 +467,8 @@ class Home extends Component {
                 </div>
               </div>
             </div>
-            <div className="bg-red pt-20 pb-20 ct-menu-small-device">
-              <div className="container">
-                <div className="category-menu-wrap">
-                  <h3 className="showcat">
-                    <a href="#">
-                      <img
-                        className="category-menu-non-stick"
-                        src="../../static/assets/images/icon-img/category-menu.png"
-                        alt="icon"
-                      />
-                      <img
-                        className="category-menu-stick"
-                        src="../../static/assets/images/icon-img/category-menu-stick.png"
-                        alt="icon"
-                      />
-                      All Department <i className="la la-angle-down" />
-                    </a>
-                  </h3>
-                  <div className="category-menu mobile-category-menu hidecat">
-                    <nav>
-                      <ul>
-                        <li className="cr-dropdown">
-                          <a href="#">
-                            Computer <span className="la la-angle-down" />
-                          </a>
-                          <ul className="cr-menu-desktop-none">
-                            <li className="cr-sub-dropdown sub-style">
-                              <a href="#">
-                                Laptop Accessories{" "}
-                                <i className="la la-angle-down" />
-                              </a>
-                              <ul>
-                                <li>
-                                  <a href="shop.html">Laptop Keyboard</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Laptop Mouse</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Bluetooth Speaker</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">LED Light</a>
-                                </li>
-                              </ul>
-                            </li>
-                            <li className="cr-sub-dropdown sub-style">
-                              <a href="#">
-                                Laptop Accessories{" "}
-                                <i className="la la-angle-down" />
-                              </a>
-                              <ul>
-                                <li>
-                                  <a href="shop.html">Laptop Keyboard</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Laptop Mouse</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Bluetooth Speaker</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">LED Light</a>
-                                </li>
-                              </ul>
-                            </li>
-                            <li className="cr-sub-dropdown sub-style">
-                              <a href="#">
-                                Laptop Accessories{" "}
-                                <i className="la la-angle-down" />
-                              </a>
-                              <ul>
-                                <li>
-                                  <a href="shop.html">Laptop Keyboard</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Laptop Mouse</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Bluetooth Speaker</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">LED Light</a>
-                                </li>
-                              </ul>
-                            </li>
-                          </ul>
-                        </li>
-                        <li className="cr-dropdown">
-                          <a href="#">
-                            Accessories <span className="la la-angle-down" />
-                          </a>
-                          <ul className="cr-menu-desktop-none">
-                            <li className="cr-sub-dropdown sub-style">
-                              <a href="#">
-                                Laptop Accessories{" "}
-                                <i className="la la-angle-down" />
-                              </a>
-                              <ul>
-                                <li>
-                                  <a href="shop.html">Laptop Keyboard</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Laptop Mouse</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Bluetooth Speaker</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">LED Light</a>
-                                </li>
-                              </ul>
-                            </li>
-                            <li className="cr-sub-dropdown sub-style">
-                              <a href="#">
-                                Laptop Accessories{" "}
-                                <i className="la la-angle-down" />
-                              </a>
-                              <ul>
-                                <li>
-                                  <a href="shop.html">Laptop Keyboard</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Laptop Mouse</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Bluetooth Speaker</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">LED Light</a>
-                                </li>
-                              </ul>
-                            </li>
-                          </ul>
-                        </li>
-                        <li className="cr-dropdown">
-                          <a href="#">
-                            Computer Kit <span className="la la-angle-down" />
-                          </a>
-                          <ul className="cr-menu-desktop-none">
-                            <li className="cr-sub-dropdown sub-style">
-                              <a href="#">
-                                Laptop Accessories{" "}
-                                <i className="la la-angle-down" />
-                              </a>
-                              <ul>
-                                <li>
-                                  <a href="shop.html">Laptop Keyboard</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Laptop Mouse</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Bluetooth Speaker</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">LED Light</a>
-                                </li>
-                              </ul>
-                            </li>
-                            <li className="cr-sub-dropdown sub-style">
-                              <a href="#">
-                                Laptop Accessories{" "}
-                                <i className="la la-angle-down" />
-                              </a>
-                              <ul>
-                                <li>
-                                  <a href="shop.html">Laptop Keyboard</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Laptop Mouse</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Bluetooth Speaker</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">LED Light</a>
-                                </li>
-                              </ul>
-                            </li>
-                            <li className="cr-sub-dropdown sub-style">
-                              <a href="#">
-                                Laptop Accessories{" "}
-                                <i className="la la-angle-down" />
-                              </a>
-                              <ul>
-                                <li>
-                                  <a href="shop.html">Laptop Keyboard</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Laptop Mouse</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Bluetooth Speaker</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">LED Light</a>
-                                </li>
-                              </ul>
-                            </li>
-                          </ul>
-                        </li>
-                        <li className="cr-dropdown">
-                          <a href="#">
-                            Laptop <span className="la la-angle-down" />
-                          </a>
-                          <ul className="cr-menu-desktop-none">
-                            <li className="cr-sub-dropdown sub-style">
-                              <a href="#">
-                                Laptop Accessories{" "}
-                                <i className="la la-angle-down" />
-                              </a>
-                              <ul>
-                                <li>
-                                  <a href="shop.html">Laptop Keyboard</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Laptop Mouse</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Bluetooth Speaker</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">LED Light</a>
-                                </li>
-                              </ul>
-                            </li>
-                            <li className="cr-sub-dropdown sub-style">
-                              <a href="#">
-                                Laptop Accessories{" "}
-                                <i className="la la-angle-down" />
-                              </a>
-                              <ul>
-                                <li>
-                                  <a href="shop.html">Laptop Keyboard</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Laptop Mouse</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Bluetooth Speaker</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">LED Light</a>
-                                </li>
-                              </ul>
-                            </li>
-                          </ul>
-                        </li>
-                        <li className="cr-dropdown">
-                          <a href="#">Laptop Accessories </a>
-                        </li>
-                        <li className="cr-dropdown">
-                          <a href="#">Smartwatch</a>
-                        </li>
-                        <li className="cr-dropdown">
-                          <a href="#">
-                            Accessories <span className="la la-angle-down" />
-                          </a>
-                          <ul className="cr-menu-desktop-none">
-                            <li className="cr-sub-dropdown sub-style">
-                              <a href="#">
-                                Laptop Accessories{" "}
-                                <i className="la la-angle-down" />
-                              </a>
-                              <ul>
-                                <li>
-                                  <a href="shop.html">Laptop Keyboard</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Laptop Mouse</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Bluetooth Speaker</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">LED Light</a>
-                                </li>
-                              </ul>
-                            </li>
-                            <li className="cr-sub-dropdown sub-style">
-                              <a href="#">
-                                Laptop Accessories{" "}
-                                <i className="la la-angle-down" />
-                              </a>
-                              <ul>
-                                <li>
-                                  <a href="shop.html">Laptop Keyboard</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Laptop Mouse</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Bluetooth Speaker</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">LED Light</a>
-                                </li>
-                              </ul>
-                            </li>
-                          </ul>
-                        </li>
-                        <li className="cr-dropdown">
-                          <a href="#">Cameras</a>
-                        </li>
-                        <li className="cr-dropdown">
-                          <a href="#">
-                            Mobile Phone <span className="la la-angle-down" />
-                          </a>
-                          <ul className="cr-menu-desktop-none">
-                            <li className="cr-sub-dropdown sub-style">
-                              <a href="#">
-                                Laptop Accessories{" "}
-                                <i className="la la-angle-down" />
-                              </a>
-                              <ul>
-                                <li>
-                                  <a href="shop.html">Laptop Keyboard</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Laptop Mouse</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Bluetooth Speaker</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">LED Light</a>
-                                </li>
-                              </ul>
-                            </li>
-                            <li className="cr-sub-dropdown sub-style">
-                              <a href="#">
-                                Laptop Accessories{" "}
-                                <i className="la la-angle-down" />
-                              </a>
-                              <ul>
-                                <li>
-                                  <a href="shop.html">Laptop Keyboard</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Laptop Mouse</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Bluetooth Speaker</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">LED Light</a>
-                                </li>
-                              </ul>
-                            </li>
-                            <li className="cr-sub-dropdown sub-style">
-                              <a href="#">
-                                Laptop Accessories{" "}
-                                <i className="la la-angle-down" />
-                              </a>
-                              <ul>
-                                <li>
-                                  <a href="shop.html">Laptop Keyboard</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Laptop Mouse</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">Bluetooth Speaker</a>
-                                </li>
-                                <li>
-                                  <a href="shop.html">LED Light</a>
-                                </li>
-                              </ul>
-                            </li>
-                          </ul>
-                        </li>
-                        <li className="cr-dropdown">
-                          <a href="#">Drone</a>
-                        </li>
-                        <li className="cr-dropdown">
-                          <a href="#">Drone Cameras</a>
-                        </li>
-                        <li className="cr-dropdown">
-                          <a href="#">Apple Products </a>
-                        </li>
-                      </ul>
-                    </nav>
-                  </div>
-                </div>
-              </div>
-            </div>
           </header>
-          <div className="mobile-off-canvas-active">
-            <a className="mobile-aside-close">
-              <i className="la la-close" />
-            </a>
-            <div className="header-mobile-aside-wrap">
-              <div className="mobile-search">
-                <form className="search-form" action="#">
-                  <input type="text" placeholder="Search entire store…" />
-                  <button className="button-search">
-                    <i className="la la-search" />
-                  </button>
-                </form>
-              </div>
-              <div className="mobile-menu-wrap">
-                {/* <!-- mobile menu start --> */}
-                <div className="mobile-navigation">
-                  {/* <!-- mobile menu navigation start --> */}
-                  <nav>
-                    <ul className="mobile-menu">
-                      <li className="menu-item-has-children">
-                        <a href="index.html">Home</a>
-                        <ul className="dropdown">
-                          <li>
-                            <a href="index.html">Home version 1 </a>
-                          </li>
-                          <li>
-                            <a href="index-2.html">Home version 2 </a>
-                          </li>
-                          <li>
-                            <a href="index-3.html">Home version 3 </a>
-                          </li>
-                          <li>
-                            <a href="index-4.html">Home version 4 </a>
-                          </li>
-                          <li>
-                            <a href="index-5.html">Home version 5 </a>
-                          </li>
-                          <li>
-                            <a href="index-6.html">Home version 6 </a>
-                          </li>
-                          <li>
-                            <a href="index-7.html">Home version 7 </a>
-                          </li>
-                          <li>
-                            <a href="index-8.html">Home version 8 </a>
-                          </li>
-                          <li>
-                            <a href="index-9.html">Home version 9 </a>
-                          </li>
-                          <li>
-                            <a href="index-10.html">Home version 10 </a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li className="menu-item-has-children ">
-                        <a href="#">shop</a>
-                        <ul className="dropdown">
-                          <li className="menu-item-has-children">
-                            <a href="#">shop layout</a>
-                            <ul className="dropdown">
-                              <li>
-                                <a href="shop.html">standard grid style</a>
-                              </li>
-                              <li>
-                                <a href="shop-2.html">standard style 2</a>
-                              </li>
-                              <li>
-                                <a href="shop-2-col.html">shop 2 column</a>
-                              </li>
-                              <li>
-                                <a href="shop-no-sidebar.html">
-                                  shop no sidebar
-                                </a>
-                              </li>
-                              <li>
-                                <a href="shop-fullwide.html">shop fullwide</a>
-                              </li>
-                              <li>
-                                <a href="shop-fullwide-no-sidebar.html">
-                                  fullwide no sidebar{" "}
-                                </a>
-                              </li>
-                            </ul>
-                          </li>
-                          <li className="menu-item-has-children">
-                            <a href="#">shop list layout</a>
-                            <ul className="dropdown">
-                              <li>
-                                <a href="shop-list.html">list style</a>
-                              </li>
-                              <li>
-                                <a href="shop-list-2col.html">list 2 column</a>
-                              </li>
-                              <li>
-                                <a href="shop-list-no-sidebar.html">
-                                  list no sidebar
-                                </a>
-                              </li>
-                            </ul>
-                          </li>
-                          <li className="menu-item-has-children">
-                            <a href="#">product details</a>
-                            <ul className="dropdown">
-                              <li>
-                                <a href="product-details.html">
-                                  standard style
-                                </a>
-                              </li>
-                              <li>
-                                <a href="product-details-2.html">
-                                  standard style 2
-                                </a>
-                              </li>
-                              <li>
-                                <a href="product-details-tab1.html">
-                                  tab style 1
-                                </a>
-                              </li>
-                              <li>
-                                <a href="product-details-tab2.html">
-                                  tab style 2
-                                </a>
-                              </li>
-                              <li>
-                                <a href="product-details-tab3.html">
-                                  tab style 3{" "}
-                                </a>
-                              </li>
-                              <li>
-                                <a href="product-details-gallery.html">
-                                  gallery style{" "}
-                                </a>
-                              </li>
-                              <li>
-                                <a href="product-details-sticky.html">
-                                  sticky style
-                                </a>
-                              </li>
-                              <li>
-                                <a href="product-details-slider.html">
-                                  slider style
-                                </a>
-                              </li>
-                              <li>
-                                <a href="product-details-affiliate.html">
-                                  Affiliate style
-                                </a>
-                              </li>
-                            </ul>
-                          </li>
-                        </ul>
-                      </li>
-                      <li className="menu-item-has-children">
-                        <a href="#">Pages</a>
-                        <ul className="dropdown">
-                          <li>
-                            <a href="about-us.html">about us </a>
-                          </li>
-                          <li>
-                            <a href="cart.html">cart page </a>
-                          </li>
-                          <li>
-                            <a href="checkout.html">checkout </a>
-                          </li>
-                          <li>
-                            <a href="compare.html">compare </a>
-                          </li>
-                          <li>
-                            <a href="wishlist.html">wishlist </a>
-                          </li>
-                          <li>
-                            <a href="my-account.html">my account </a>
-                          </li>
-                          <li>
-                            <a href="contact.html">contact us </a>
-                          </li>
-                          <li>
-                            <a href="login-register.html">login/register </a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li className="menu-item-has-children ">
-                        <a href="#">Blog</a>
-                        <ul className="dropdown">
-                          <li>
-                            <a href="blog.html">standard style </a>
-                          </li>
-                          <li>
-                            <a href="blog-2col.html">blog 2 column </a>
-                          </li>
-                          <li>
-                            <a href="blog-sidebar.html">blog sidebar </a>
-                          </li>
-                          <li>
-                            <a href="blog-details.html">blog details </a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li>
-                        <a href="contact.html">Contact us</a>
-                      </li>
-                    </ul>
-                  </nav>
-                  {/* <!-- mobile menu navigation end --> */}
-                </div>
-                {/* <!-- mobile menu end --> */}
-              </div>
-              <div className="mobile-curr-lang-wrap">
-                <div className="single-mobile-curr-lang">
-                  <a className="mobile-language-active" href="#">
-                    Language <i className="la la-angle-down" />
-                  </a>
-                  <div className="lang-curr-dropdown lang-dropdown-active">
-                    <ul>
-                      <li>
-                        <a href="#">English (US)</a>
-                      </li>
-                      <li>
-                        <a href="#">English (UK)</a>
-                      </li>
-                      <li>
-                        <a href="#">Spanish</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="single-mobile-curr-lang">
-                  <a className="mobile-currency-active" href="#">
-                    Currency <i className="la la-angle-down" />
-                  </a>
-                  <div className="lang-curr-dropdown curr-dropdown-active">
-                    <ul>
-                      <li>
-                        <a href="#">USD</a>
-                      </li>
-                      <li>
-                        <a href="#">EUR</a>
-                      </li>
-                      <li>
-                        <a href="#">Real</a>
-                      </li>
-                      <li>
-                        <a href="#">BDT</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="single-mobile-curr-lang">
-                  <a className="mobile-account-active" href="#">
-                    My Account <i className="la la-angle-down" />
-                  </a>
-                  <div className="lang-curr-dropdown account-dropdown-active">
-                    <ul>
-                      <li>
-                        <a href="#">Login</a>
-                      </li>
-                      <li>
-                        <a href="#">Creat Account</a>
-                      </li>
-                      <li>
-                        <a href="#">My Account</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="mobile-social-wrap">
-                <a className="facebook" href="#">
-                  <i className="ti-facebook" />
-                </a>
-                <a className="twitter" href="#">
-                  <i className="ti-twitter-alt" />
-                </a>
-                <a className="pinterest" href="#">
-                  <i className="ti-pinterest" />
-                </a>
-                <a className="instagram" href="#">
-                  <i className="ti-instagram" />
-                </a>
-                <a className="google" href="#">
-                  <i className="ti-google" />
-                </a>
-              </div>
-            </div>
-          </div>
+
           <div className="slider-area pt-20">
             <div className="container">
               <div className="slider-active-4 owl-carousel dot-style-2">
@@ -1065,49 +485,58 @@ class Home extends Component {
                 <div className="row">
                   <div className="col-xl-4 col-lg-3 col-md-4 col-sm-4">
                     <div className="section-title-5">
-                      <h2>All Product</h2>
+                      <h2>Companies</h2>
                     </div>
                   </div>
                   <div className="col-xl-8 col-lg-9 col-md-10 col-sm-10">
                     <div className="product-tab-list-4 nav">
-                      <a href="#product-10">
+                      <a className="active comp" href="#product-10">
                         <h5>Dell </h5>
                       </a>
                       <a
-                        className="active"
+                        className="comp"
                         href="#product-11"
                         onClick={() => this.onClick("msi")}
                       >
                         <h5>MSI</h5>
                       </a>
                       <a
+                        className="comp"
                         href="#product-12"
                         onClick={() => this.onClick("apple")}
                       >
                         <h5>Apple</h5>
                       </a>
-                      <a href="#product-13" onClick={() => this.onClick("hp")}>
+                      <a
+                        className="comp"
+                        href="#product-13"
+                        onClick={() => this.onClick("hp")}
+                      >
                         <h5>HP </h5>
                       </a>
                       <a
+                        className="comp"
                         href="#product-14"
                         onClick={() => this.onClick("razer")}
                       >
                         <h5>Razer</h5>
                       </a>
                       <a
+                        className="comp"
                         href="#product-15"
                         onClick={() => this.onClick("lenovo")}
                       >
                         <h5>Lenovo</h5>
                       </a>
                       <a
+                        className="comp"
                         href="#product-16"
                         onClick={() => this.onClick("acer")}
                       >
                         <h5>Acer</h5>
                       </a>
                       <a
+                        className="comp"
                         href="#product-17"
                         onClick={() => this.onClick("gigabyte")}
                       >
@@ -1126,43 +555,91 @@ class Home extends Component {
           </div>
           <div className="brand-logo-area pb-70">
             <div className="container">
-              <div className="brand-logo-padding bg-gray-3">
-                <div className="brand-logo-active-2 owl-carousel">
-                  <div className="single-brand-logo">
-                    <img
-                      src="../../static/assets/images/brand-logo/brand-logo-5.png"
-                      alt=""
-                    />
+              <div className="brand-logo bg-gray-3">
+                <div className="row brand-logo-active-2">
+                  <div className="single-brand-logo col">
+                    <a href="https://us-store.acer.com">
+                      <img
+                        className="logo-img"
+                        src="../../static/images/acer_logo.png"
+                        alt="Acer"
+                      />
+                    </a>
                   </div>
-                  <div className="single-brand-logo">
-                    <img
-                      src="../../static/assets/images/brand-logo/brand-logo-6.png"
-                      alt=""
-                    />
+
+                  <div className="single-brand-logo col">
+                    <a href="https://www.asus.com">
+                      <img
+                        className="logo-img"
+                        src="../../static/images/Asus-Logo.png"
+                        alt="Asus"
+                      />
+                    </a>
                   </div>
-                  <div className="single-brand-logo">
-                    <img
-                      src="../../static/assets/images/brand-logo/brand-logo-7.png"
-                      alt=""
-                    />
+                  <div className="single-brand-logo col">
+                    <a href="https://www.razer.com">
+                      <img
+                        className="logo-img"
+                        src="../../static/images/razer_logo.png"
+                        alt="Razer"
+                      />
+                    </a>
                   </div>
-                  <div className="single-brand-logo">
-                    <img
-                      src="../../static/assets/images/brand-logo/brand-logo-8.png"
-                      alt=""
-                    />
+
+                  <div className="single-brand-logo col">
+                    <a href="https://www.dell.com.pk">
+                      <img
+                        className="logo-img"
+                        src="../../static/images/dell-logo.png"
+                        alt="Dell"
+                      />
+                    </a>
                   </div>
-                  <div className="single-brand-logo">
-                    <img
-                      src="../../static/assets/images/brand-logo/brand-logo-9.png"
-                      alt=""
-                    />
+                  <div className="single-brand-logo col">
+                    <a href="https://www.gigabyte.com">
+                      <img
+                        className="logo-img"
+                        src="../../static/images/gigabyte-logo.png"
+                        alt="GigaByte"
+                      />
+                    </a>
                   </div>
-                  <div className="single-brand-logo">
-                    <img
-                      src="../../static/assets/images/brand-logo/brand-logo-6.png"
-                      alt=""
-                    />
+
+                  <div className="single-brand-logo col">
+                    <a href="https://www.lenovo.com/pk/en?Redirect=False">
+                      <img
+                        className="logo-img"
+                        src="../../static/images/lenovo-logo.png"
+                        alt="Lenovo"
+                      />
+                    </a>
+                  </div>
+                  <div className="single-brand-logo col">
+                    <a href="https://www.apple.com">
+                      <img
+                        className="logo-img"
+                        src="../../static/images/Apple_logo.png"
+                        alt="Apple"
+                      />
+                    </a>
+                  </div>
+                  <div className="single-brand-logo col">
+                    <a href="https://www.msi.com/index.php">
+                      <img
+                        className="logo-img"
+                        src="../../static/images/msi_logo.png"
+                        alt="MSI"
+                      />
+                    </a>
+                  </div>
+                  <div className="single-brand-logo col">
+                    <a href="https://store.hp.com/us/en">
+                      <img
+                        className="logo-img col"
+                        src="../../static/images/hp-logo.png"
+                        alt="HP"
+                      />
+                    </a>
                   </div>
                 </div>
               </div>
@@ -1174,13 +651,19 @@ class Home extends Component {
     );
   }
 }
+Home.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
 const mapStateToProps = state => ({
   products: state.products.products,
   pagination: state.products.pagination,
-  loader: state.loader
+  searchedProducts: state.products.searchedProducts,
+  loader: state.loader,
+  auth: state.auth
 });
 
 export default connect(
   mapStateToProps,
-  { getRelatedProduct }
+  { logoutUser, clearCurrentUser, getRelatedProduct, getProductByName }
 )(Home);

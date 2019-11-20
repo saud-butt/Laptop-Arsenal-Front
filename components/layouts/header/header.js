@@ -1,9 +1,42 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Link from "next/link";
-import Account from "../../account/account";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { logoutUser } from "../../../store/actions/authActions";
+import { clearCurrentUser } from "../../../store/actions/userActions";
 
 class Header extends Component {
+  onLogoutClick(e) {
+    e.preventDefault();
+    this.props.clearCurrentUser();
+    this.props.logoutUser();
+  }
   render() {
+    const { isAuthenticated } = this.props.auth;
+
+    const authLinks = (
+      <>
+        <div className="header-wishlist">
+          <a href="/user/wishlist">
+            <FontAwesomeIcon icon={["far", "heart"]} />
+          </a>
+        </div>
+        <div className="header-login ml-40">
+          <a href="" onClick={this.onLogoutClick.bind(this)}>
+            <FontAwesomeIcon icon="sign-out-alt" />
+          </a>
+        </div>
+      </>
+    );
+    const guestLinks = (
+      <div className="header-login ml-40">
+        <a href="/auth/login">
+          <FontAwesomeIcon icon={["far", "user-circle"]} />
+        </a>
+      </div>
+    );
+
     return (
       <header className="header-area transparent-bar sticky-bar pt-10">
         <div className="main-header-wrap">
@@ -26,7 +59,7 @@ class Header extends Component {
                   <nav>
                     <ul>
                       <li className="angle-shape">
-                        <Link href="/product/productList">
+                        <Link href="/products">
                           <a>Laptops</a>
                         </Link>
                         <ul className="submenu">
@@ -120,16 +153,7 @@ class Header extends Component {
               </div>
               <div className="col-xl-3 col-lg-3">
                 <div className="header-right-wrap mt-10">
-                  <div className="header-wishlist">
-                    <a href="wishlist.html">
-                      <i className="la la-heart-o" />
-                    </a>
-                  </div>
-                  <div className="header-login ml-40">
-                    <a href="login-register.html">
-                      <i className="la la-user" />
-                    </a>
-                  </div>
+                  {isAuthenticated ? authLinks : guestLinks}
                 </div>
               </div>
             </div>
@@ -187,4 +211,11 @@ class Header extends Component {
   }
 }
 
-export default Header;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+  { clearCurrentUser, logoutUser }
+)(Header);

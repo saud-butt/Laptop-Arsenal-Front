@@ -33,13 +33,20 @@ class ProductDetail extends Component {
 
   render() {
     const { product, loading } = this.props;
-    const { brand, name, images, price } = product;
+    const { brand, name, images, price, link, _id } = product;
     const over =
       loading && product ? (
         " LOADING "
       ) : (
         <>
-          <Overview brand={brand} name={name} price={price} images={images} />
+          <Overview
+            brand={brand}
+            name={name}
+            price={price}
+            images={images}
+            link={link}
+            id={_id}
+          />
           <Description product={product} />
           <Related brand={brand} />
         </>

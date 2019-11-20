@@ -1,9 +1,4 @@
 /*-----------------------------------------------------------------------------------
-
-    Template Name: Daxone - eCommerce Bootstrap 4 Template
-    Version: 2
-
------------------------------------------------------------------------------------
     
     CSS INDEX
     ===================
@@ -12006,6 +12001,10 @@ button, input, optgroup, select, textarea {
   text-transform: uppercase;
 }
 
+.comp:active{
+  
+}
+
 @media only screen and (min-width: 1200px) and (max-width: 1365px) {
   .overview-content h2 {
     font-size: 40px;
@@ -13346,6 +13345,11 @@ button, input, optgroup, select, textarea {
   padding: 60px 50px 60px 100px;
 }
 
+.logo-img{
+  height: 150px;
+  width:150px;
+}
+
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .brand-logo-border {
     padding: 60px 20px 60px 70px;
@@ -13370,7 +13374,7 @@ button, input, optgroup, select, textarea {
 }
 
 .brand-logo-active-2 .single-brand-logo {
-  height: 48px;
+  /* height: 48px; */
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -16329,7 +16333,7 @@ h3.cart-page-title {
   left: 0;
   bottom: -12px;
   background-color: #ff5151;
-  width: 50px;
+  width: 410px;
   height: 2px;
 }
 
@@ -16920,6 +16924,11 @@ h3.cart-page-title {
   font-size: 14px;
   padding: 20px 0;
   color: #333;
+}
+
+.dropDown {
+  color: #ffff;
+  font-weight: 500;
 }
 
 /*-------- Start My Account Page Wrapper --------*/

@@ -45,6 +45,11 @@ export default class CustomHead extends Head {
 
         <link href="/static/styles/carousal.min.css" rel="stylesheet" />
         <link href="/static/styles/style.css" rel="stylesheet" />
+        <link
+          href="/components/reactSelect/react-select.css"
+          rel="stylesheet"
+        />
+
         {head}
         {page !== "/_error" && (
           <link
