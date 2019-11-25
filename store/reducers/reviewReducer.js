@@ -10,7 +10,9 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  reviews: []
+  reviews: [],
+  review: {},
+  pagination: {}
 };
 
 export default function(state = initialState, action) {
@@ -18,14 +20,20 @@ export default function(state = initialState, action) {
     case GET_ALL_REVIEWS:
       return {
         ...state,
-        reviews: action.payload
+        reviews: action.payload,
+        pagination: action.pagination
       };
     case CREATE_REVIEW:
       return {
         ...state,
         reviews: [action.payload, ...state.reviews]
       };
+    case GET_REVIEW_BY_PRODUCTID:
+      return {
+        ...state,
+        review: action.payload
+      };
     default:
-      return state;
+      return { ...state };
   }
 }

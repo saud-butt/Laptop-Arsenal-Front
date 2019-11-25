@@ -2,7 +2,8 @@ import React from "react";
 import { Tabs, Tab } from "react-bootstrap";
 
 import Specification from "./Specification";
-import Reviews from "./Reviews";
+import Reviews from "../../reviews/Review";
+import CreateReview from "../../reviews/CreteReview";
 
 const Description = ({ product }) => {
   return (
@@ -92,6 +93,7 @@ const Description = ({ product }) => {
 
                 <Tab eventKey="review" title="Review" id="des-details3">
                   <Reviews />
+                  <CreateReview />
                 </Tab>
               </Tabs>{" "}
             </div>

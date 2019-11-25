@@ -21,6 +21,8 @@ class Compare extends Component {
   }
   onChange = (selectedProduct, key) => {
     this.props.getProduct(selectedProduct.value, true, key);
+    console.log(searchedProducts);
+    console.log(key);
   };
   render() {
     const { compare1, compare2, compare3 } = this.props;
@@ -384,7 +386,6 @@ const mapStateToProps = state => ({
   compare2: state.products.compare2
 });
 
-export default connect(
-  mapStateToProps,
-  { getProduct, getProductByName }
-)(withRouter(Compare));
+export default connect(mapStateToProps, { getProduct, getProductByName })(
+  withRouter(Compare)
+);

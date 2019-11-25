@@ -297,7 +297,4 @@ const mapStateToProps = state => ({
   loader: state.loader
 });
 
-export default connect(
-  mapStateToProps,
-  { getAllProducts }
-)(ListItem);
+export default connect(mapStateToProps, { getAllProducts })(ListItem);

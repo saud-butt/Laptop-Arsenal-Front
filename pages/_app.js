@@ -13,7 +13,8 @@ import {
   faTh,
   faList,
   faSignOutAlt,
-  faScrewdriver
+  faScrewdriver,
+  faThumbsUp
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -42,7 +43,8 @@ library.add(
   faTh,
   faList,
   faSignOutAlt,
-  faScrewdriver
+  faScrewdriver,
+  faThumbsUp
 );
 
 SetAxiosDefault();

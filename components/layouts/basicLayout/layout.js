@@ -6,8 +6,8 @@ export default ({ children, title = "This is the default title" }) => (
   <div className="main-wrapper">
     <Header />
     <div className={`breadcrumb-area bg-img ${Style.bgImage}`}>
-      <div class="container">
-        <div class="breadcrumb-content text-center"></div>
+      <div className="container">
+        <div className="breadcrumb-content text-center"></div>
       </div>
     </div>
     {children}

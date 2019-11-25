@@ -124,7 +124,7 @@ class Header extends Component {
                         </Link>
                       </li>
                       <li className="angle-shape">
-                        <a className="menu-title" href="#">
+                        <a className="menu-title" href="/products/reviews">
                           Reviews
                         </a>
                       </li>
@@ -157,53 +157,6 @@ class Header extends Component {
                 </div>
               </div>
             </div>
-            {/* <!-- main-search start --> */}
-            <div className="main-search-active">
-              <div className="sidebar-search-icon">
-                <button className="search-close">
-                  <span className="la la-close" />
-                </button>
-              </div>
-              <div className="sidebar-search-input">
-                <form>
-                  <div className="form-search">
-                    <input
-                      id="search"
-                      className="input-text"
-                      value=""
-                      placeholder="Search Now"
-                      type="search"
-                    />
-                    <button>
-                      <i className="la la-search" />
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-
-            <div className="header-small-mobile">
-              <div className="container">
-                <div className="row align-items-center">
-                  <div className="col-6">
-                    <div className="mobile-logo">
-                      <a href="index.html">
-                        <img
-                          alt=""
-                          src="../../../static/assets/images/logo/logo-1.png"
-                        />
-                      </a>
-                    </div>
-                  </div>
-
-                  <div className="mobile-off-canvas">
-                    <a className="mobile-aside-button" href="#">
-                      <i className="la la-navicon la-2x" />
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </header>
@@ -215,7 +168,6 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(
-  mapStateToProps,
-  { clearCurrentUser, logoutUser }
-)(Header);
+export default connect(mapStateToProps, { clearCurrentUser, logoutUser })(
+  Header
+);

@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Link from "next/link";
+import Router from "next/router";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Dropdown from "react-bootstrap/Dropdown";
 
 import { logoutUser } from "../../store/actions/authActions";
 import {
+  getProduct,
   getRelatedProduct,
   getProductByName
 } from "../../store/actions/productActions";
@@ -30,7 +32,10 @@ class Home extends Component {
     this.props.logoutUser();
   }
   onChange = (selectedProduct, key) => {
-    this.props.getProduct(selectedProduct.value, true, key);
+    //this.props.getProduct(selectedProduct.value, true, key);
+    Router.push(`/products/show?id=${selectedProduct.value}`);
+    console.log(selectedProduct);
+    console.log(key);
   };
   render() {
     const { products } = this.props;
@@ -50,29 +55,33 @@ class Home extends Component {
       </div>
     ));
 
-    const authLinks = (
-      <>
-        <Link href="/user/wishlist">
-          <a title="Wishlist">Wishlist</a>
-        </Link>
-        <Link href="/user/account">
-          <a title="My Account">
-            <img
-              className="rounded-circle"
-              src={user.avatar}
-              alt={user.name}
-              style={{ width: "25px", marginRight: "5px" }}
-              title="You must have a Gravatar connected to your email to display an image"
-            />
-            My Account
-          </a>
-        </Link>
+    let authLinks = null;
 
-        <a href="" onClick={this.onLogoutClick.bind(this)}>
-          Logout <FontAwesomeIcon icon="sign-out-alt" />
-        </a>
-      </>
-    );
+    if (user) {
+      authLinks = (
+        <>
+          <Link href="/user/wishlist">
+            <a title="Wishlist">Wishlist</a>
+          </Link>
+          <Link href="/user/account">
+            <a title="My Account">
+              <img
+                className="rounded-circle"
+                src={user.avatar}
+                alt={user.name}
+                style={{ width: "25px", marginRight: "5px" }}
+                title="You must have a Gravatar connected to your email to display image"
+              />
+              My Account
+            </a>
+          </Link>
+
+          <a href="" onClick={this.onLogoutClick.bind(this)}>
+            Logout <FontAwesomeIcon icon="sign-out-alt" />
+          </a>
+        </>
+      );
+    }
     const guestLinks = (
       <>
         <Link href="/auth/login">
@@ -432,7 +441,7 @@ class Home extends Component {
                               </Link>
                             </li>
                             <li className="angle-shape">
-                              <Link href="product/reviews">
+                              <Link href="products/reviews">
                                 <a className="menu-title" href="#">
                                   Reviews
                                 </a>
@@ -663,7 +672,10 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(
-  mapStateToProps,
-  { logoutUser, clearCurrentUser, getRelatedProduct, getProductByName }
-)(Home);
+export default connect(mapStateToProps, {
+  logoutUser,
+  getProduct,
+  clearCurrentUser,
+  getRelatedProduct,
+  getProductByName
+})(Home);

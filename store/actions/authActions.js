@@ -4,7 +4,7 @@ import Router from "next/router";
 import setAuthToken from "../../utils/setAuthToken";
 
 import { toggleLoader } from "./loading";
-import { GET_ERRORS, SET_CURRENT_USER, PERSIST_USER } from "./types";
+import { GET_ERRORS, SET_CURRENT_USER } from "./types";
 
 // Register User
 export const registerUser = userData => dispatch => {

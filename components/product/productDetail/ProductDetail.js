@@ -7,6 +7,7 @@ import {
   getProduct,
   getRelatedProduct
 } from "../../../store/actions/productActions";
+import { getReview } from "../../../store/actions/reviewActions";
 import Related from "../detail/Related";
 import Description from "../detail/Description";
 import Overview from "../detail/Overview";
@@ -19,6 +20,7 @@ class ProductDetail extends Component {
     const id = this.props.router.query.id;
     if (id) {
       this.props.getProduct(id);
+      this.props.getReview(id);
     }
   }
   componentDidUpdate() {
@@ -62,7 +64,8 @@ const mapStateToProps = state => ({
   product: state.products.product
 });
 
-export default connect(
-  mapStateToProps,
-  { getProduct, getRelatedProduct }
-)(withRouter(ProductDetail));
+export default connect(mapStateToProps, {
+  getProduct,
+  getRelatedProduct,
+  getReview
+})(withRouter(ProductDetail));

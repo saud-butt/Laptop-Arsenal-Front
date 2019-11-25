@@ -14,14 +14,16 @@ import {
 } from "./types";
 
 // Get all reviews
-export const getAllReviews = () => dispatch => {
+export const getAllReviews = (page = 1, limit = 12) => dispatch => {
   dispatch(toggleLoader(true));
   axios
-    .get("reviews")
+    .get(`/reviews?page=${page}&limit=${limit}`)
     .then(res => {
+      const { docs, ...pagination } = res.data;
       dispatch({
         type: GET_ALL_REVIEWS,
-        payload: res.data
+        payload: docs,
+        pagination: { ...pagination }
       });
       dispatch(toggleLoader(false));
     })
@@ -36,19 +38,63 @@ export const getAllReviews = () => dispatch => {
 
 // Create a review
 export const createReview = reviewData => dispatch => {
-  dispatch(clearErrors());
+  // dispatch(clearErrors());
+  dispatch(toggleLoader(true));
   axios
-    .review("/api/reviews", reviewData)
-    .then(res =>
+    .post("/api/reviews", reviewData)
+    .then(res => {
       dispatch({
         type: CREATE_REVIEW,
         payload: res.data
-      })
-    )
-    .catch(err =>
+      });
+      dispatch(toggleLoader(false));
+    })
+    .catch(err => {
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-      })
-    );
+      });
+      dispatch(toggleLoader(false));
+    });
+};
+
+// Like a review
+export const likeReview = id => dispatch => {
+  dispatch(toggleLoader(true));
+  axios
+    .post(`/like/${id}`)
+    .then(res => {
+      dispatch(getAllReviews());
+      dispatch(toggleLoader(false));
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+      dispatch(toggleLoader(false));
+    });
+};
+
+// Get review by product Id
+export const getReview = id => dispatch => {
+  console.log(`Product Id is ${id}`);
+  dispatch(toggleLoader(true));
+  axios
+    .get(`/api/reviews/model/${id}`)
+    .then(res => {
+      dispatch({
+        type: GET_REVIEW_BY_PRODUCTID,
+        payload: res.data
+      });
+
+      dispatch(toggleLoader(false));
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_REVIEW_BY_PRODUCTID,
+        payload: null
+      });
+      dispatch(toggleLoader(false));
+    });
 };
