@@ -669,7 +669,7 @@ const mapStateToProps = state => ({
   pagination: state.products.pagination,
   searchedProducts: state.products.searchedProducts,
   loader: state.loader,
-  auth: state.auth
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, {

@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { createReducer } from "../../store/actions/reviewActions";
 
-class PostForm extends Component {
+import { createReview } from "../../store/actions/reviewActions";
+import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
+
+class CreateReview extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,14 +27,17 @@ class PostForm extends Component {
     e.preventDefault();
 
     const { user } = this.props.auth;
-
+    const { product } = this.props;
     const newReview = {
       text: this.state.text,
-      name: user.name,
-      avatar: user.avatar
+      author: user.name,
+      avatar: user.avatar,
+      id: product._id,
+      model: product.model,
+      cover: product.cover
     };
 
-    // this.props.addPost(newPost);
+    this.props.createReview(newReview);
     this.setState({ text: "" });
   }
 
@@ -41,20 +46,24 @@ class PostForm extends Component {
   }
 
   render() {
+    const { errors } = this.state;
     return (
       <div className="get-in-touch-wrap">
         <h3 className="pt-20">Give your opinion about this product</h3>
         <div className="contact-from contact-shadow">
-          <form id="contact-form" action="assets/mail.php" method="post">
-            <div className="row">
-              <div className="col-lg-12">
-                <textarea name="message" placeholder="Your Thoughts"></textarea>
-              </div>
-              <div className="col-lg-12">
-                <button className="submit" type="submit">
-                  Submit
-                </button>
-              </div>
+          <form id="contact-form" onSubmit={this.onSubmit}>
+            <TextAreaFieldGroup
+              placeholder="Your Thoughts"
+              name="text"
+              value={this.state.text}
+              onChange={this.onChange}
+              error={errors.text}
+            />
+
+            <div className="col-lg-12">
+              <button className="submit" type="submit">
+                Submit
+              </button>
             </div>
           </form>
           <p className="form-messege"></p>
@@ -64,15 +73,16 @@ class PostForm extends Component {
   }
 }
 
-PostForm.propTypes = {
-  // addPost: PropTypes.func.isRequired,
+CreateReview.propTypes = {
+  CreateReview: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  errors: state.errors
+  errors: state.errors,
+  product: state.products.product
 });
 
-export default connect(mapStateToProps, null)(PostForm);
+export default connect(mapStateToProps, { createReview })(CreateReview);

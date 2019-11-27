@@ -31,7 +31,7 @@ export default function(state = initialState, action) {
     case GET_REVIEW_BY_PRODUCTID:
       return {
         ...state,
-        review: action.payload
+        reviews: action.payload
       };
     default:
       return { ...state };

@@ -38,10 +38,9 @@ export const getAllReviews = (page = 1, limit = 12) => dispatch => {
 
 // Create a review
 export const createReview = reviewData => dispatch => {
-  // dispatch(clearErrors());
   dispatch(toggleLoader(true));
   axios
-    .post("/api/reviews", reviewData)
+    .post("/reviews", reviewData)
     .then(res => {
       dispatch({
         type: CREATE_REVIEW,
@@ -62,9 +61,8 @@ export const createReview = reviewData => dispatch => {
 export const likeReview = id => dispatch => {
   dispatch(toggleLoader(true));
   axios
-    .post(`/like/${id}`)
+    .post(`reviews/like/${id}`)
     .then(res => {
-      dispatch(getAllReviews());
       dispatch(toggleLoader(false));
     })
     .catch(err => {
@@ -76,18 +74,33 @@ export const likeReview = id => dispatch => {
     });
 };
 
+// Remove Like from a review
+export const unlikeReview = id => dispatch => {
+  dispatch(toggleLoader(true));
+  axios
+    .post(`reviews/unlike/${id}`)
+    .then(res => {
+      dispatch(toggleLoader(false));
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 // Get review by product Id
 export const getReview = id => dispatch => {
   console.log(`Product Id is ${id}`);
   dispatch(toggleLoader(true));
   axios
-    .get(`/api/reviews/model/${id}`)
+    .get(`/reviews/model/${id}`)
     .then(res => {
       dispatch({
         type: GET_REVIEW_BY_PRODUCTID,
         payload: res.data
       });
-
       dispatch(toggleLoader(false));
     })
     .catch(err => {

@@ -12,7 +12,6 @@ class Reviews extends Component {
   componentDidMount() {
     this.props.getAllReviews();
   }
-
   render() {
     const { pagination, reviews } = this.props;
     const { totalPages, totalDocs, page, limit } = pagination;
@@ -23,12 +22,11 @@ class Reviews extends Component {
         <ReviewCard
           text={review.text}
           author={review.author}
-          avatar={review.avatar}
-          //href={`/reviews/show?id=${review._id}`}
           alt={review.author}
           model={review.model}
           likes={review.likes.length}
           cover={review.cover}
+          id={review._id}
         />
       </div>
     ));
@@ -114,4 +112,6 @@ const mapStateToProps = state => ({
   reviews: state.reviews.reviews,
   pagination: state.reviews.pagination
 });
-export default connect(mapStateToProps, { getAllReviews })(Reviews);
+export default connect(mapStateToProps, {
+  getAllReviews
+})(Reviews);
