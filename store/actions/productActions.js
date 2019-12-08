@@ -6,7 +6,8 @@ import {
   GET_PRODUCT,
   GET_RELATED_PRODUCT,
   GET_PRODUCT_BY_NAME,
-  COMPARE_PRODUCTS
+  COMPARE_PRODUCTS,
+  GET_PRODUCTS_BY_BRAND
 } from "./types";
 
 // Get all products
@@ -41,7 +42,7 @@ export const getProduct = (id, compare = false, key = null) => dispatch => {
     .then(res => {
       if (compare) {
         dispatch({
-          type: COMPARE_PRODUCTS,
+          type: GET_PRODUCT,
           payload: res.data,
           key: key
         });
@@ -63,10 +64,12 @@ export const getProduct = (id, compare = false, key = null) => dispatch => {
 };
 
 // Get related products
-export const getRelatedProduct = brand => dispatch => {
+export const getRelatedProduct = (brand, page = 1, limit = 8) => dispatch => {
   dispatch(toggleLoader(true));
   axios
-    .get(`http://localhost:5000/api/products/brand/${brand}`)
+    .get(
+      `http://localhost:5000/api/products/brand/${brand}?page=${page}&limit=${limit}`
+    )
     .then(res => {
       dispatch({
         type: GET_RELATED_PRODUCT,
@@ -77,6 +80,29 @@ export const getRelatedProduct = brand => dispatch => {
     .catch(err => {
       dispatch({
         type: GET_RELATED_PRODUCT,
+        payload: []
+      });
+      dispatch(toggleLoader(false));
+    });
+};
+
+// Get products by brand
+export const getProductsByBrand = (brand, page = 1, limit = 12) => dispatch => {
+  dispatch(toggleLoader(true));
+  axios
+    .get(
+      `http://localhost:5000/api/products/brand/${brand}?page=${page}&limit=${limit}`
+    )
+    .then(res => {
+      dispatch({
+        type: GET_PRODUCTS_BY_BRAND,
+        payload: res.data.products.docs
+      });
+      dispatch(toggleLoader(false));
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_PRODUCTS_BY_BRAND,
         payload: []
       });
       dispatch(toggleLoader(false));

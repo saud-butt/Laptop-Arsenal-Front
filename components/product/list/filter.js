@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import Slider, { Range } from "rc-slider";
+
 import { connect } from "react-redux";
 
-import { filterProducts } from "../../../store/actions/productActions";
+import {
+  filterProducts,
+  getProductsByBrand
+} from "../../../store/actions/productActions";
 
 class Filter extends Component {
   state = {
@@ -23,6 +25,11 @@ class Filter extends Component {
     this.setState({ filters });
   };
 
+  // onClick = (e, brand) => {
+  //   // e.preventDefault();
+  //   this.props.getProductsByBrand(brand);
+  // };
+
   onSubmit = e => {
     e.preventDefault();
     this.props.filterProducts({ ...this.state.filters });
@@ -39,6 +46,7 @@ class Filter extends Component {
   };
   render() {
     const { name, category, brand, price } = this.state.filters;
+
     return (
       <div className="col-lg-3">
         <div className="sidebar-wrapper">
@@ -68,7 +76,8 @@ class Filter extends Component {
                   <a
                     data-toggle="collapse"
                     data-parent="#faq"
-                    href="#shop-catigory-1"
+                    href="#"
+                    //onClick={this.onClick("acer")}
                   >
                     Acer
                     <i className="la la-angle-down" />
@@ -250,7 +259,6 @@ class Filter extends Component {
           <div className="shop-price-filter mt-35 shop-sidebar-border pt-40 sidebar-widget">
             <h4 className="sidebar-title">Price Filter</h4>
             <div className="price-filter mt-20">
-              <span>Range: Rs.100.00 - 1.300.00 </span>
               <div id="slider-range" />
               <div className="price-slider-amount">
                 <div className="label-input">
@@ -265,6 +273,7 @@ class Filter extends Component {
               </div>
             </div>
           </div>
+
           <div className="sidebar-widget shop-sidebar-border pt-40 mt-40">
             <h4 className="sidebar-title">Refine By </h4>
             <div className="sidebar-widget-list mt-20">
@@ -327,7 +336,4 @@ class Filter extends Component {
   }
 }
 
-export default connect(
-  null,
-  { filterProducts }
-)(Filter);
+export default connect(null, { filterProducts, getProductsByBrand })(Filter);

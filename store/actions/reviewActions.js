@@ -3,14 +3,15 @@ import axios from "axios";
 import { toggleLoader } from "./loading";
 import {
   GET_ALL_REVIEWS,
+  GET_REVIEW,
   CREATE_REVIEW,
   LIKE_REVIEW,
   UNLIKE_REVIEW,
-  COMMENT_ON_REVIEW,
-  UNCOMMENT_REVIEW,
   GET_REVIEW_BY_PRODUCTID,
   GET_REVIEW_BY_USERID,
-  GET_ERRORS
+  GET_ERRORS,
+  CLEAR_ERRORS,
+  DELETE_REVIEW
 } from "./types";
 
 // Get all reviews
@@ -31,6 +32,27 @@ export const getAllReviews = (page = 1, limit = 12) => dispatch => {
       dispatch({
         type: GET_ALL_REVIEWS,
         payload: []
+      });
+      dispatch(toggleLoader(false));
+    });
+};
+
+// Get Review by Id
+export const getReview = id => dispatch => {
+  dispatch(toggleLoader(true));
+  axios
+    .get(`/reviews/${id}`)
+    .then(res => {
+      dispatch({
+        type: GET_REVIEW,
+        payload: res.data
+      });
+      dispatch(toggleLoader(false));
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_REVIEW,
+        payload: null
       });
       dispatch(toggleLoader(false));
     });
@@ -63,6 +85,10 @@ export const likeReview = id => dispatch => {
   axios
     .post(`reviews/like/${id}`)
     .then(res => {
+      dispatch({
+        type: LIKE_REVIEW,
+        payload: res.data
+      });
       dispatch(toggleLoader(false));
     })
     .catch(err => {
@@ -80,19 +106,23 @@ export const unlikeReview = id => dispatch => {
   axios
     .post(`reviews/unlike/${id}`)
     .then(res => {
+      dispatch({
+        type: UNLIKE_REVIEW,
+        payload: res.data
+      });
       dispatch(toggleLoader(false));
     })
-    .catch(err =>
+    .catch(err => {
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-      })
-    );
+      });
+      dispatch(toggleLoader(false));
+    });
 };
 
 // Get review by product Id
-export const getReview = id => dispatch => {
-  console.log(`Product Id is ${id}`);
+export const getProductReview = id => dispatch => {
   dispatch(toggleLoader(true));
   axios
     .get(`/reviews/model/${id}`)
@@ -110,4 +140,75 @@ export const getReview = id => dispatch => {
       });
       dispatch(toggleLoader(false));
     });
+};
+
+// Delete Review
+export const deleteReview = id => dispatch => {
+  dispatch(toggleLoader(true));
+  axios
+    .delete(`/reviews/${id}`)
+    .then(res => {
+      dispatch({
+        type: DELETE_REVIEW,
+        payload: id
+      });
+      dispatch(toggleLoader(false));
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+      dispatch(toggleLoader(false));
+    });
+};
+
+// Add Comment
+export const addComment = (reviewId, commentData) => dispatch => {
+  dispatch(toggleLoader(true));
+  dispatch(clearErrors());
+  axios
+    .post(`/reviews/comment/${reviewId}`, commentData)
+    .then(res => {
+      dispatch({
+        type: GET_REVIEW,
+        payload: res.data
+      });
+      dispatch(toggleLoader(false));
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+      dispatch(toggleLoader(false));
+    });
+};
+
+// Delete Comment
+export const deleteComment = (reviewId, commentId) => dispatch => {
+  dispatch(toggleLoader(true));
+  axios
+    .delete(`/reviews/comment/${reviewId}/${commentId}`)
+    .then(res => {
+      dispatch({
+        type: GET_REVIEW,
+        payload: res.data
+      });
+      dispatch(toggleLoader(false));
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+      dispatch(toggleLoader(false));
+    });
+};
+
+// Clear errors
+export const clearErrors = () => {
+  return {
+    type: CLEAR_ERRORS
+  };
 };

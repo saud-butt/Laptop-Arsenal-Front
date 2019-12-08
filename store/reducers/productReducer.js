@@ -3,7 +3,8 @@ import {
   GET_PRODUCT,
   GET_RELATED_PRODUCT,
   GET_PRODUCT_BY_NAME,
-  COMPARE_PRODUCTS
+  COMPARE_PRODUCTS,
+  GET_PRODUCTS_BY_BRAND
 } from "../actions/types";
 
 const initialState = {
@@ -30,6 +31,11 @@ export default function(state = initialState, action) {
         product: action.payload
       };
     case GET_RELATED_PRODUCT:
+      return {
+        ...state,
+        products: action.payload
+      };
+    case GET_PRODUCTS_BY_BRAND:
       return {
         ...state,
         products: action.payload

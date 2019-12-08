@@ -34,8 +34,6 @@ class Home extends Component {
   onChange = (selectedProduct, key) => {
     //this.props.getProduct(selectedProduct.value, true, key);
     Router.push(`/products/show?id=${selectedProduct.value}`);
-    console.log(selectedProduct);
-    console.log(key);
   };
   render() {
     const { products } = this.props;
@@ -63,7 +61,7 @@ class Home extends Component {
           <Link href="/user/wishlist">
             <a title="Wishlist">Wishlist</a>
           </Link>
-          <Link href="/user/account">
+          <Link>
             <a title="My Account">
               <img
                 className="rounded-circle"
@@ -72,7 +70,7 @@ class Home extends Component {
                 style={{ width: "25px", marginRight: "5px" }}
                 title="You must have a Gravatar connected to your email to display image"
               />
-              My Account
+              {user.name}
             </a>
           </Link>
 
@@ -141,7 +139,7 @@ class Home extends Component {
                       <div className="logo">
                         <a href="/landing/home">
                           <img
-                            src="../../static/assets/images/logo/logo-1.png"
+                            src="../../static/images/logo.png"
                             alt="Laptop Arsenal"
                           />
                         </a>
@@ -428,28 +426,28 @@ class Home extends Component {
                               </Link>
                             </li>
                             <li className="angle-shape">
-                              <Link href="product/productCompare">
-                                <a href="shop.html">Laptop Finder</a>
+                              <Link href="/products">
+                                <a href="shop.html">Laptops</a>
                               </Link>
                             </li>
 
                             <li className="angle-shape">
-                              <Link href="/news/news">
+                              <Link href="/products">
                                 <a className="menu-title" href="#">
-                                  News
+                                  Tablets
                                 </a>
                               </Link>
                             </li>
                             <li className="angle-shape">
-                              <Link href="products/reviews">
+                              <Link href="/reviews">
                                 <a className="menu-title" href="#">
                                   Reviews
                                 </a>
                               </Link>
                             </li>
                             <li className="angle-shape">
-                              <Link href="product/benchmarks">
-                                <a href="shop.html">Benchmarks </a>
+                              <Link href="/contact">
+                                <a href="shop.html">Contact Us </a>
                               </Link>
                             </li>
                           </ul>
@@ -669,7 +667,7 @@ const mapStateToProps = state => ({
   pagination: state.products.pagination,
   searchedProducts: state.products.searchedProducts,
   loader: state.loader,
-  auth: state.auth,
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, {

@@ -57,7 +57,7 @@ class Login extends Component {
     return (
       <>
         <Layout>
-          <div className="login-register-area pt-85 pb-90">
+          <div className="login-register-area pt-50 pb-90">
             <div className="container">
               <div className="row">
                 <div className="col-lg-7 col-md-12 ml-auto mr-auto">
@@ -96,11 +96,7 @@ class Login extends Component {
                                 error={errors.password}
                               />
                               <div className="button-box">
-                                <div className="login-toggle-btn">
-                                  <input type="checkbox" />
-                                  <label>Remember me</label>
-                                  <a href="#">Forgot Password?</a>
-                                </div>
+                                <div className="login-toggle-btn"></div>
                                 <button type="submit">Login</button>
                               </div>
                             </form>
@@ -128,7 +124,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(
-  mapStateToProps,
-  { toggleLoader, loginUser }
-)(Login);
+export default connect(mapStateToProps, { toggleLoader, loginUser })(Login);

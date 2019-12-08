@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
@@ -24,7 +25,7 @@ class Review extends Component {
             <div className="dec-review-img-wrap">
               <div className="dec-review-img">
                 <img
-                  className="rounded"
+                  className="rounded-circle"
                   src={review.avatar}
                   alt={review.model}
                 />
@@ -48,6 +49,16 @@ class Review extends Component {
                       {" "}
                       <FontAwesomeIcon icon="thumbs-down" /> Unlike
                     </a>
+                  </span>
+                </div>
+                <div>
+                  <span>
+                    <Link
+                      href={`/reviews/review?id=${review._id}`}
+                      className="btn btn-info mr-1"
+                    >
+                      Comments
+                    </Link>
                   </span>
                 </div>
                 <div className="review-date">

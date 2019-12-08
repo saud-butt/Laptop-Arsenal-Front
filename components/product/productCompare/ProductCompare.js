@@ -10,6 +10,7 @@ import {
 } from "../../../store/actions/productActions";
 import Layout from "../../layouts/basicLayout/layout";
 import { ProductHelper } from "../../../helpers";
+import { toggleLoader } from "../../../store/actions/loading";
 
 class Compare extends Component {
   componentDidMount() {
@@ -17,12 +18,12 @@ class Compare extends Component {
     const id = this.props.router.query.id;
     if (id) {
       this.props.getProduct(id, true, key);
+    } else {
+      this.props.toggleLoader(false);
     }
   }
   onChange = (selectedProduct, key) => {
     this.props.getProduct(selectedProduct.value, true, key);
-    console.log(searchedProducts);
-    console.log(key);
   };
   render() {
     const { compare1, compare2, compare3 } = this.props;
@@ -366,7 +367,6 @@ class Compare extends Component {
                       </table>
                     </div>
                   </div>
-                  {/* <!-- Compare Page Content End --> */}
                 </div>
               </div>
             </div>
@@ -386,6 +386,8 @@ const mapStateToProps = state => ({
   compare2: state.products.compare2
 });
 
-export default connect(mapStateToProps, { getProduct, getProductByName })(
-  withRouter(Compare)
-);
+export default connect(mapStateToProps, {
+  getProduct,
+  getProductByName,
+  toggleLoader
+})(withRouter(Compare));

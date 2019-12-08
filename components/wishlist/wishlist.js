@@ -23,7 +23,7 @@ class wishlist extends Component {
       : wishlist.map((item, index) => (
           <tr>
             <td className="product-thumbnail">
-              <a href="#">
+              <a href={`/products/show?id=${item._id}`}>
                 <img
                   src={item.cover}
                   alt={item.name}
@@ -32,16 +32,16 @@ class wishlist extends Component {
               </a>
             </td>
             <td className="product-name">
-              <a href="#">{item.name}</a>
+              <a href={`/products/show?id=${item._id}`}>{item.name}</a>
             </td>
             <td className="product-price-cart">
               <span className="amount">RS.{item.price}</span>
             </td>
             <td className="product-wishlist-cart">
-              <a href="">Add to compare</a>
+              <a href={`/products/compare?id=${item._id}`}>Add to compare</a>
             </td>
             <td className=" pro-remove">
-              <button onClick={() => this.onClick(item.id)}>
+              <button onClick={() => this.onClick(item._id)}>
                 <FontAwesomeIcon icon="trash-alt" />
               </button>
             </td>
@@ -67,9 +67,8 @@ class wishlist extends Component {
                             <th>Add To Compare</th>
                             <th>Remove From Wishlist</th>
                           </tr>
-                          {items}
                         </thead>
-                        <tbody></tbody>
+                        <tbody>{items}</tbody>
                       </table>
                     </div>
                   </form>
@@ -87,7 +86,6 @@ const mapStateToProps = state => ({
   loading: state.loader.loading
 });
 
-export default connect(
-  mapStateToProps,
-  { getWishlist, removeFromWishlist }
-)(wishlist);
+export default connect(mapStateToProps, { getWishlist, removeFromWishlist })(
+  wishlist
+);

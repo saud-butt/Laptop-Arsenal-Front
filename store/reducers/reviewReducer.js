@@ -3,10 +3,10 @@ import {
   CREATE_REVIEW,
   LIKE_REVIEW,
   UNLIKE_REVIEW,
-  COMMENT_ON_REVIEW,
-  UNCOMMENT_REVIEW,
+  DELETE_REVIEW,
   GET_REVIEW_BY_PRODUCTID,
-  GET_REVIEW_BY_USERID
+  GET_REVIEW_BY_USERID,
+  GET_REVIEW
 } from "../actions/types";
 
 const initialState = {
@@ -23,6 +23,11 @@ export default function(state = initialState, action) {
         reviews: action.payload,
         pagination: action.pagination
       };
+    case GET_REVIEW:
+      return {
+        ...state,
+        review: action.payload
+      };
     case CREATE_REVIEW:
       return {
         ...state,
@@ -32,6 +37,21 @@ export default function(state = initialState, action) {
       return {
         ...state,
         reviews: action.payload
+      };
+    case LIKE_REVIEW:
+      return {
+        ...state,
+        reviews: action.payload
+      };
+    case UNLIKE_REVIEW:
+      return {
+        ...state,
+        reviews: action.payload
+      };
+    case DELETE_REVIEW:
+      return {
+        ...state,
+        reviews: state.reviews.filter(review => review._id !== action.payload)
       };
     default:
       return { ...state };

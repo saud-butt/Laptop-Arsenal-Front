@@ -15,13 +15,17 @@ import {
   faSignOutAlt,
   faScrewdriver,
   faThumbsUp,
-  faThumbsDown
+  faThumbsDown,
+  faMapMarkerAlt,
+  faMobileAlt,
+  faClock
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
   faHeart,
   faUserCircle,
-  faEye
+  faEye,
+  faEnvelopeOpen
 } from "@fortawesome/free-regular-svg-icons";
 
 import initStore from "../store/store";
@@ -46,7 +50,11 @@ library.add(
   faSignOutAlt,
   faScrewdriver,
   faThumbsUp,
-  faThumbsDown
+  faThumbsDown,
+  faMapMarkerAlt,
+  faMobileAlt,
+  faEnvelopeOpen,
+  faClock
 );
 
 SetAxiosDefault();

@@ -12,12 +12,12 @@ class ReviewCard extends Component {
     this.props.unlikeReview(id);
   }
   render() {
-    const { model, cover, alt, text, author, likes, id } = this.props;
+    const { model, cover, alt, text, author, likes, id, href } = this.props;
     return (
       <div className="col grid-item">
         <div className="blog-wrap mb-45">
           <div className="blog-img mb-25">
-            <a href="blog-details.html">
+            <a href={href}>
               <img src={cover} alt={alt} />
             </a>
           </div>

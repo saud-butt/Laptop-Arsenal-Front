@@ -23,6 +23,7 @@ class Reviews extends Component {
           text={review.text}
           author={review.author}
           alt={review.author}
+          href={`/reviews/review?id=${review._id}`}
           model={review.model}
           likes={review.likes.length}
           cover={review.cover}
@@ -93,14 +94,6 @@ class Reviews extends Component {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="description-review-wrapper pb-90">
-          <div className="container">
-            <div className="row">
-              <div className="ml-auto mr-auto col-lg-10"></div>
             </div>
           </div>
         </div>

@@ -12,6 +12,20 @@ import ReactSelect from "../../reactSelect/ReactSelect";
 import { ProductHelper } from "../../../helpers";
 
 class ProductModify extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      processor: "",
+      graphics: "",
+      memory: "",
+      storage: "",
+      errors: {}
+    };
+
+    this.onChange = this.onChange.bind(this);
+    // this.onSubmit = this.onSubmit.bind(this);
+  }
+
   componentDidMount() {
     if (this.props.router.query.id) {
       const id = this.props.router.query.id;
@@ -20,6 +34,29 @@ class ProductModify extends Component {
       }
     }
   }
+
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.errors) {
+  //     this.setState({ errors: nextProps.errors });
+  //   }
+
+  // onSubmit(e) {
+  //   e.preventDefault();
+
+  //   const productData = {
+  //     processor: this.state.processor,
+  //      graphics: this.state.graphics,
+  //      memory: this.state.memory,
+  //     storage: this.state.storage,
+  //   };
+
+  //   this.props.createProfile(productData, this.props.history);
+  // }
+
+  onSelect(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
   onChange = (selectedProduct, key) => {
     this.props.getProduct(selectedProduct.value, true, key);
   };
@@ -27,7 +64,8 @@ class ProductModify extends Component {
   render() {
     const { product } = this.props;
 
-    const processors = [
+    const processorOptions = [
+      { label: "Select a new processor", value: 0 },
       { label: "Core i3 4th Gen", value: "Core i3 4th Gen" },
       { label: "Core i3 5th Gen", value: "Core i3 5th Gen" },
       { label: "Core i3 6th Gen", value: "Core i3 6th Gen" },
@@ -47,6 +85,93 @@ class ProductModify extends Component {
       { label: "Core i7 8th Gen", value: "Core i7 8th Gen" },
       { label: "Core i7 9th Gen", value: "Core i7 9th Gen" }
     ];
+    const graphicsOptions = [
+      { label: "Select a new graphics adapter", value: 0 },
+      {
+        label: "AMD Radeon 530 (2GB GDDR5)",
+        value: "AMD Radeon 530 (2GB GDDR5)"
+      },
+      { label: "AMD Radeon RX Vega 3", value: "AMD Radeon RX Vega 3" },
+      {
+        label: "AMD Radeon 530 (2GB DDR3)",
+        value: "AMD Radeon 530 (2GB DDR3)"
+      },
+      {
+        label: "AMD Radeon 520 (2GB GDDR5)",
+        value: "AMD Radeon 520 (2GB GDDR5)"
+      },
+      {
+        label: "NVIDIA GeForce MX110 (2GB GDDR5)",
+        value: "NVIDIA GeForce MX110 (2GB GDDR5)"
+      },
+      { label: "AMD Radeon 530 (4GB GDDR5)", value: "Core i3 9th Gen" },
+      {
+        label: "NVIDIA Quadro M520 (2GB GDDR5)",
+        value: "NVIDIA Quadro M520 (2GB GDDR5)"
+      },
+      {
+        label: "NVIDIA GeForce MX130 (2GB GDDR5)",
+        value: "NVIDIA GeForce MX130 (2GB GDDR5)"
+      },
+      {
+        label: "NVIDIA GeForce MX230 (2GB GDDR5)",
+        value: "NVIDIA GeForce MX230 (2GB GDDR5)"
+      },
+      {
+        label: "AMD Radeon RX 550 (64-bit, 2GB GDDR5)",
+        value: "AMD Radeon RX 550 (64-bit, 2GB GDDR5)"
+      },
+      {
+        label: "NVIDIA Quadro P2000 (Laptop, 4GB GDDR5)",
+        value: "NVIDIA Quadro P2000 (Laptop, 4GB GDDR5)"
+      },
+      {
+        label: "AMD Radeon RX Vega M GL (Vega 870, 4GB HBM2)",
+        value: "AMD Radeon RX Vega M GL (Vega 870, 4GB HBM2)"
+      },
+      {
+        label: "NVIDIA GeForce GTX 1050 Ti (4GB GDDR5)",
+        value: "NVIDIA GeForce GTX 1050 Ti (4GB GDDR5)"
+      },
+      { label: "NVIDIA GeForce GTX 1650", value: "NVIDIA GeForce GTX 1650" },
+      {
+        label: "AMD Radeon RX 580 (4GB GDDR5)",
+        value: "AMD Radeon RX 580 (4GB GDDR5)"
+      },
+      {
+        label: "NVIDIA Quadro P4000 (8GB GDDR5)",
+        value: "NVIDIA Quadro P4000 (8GB GDDR5)"
+      },
+      {
+        label: "NVIDIA GeForce GTX 1070 Max-Q (8GB GDDR5)",
+        value: "NVIDIA GeForce GTX 1070 Max-Q (8GB GDDR5)"
+      },
+      {
+        label: "NVIDIA GeForce GTX 1660 Ti",
+        value: "NVIDIA GeForce GTX 1660 Ti"
+      },
+      { label: "NVIDIA GeForce RTX 2060", value: "NVIDIA GeForce RTX 2060" },
+      { label: "NVIDIA GeForce RTX 2070", value: "NVIDIA GeForce RTX 2070" },
+      { label: "NVIDIA GeForce RTX 2080", value: "NVIDIA GeForce RTX 2080" }
+    ];
+    const memoryOptions = [
+      { label: "Select a new RAM", value: 0 },
+      { label: "4 GB", value: "4 GB" },
+      { label: "8 GB", value: "8 GB" },
+      { label: "16 GB", value: "16 GB" }
+    ];
+    const storageOptions = [
+      { label: "Select a new HDD or SSD", value: 0 },
+      { label: "128 GB SSD", value: "128 GB SSD" },
+      { label: "256 GB SSD", value: "256 GB SSD" },
+      { label: "500 GB SSD", value: "500 GB SSD" },
+      { label: "1 TB SSD", value: "1 TB SSD" },
+      { label: "128 GB HDD", value: "128 GB HDD" },
+      { label: "256 GB HDD", value: "256 GB HDD" },
+      { label: "500 GB HDD", value: "500 GB HDD" },
+      { label: "1 TB HDD", value: "1 TB HDD" },
+      { label: "2 TB HDD", value: "2 TB HDD" }
+    ];
 
     return (
       <Layout>
@@ -60,367 +185,110 @@ class ProductModify extends Component {
                     <div className="row">
                       <div className="col-lg-12">
                         <div className="billing-info mb-20 ">
-                          <label>
-                            Model{" "}
-                            <abbr className="required" title="required">
-                              *
-                            </abbr>
-                          </label>
+                          <label>Model </label>
                           <ReactSelect
                             className="input-text"
                             onChange={this.onChange}
                             liberateOptions={this.props.getProductByName}
                             placeholder={product.name}
                             searchedOptions={this.props.searchedProducts}
-                          ></ReactSelect>
-                        </div>
-                      </div>
-                      <div className="col-lg-12">
-                        <div className="billing-info mb-20">
-                          <label>
-                            Processor
-                            <abbr className="required" title="required">
-                              *
-                            </abbr>
-                          </label>
-                          <SelectListGroup
-                            name="view"
-                            value={"core i3 7th Gen"}
-                            onChange={this.onSelect}
-                            options={processors}
+                            storeKey="product"
                           />
-                        </div>
-                      </div>
-                      <div className="col-lg-12">
-                        <div className="billing-info mb-20">
-                          <label>
-                            Company Name{" "}
-                            <abbr className="required" title="required">
-                              *
-                            </abbr>
-                          </label>
-                          <input type="text" />
                         </div>
                       </div>
                       <div className="col-lg-12">
                         <div className="billing-select mb-20">
-                          <label>
-                            Country{" "}
-                            <abbr className="required" title="required">
-                              *
-                            </abbr>
-                          </label>
-                          <select>
-                            <option>Select a country</option>
-                            <option>Azerbaijan</option>
-                            <option>Bahamas</option>
-                            <option>Bahrain</option>
-                            <option>Bangladesh</option>
-                            <option>Barbados</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div className="col-lg-12">
-                        <div className="billing-info mb-20">
-                          <label>
-                            Street Address{" "}
-                            <abbr className="required" title="required">
-                              *
-                            </abbr>
-                          </label>
-                          <input
-                            className="billing-address"
-                            placeholder="House number and street name"
-                            type="text"
-                          />
-                          <input
-                            placeholder="Apartment, suite, unit etc."
-                            type="text"
+                          <label>Processor</label>
+                          {ProductHelper.getSpecs(product.processor)}
+
+                          <SelectListGroup
+                            name="processor"
+                            value={this.state.processor}
+                            onChange={this.onSelect}
+                            options={processorOptions}
                           />
                         </div>
                       </div>
                       <div className="col-lg-12">
-                        <div className="billing-info mb-20">
-                          <label>
-                            Town / City{" "}
-                            <abbr className="required" title="required">
-                              *
-                            </abbr>
-                          </label>
-                          <input type="text" />
+                        <div className="billing-select mb-20">
+                          <label>Graphics </label>
+                          {ProductHelper.getSpecs(product.graphics)}
+
+                          <SelectListGroup
+                            name="graphics"
+                            value={this.state.graphics}
+                            onChange={this.onSelect}
+                            options={graphicsOptions}
+                          />
                         </div>
                       </div>
-                      <div className="col-lg-12 col-md-12">
-                        <div className="billing-info mb-20">
-                          <label>
-                            State / County{" "}
-                            <abbr className="required" title="required">
-                              *
-                            </abbr>
-                          </label>
-                          <input type="text" />
+                      <div className="col-lg-12">
+                        <div className="billing-select mb-20">
+                          <label>RAM </label>
+                          {ProductHelper.getSpecs(product.memory)}
+
+                          <SelectListGroup
+                            name="memory"
+                            value={this.state.memory}
+                            onChange={this.onSelect}
+                            options={memoryOptions}
+                          />
                         </div>
                       </div>
-                      <div className="col-lg-12 col-md-12">
-                        <div className="billing-info mb-20">
-                          <label>
-                            Postcode / ZIP{" "}
-                            <abbr className="required" title="required">
-                              *
-                            </abbr>
-                          </label>
-                          <input type="text" />
+                      <div className="col-lg-12">
+                        <div className="billing-select mb-20">
+                          <label>Hard disk </label>
+                          {ProductHelper.getSpecs(product.storage)}
+
+                          <SelectListGroup
+                            name="storage"
+                            value={this.state.storage}
+                            onChange={this.onSelect}
+                            options={storageOptions}
+                          />
                         </div>
                       </div>
-                      <div className="col-lg-12 col-md-12">
-                        <div className="billing-info mb-20">
-                          <label>
-                            Phone{" "}
-                            <abbr className="required" title="required">
-                              *
-                            </abbr>
-                          </label>
-                          <input type="text" />
-                        </div>
-                      </div>
-                      <div className="col-lg-12 col-md-12">
-                        <div className="billing-info mb-20">
-                          <label>
-                            Email Address{" "}
-                            <abbr className="required" title="required">
-                              *
-                            </abbr>
-                          </label>
-                          <input type="text" />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="checkout-account mb-25">
-                      <input className="checkout-toggle2" type="checkbox" />
-                      <span>Create an account?</span>
-                    </div>
-                    <div className="checkout-account-toggle open-toggle2 mb-30">
-                      <label>Email Address</label>
-                      <input placeholder="Password" type="password" />
-                    </div>
-                    <div className="checkout-account mt-25">
-                      <input className="checkout-toggle" type="checkbox" />
-                      <span>Ship to a different address?</span>
-                    </div>
-                    <div className="different-address open-toggle mt-30">
-                      <div className="row">
-                        <div className="col-lg-6 col-md-6">
-                          <div className="billing-info mb-20">
-                            <label>First Name</label>
-                            <input type="text" />
-                          </div>
-                        </div>
-                        <div className="col-lg-6 col-md-6">
-                          <div className="billing-info mb-20">
-                            <label>Last Name</label>
-                            <input type="text" />
-                          </div>
-                        </div>
-                        <div className="col-lg-12">
-                          <div className="billing-info mb-20">
-                            <label>Company Name</label>
-                            <input type="text" />
-                          </div>
-                        </div>
-                        <div className="col-lg-12">
-                          <div className="billing-select mb-20">
-                            <label>Country</label>
-                            <select>
-                              <option>Select a country</option>
-                              <option>Azerbaijan</option>
-                              <option>Bahamas</option>
-                              <option>Bahrain</option>
-                              <option>Bangladesh</option>
-                              <option>Barbados</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div className="col-lg-12">
-                          <div className="billing-info mb-20">
-                            <label>Street Address</label>
-                            <input
-                              className="billing-address"
-                              placeholder="House number and street name"
-                              type="text"
-                            />
-                            <input
-                              placeholder="Apartment, suite, unit etc."
-                              type="text"
-                            />
-                          </div>
-                        </div>
-                        <div className="col-lg-12">
-                          <div className="billing-info mb-20">
-                            <label>Town / City</label>
-                            <input type="text" />
-                          </div>
-                        </div>
-                        <div className="col-lg-6 col-md-6">
-                          <div className="billing-info mb-20">
-                            <label>State / County</label>
-                            <input type="text" />
-                          </div>
-                        </div>
-                        <div className="col-lg-6 col-md-6">
-                          <div className="billing-info mb-20">
-                            <label>Postcode / ZIP</label>
-                            <input type="text" />
-                          </div>
-                        </div>
-                        <div className="col-lg-6 col-md-6">
-                          <div className="billing-info mb-20">
-                            <label>Phone</label>
-                            <input type="text" />
-                          </div>
-                        </div>
-                        <div className="col-lg-6 col-md-6">
-                          <div className="billing-info mb-20">
-                            <label>Email Address</label>
-                            <input type="text" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="additional-info-wrap">
-                      <label>Order notes</label>
-                      <textarea
-                        placeholder="Notes about your order, e.g. special notes for delivery. "
-                        name="message"
-                      ></textarea>
                     </div>
                   </div>
                 </div>
                 <div className="col-lg-5">
                   <div className="your-order-area">
-                    <h3>Your order</h3>
+                    <h3>Your Updated Product</h3>
                     <div className="your-order-wrap gray-bg-4">
                       <div className="your-order-info-wrap">
                         <div className="your-order-info">
                           <ul>
                             <li>
-                              Product <span>Total</span>
+                              Items <span>Price</span>
                             </li>
                           </ul>
                         </div>
                         <div className="your-order-middle">
                           <ul>
                             <li>
-                              Product Name X 1 <span>$329 </span>
-                            </li>
-                            <li>
-                              Product Name X 1 <span>$329 </span>
+                              Core i7 6th gen <span>Rs.16000 </span>
                             </li>
                           </ul>
                         </div>
-                        <div className="your-order-info order-subtotal">
+                        <div class="your-order-info order-subtotal">
                           <ul>
                             <li>
-                              Subtotal <span>$329 </span>
+                              Items Total <span>Rs.16000 </span>
                             </li>
                           </ul>
                         </div>
-                        <div className="your-order-info order-shipping">
-                          <ul>
-                            <li>
-                              Shipping <p>Enter your full address </p>
-                            </li>
-                          </ul>
-                        </div>
+
                         <div className="your-order-info order-total">
                           <ul>
                             <li>
-                              Total <span>$273.00 </span>
+                              Total Price <span>Rs.152220 </span>
                             </li>
                           </ul>
-                        </div>
-                      </div>
-                      <div className="payment-method">
-                        <div className="pay-top sin-payment">
-                          <input
-                            id="payment_method_1"
-                            className="input-radio"
-                            type="radio"
-                            value="cheque"
-                            checked="checked"
-                            name="payment_method"
-                          />
-                          <label for="payment_method_1">
-                            {" "}
-                            Direct Bank Transfer{" "}
-                          </label>
-                          <div className="payment-box payment_method_bacs">
-                            <p>
-                              Make your payment directly into our bank account.
-                              Please use your Order ID as the payment reference.
-                            </p>
-                          </div>
-                        </div>
-                        <div className="pay-top sin-payment">
-                          <input
-                            id="payment-method-2"
-                            className="input-radio"
-                            type="radio"
-                            value="cheque"
-                            name="payment_method"
-                          />
-                          <label for="payment-method-2">Check payments</label>
-                          <div className="payment-box payment_method_bacs">
-                            <p>
-                              Make your payment directly into our bank account.
-                              Please use your Order ID as the payment reference.
-                            </p>
-                          </div>
-                        </div>
-                        <div className="pay-top sin-payment">
-                          <input
-                            id="payment-method-3"
-                            className="input-radio"
-                            type="radio"
-                            value="cheque"
-                            name="payment_method"
-                          />
-                          <label for="payment-method-3">
-                            Cash on delivery{" "}
-                          </label>
-                          <div className="payment-box payment_method_bacs">
-                            <p>
-                              Make your payment directly into our bank account.
-                              Please use your Order ID as the payment reference.
-                            </p>
-                          </div>
-                        </div>
-                        <div className="pay-top sin-payment sin-payment-3">
-                          <input
-                            id="payment-method-4"
-                            className="input-radio"
-                            type="radio"
-                            value="cheque"
-                            name="payment_method"
-                          />
-                          <label for="payment-method-4">
-                            PayPal{" "}
-                            <img
-                              alt=""
-                              src="assets/images/icon-img/payment.png"
-                            />
-                            <a href="#">What is PayPal?</a>
-                          </label>
-                          <div className="payment-box payment_method_bacs">
-                            <p>
-                              Make your payment directly into our bank account.
-                              Please use your Order ID as the payment reference.
-                            </p>
-                          </div>
                         </div>
                       </div>
                     </div>
                     <div className="Place-order mt-40">
-                      <a href="#">Place Order</a>
+                      <a href="#">Finish</a>
                     </div>
                   </div>
                 </div>

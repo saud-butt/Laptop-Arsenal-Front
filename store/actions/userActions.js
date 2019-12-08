@@ -13,7 +13,7 @@ import {
 export const addToWishlist = id => dispatch => {
   dispatch(toggleLoader(true));
   axios
-    .post(`http://localhost:5000/api/users/wishlist/${id}`)
+    .post(`users/wishlist/${id}`)
     .then(res => {
       dispatch({
         type: ADD_TO_WISHLIST,
@@ -55,11 +55,11 @@ export const getWishlist = () => dispatch => {
 export const removeFromWishlist = id => dispatch => {
   dispatch(toggleLoader(true));
   axios
-    .delete(`http://localhost:5000/api/users/wishlist/${id}`)
+    .delete(`users/wishlist/${id}`)
     .then(res => {
       dispatch({
         type: REMOVE_FROM_WISHLIST,
-        payload: res.data.wishlist
+        payload: res.data
       });
       dispatch(toggleLoader(false));
     })

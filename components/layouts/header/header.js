@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import Style from "./header.scss";
 import { logoutUser } from "../../../store/actions/authActions";
 import { clearCurrentUser } from "../../../store/actions/userActions";
 
@@ -38,7 +39,7 @@ class Header extends Component {
     );
 
     return (
-      <header className="header-area transparent-bar sticky-bar pt-10">
+      <header className={`header-area transparent-bar ${Style.sticky} pt-10`}>
         <div className="main-header-wrap">
           <div className="container">
             <div className="row align-items-center">
@@ -46,10 +47,7 @@ class Header extends Component {
                 <div className="logo">
                   <Link href="/landing/home">
                     <a href="/landing/home">
-                      <img
-                        src="../../../static/assets/images/logo/logo-1.png"
-                        alt="logo"
-                      />
+                      <img src="../../../static/images/logo.png" alt="logo" />
                     </a>
                   </Link>
                 </div>
@@ -117,35 +115,19 @@ class Header extends Component {
                       </li>
 
                       <li className="angle-shape">
-                        <Link href="/news/news">
-                          <a className="menu-title" href="#">
-                            News
-                          </a>
+                        <Link href="/products/compare">
+                          <a>Compare</a>
                         </Link>
                       </li>
                       <li className="angle-shape">
-                        <a className="menu-title" href="/products/reviews">
-                          Reviews
-                        </a>
+                        <Link href="/reviews">
+                          <a>Reviews</a>
+                        </Link>
                       </li>
                       <li className="angle-shape">
-                        <a href="shop.html">More </a>
-                        <ul className="submenu">
-                          <li>
-                            <a href="index.html">Laptop Finder</a>
-                          </li>
-
-                          <li>
-                            <a href="index-3.html">Benchmarks </a>
-                          </li>
-                          <li>
-                            <a href="index-4.html">Compare </a>
-                          </li>
-
-                          <li>
-                            <a href="index-7.html">Contact Us </a>
-                          </li>
-                        </ul>
+                        <Link href="/contact">
+                          <a>Contact Us</a>
+                        </Link>
                       </li>
                     </ul>
                   </nav>

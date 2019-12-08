@@ -2,7 +2,7 @@ import React from "react";
 import { Tabs, Tab } from "react-bootstrap";
 
 import Specification from "./Specification";
-import Reviews from "../../reviews/Review";
+import ReviewItem from "../../reviews/ReviewItem";
 import CreateReview from "../../reviews/CreteReview";
 
 const Description = ({ product }) => {
@@ -92,7 +92,7 @@ const Description = ({ product }) => {
                 </Tab>
 
                 <Tab eventKey="review" title="Review" id="des-details3">
-                  <Reviews />
+                  <ReviewItem />
                   <CreateReview />
                 </Tab>
               </Tabs>{" "}
