@@ -1,29 +1,39 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "next/router";
+import $ from "jquery";
+import Link from "next/link";
 
 import {
   getProduct,
   getProductByName
 } from "../../../store/actions/productActions";
+import {
+  getProcessorPrice,
+  getGraphicPrice,
+  getStoragePrice,
+  getMemoryPrice
+} from "../../../store/actions/priceActions";
 import Layout from "../../layouts/basicLayout/layout";
 import SelectListGroup from "../../selectListGroup/selectListGroup";
 import ReactSelect from "../../reactSelect/ReactSelect";
 import { ProductHelper } from "../../../helpers";
+import { toggleLoader } from "../../../store/actions/loading";
 
 class ProductModify extends Component {
   constructor(props) {
     super(props);
     this.state = {
       processor: "",
-      graphics: "",
+      graphic: "",
       memory: "",
       storage: "",
+
       errors: {}
     };
 
     this.onChange = this.onChange.bind(this);
-    // this.onSubmit = this.onSubmit.bind(this);
+    this.onSelect = this.onSelect.bind(this);
   }
 
   componentDidMount() {
@@ -33,6 +43,16 @@ class ProductModify extends Component {
         this.props.getProduct(id);
       }
     }
+    this.props.toggleLoader(false);
+
+    $(document).ready(function() {
+      $("html, body").animate(
+        {
+          scrollTop: $(".col-lg-7").offset().top
+        },
+        "slow"
+      );
+    });
   }
 
   // componentWillReceiveProps(nextProps) {
@@ -53,16 +73,26 @@ class ProductModify extends Component {
   //   this.props.createProfile(productData, this.props.history);
   // }
 
-  onSelect(e) {
+  onSelect = e => {
     this.setState({ [e.target.name]: e.target.value });
-  }
+    if (e.target.name == "processor") {
+      this.props.getProcessorPrice(e.target.value);
+    } else if (e.target.name == "graphic") {
+      this.props.getGraphicPrice(e.target.value);
+    } else if (e.target.name == "memory") {
+      this.props.getMemoryPrice(e.target.value);
+    } else if (e.target.name == "storage") {
+      this.props.getStoragePrice(e.target.value);
+    }
+  };
 
   onChange = (selectedProduct, key) => {
     this.props.getProduct(selectedProduct.value, true, key);
   };
 
   render() {
-    const { product } = this.props;
+    const { product, processors, graphics, memory, storage } = this.props;
+    let sum = 0;
 
     const processorOptions = [
       { label: "Select a new processor", value: 0 },
@@ -71,19 +101,22 @@ class ProductModify extends Component {
       { label: "Core i3 6th Gen", value: "Core i3 6th Gen" },
       { label: "Core i3 7th Gen", value: "Core i3 7th Gen" },
       { label: "Core i3 8th Gen", value: "Core i3 8th Gen" },
-      { label: "Core i3 9th Gen", value: "Core i3 9th Gen" },
       { label: "Core i5 4th Gen", value: "Core i5 4th Gen" },
       { label: "Core i5 5th Gen", value: "Core i5 5th Gen" },
       { label: "Core i5 6th Gen", value: "Core i5 6th Gen" },
       { label: "Core i5 7th Gen", value: "Core i5 7th Gen" },
       { label: "Core i5 8th Gen", value: "Core i5 8th Gen" },
-      { label: "Core i5 9th Gen", value: "Core i5 9th Gen" },
+
       { label: "Core i7 4th Gen", value: "Core i7 4th Gen" },
       { label: "Core i7 5th Gen", value: "Core i7 5th Gen" },
       { label: "Core i7 6th Gen", value: "Core i7 6th Gen" },
       { label: "Core i7 7th Gen", value: "Core i7 7th Gen" },
       { label: "Core i7 8th Gen", value: "Core i7 8th Gen" },
-      { label: "Core i7 9th Gen", value: "Core i7 9th Gen" }
+
+      { label: "AMD Ryzen 3", value: "AMD Ryzen 3" },
+      { label: "AMD Ryzen 5", value: "AMD Ryzen 5" },
+      { label: "AMD Ryzen 7", value: "AMD Ryzen 7" },
+      { label: "AMD Athlon", value: "AMD Athlon" }
     ];
     const graphicsOptions = [
       { label: "Select a new graphics adapter", value: 0 },
@@ -122,8 +155,8 @@ class ProductModify extends Component {
         value: "AMD Radeon RX 550 (64-bit, 2GB GDDR5)"
       },
       {
-        label: "NVIDIA Quadro P2000 (Laptop, 4GB GDDR5)",
-        value: "NVIDIA Quadro P2000 (Laptop, 4GB GDDR5)"
+        label: "NVIDIA Quadro P2000 (Laptop, 5GB GDDR5)",
+        value: "NVIDIA Quadro P2000 (Laptop, 5GB GDDR5)"
       },
       {
         label: "AMD Radeon RX Vega M GL (Vega 870, 4GB HBM2)",
@@ -156,9 +189,10 @@ class ProductModify extends Component {
     ];
     const memoryOptions = [
       { label: "Select a new RAM", value: 0 },
-      { label: "4 GB", value: "4 GB" },
-      { label: "8 GB", value: "8 GB" },
-      { label: "16 GB", value: "16 GB" }
+      { label: "4 GB DDR3", value: "4 GB DDR3" },
+      { label: "8 GB DDR3", value: "8 GB DDR3" },
+      { label: "8 GB DDR4", value: "8 GB DDR4" },
+      { label: "16 GB DDR4", value: "16 GB DDR4" }
     ];
     const storageOptions = [
       { label: "Select a new HDD or SSD", value: 0 },
@@ -166,8 +200,6 @@ class ProductModify extends Component {
       { label: "256 GB SSD", value: "256 GB SSD" },
       { label: "500 GB SSD", value: "500 GB SSD" },
       { label: "1 TB SSD", value: "1 TB SSD" },
-      { label: "128 GB HDD", value: "128 GB HDD" },
-      { label: "256 GB HDD", value: "256 GB HDD" },
       { label: "500 GB HDD", value: "500 GB HDD" },
       { label: "1 TB HDD", value: "1 TB HDD" },
       { label: "2 TB HDD", value: "2 TB HDD" }
@@ -215,7 +247,7 @@ class ProductModify extends Component {
                           {ProductHelper.getSpecs(product.graphics)}
 
                           <SelectListGroup
-                            name="graphics"
+                            name="graphic"
                             value={this.state.graphics}
                             onChange={this.onSelect}
                             options={graphicsOptions}
@@ -266,14 +298,33 @@ class ProductModify extends Component {
                         <div className="your-order-middle">
                           <ul>
                             <li>
-                              Core i7 6th gen <span>Rs.16000 </span>
+                              {processors.label}{" "}
+                              <span>{processors.value} </span>
+                            </li>
+                            <li>
+                              {graphics.label} <span>{graphics.value} </span>
+                            </li>
+                            <li>
+                              {memory.label} <span>{memory.value} </span>
+                            </li>
+                            <li>
+                              {storage.label} <span>{storage.value} </span>
                             </li>
                           </ul>
                         </div>
                         <div class="your-order-info order-subtotal">
                           <ul>
                             <li>
-                              Items Total <span>Rs.16000 </span>
+                              Items Total{" "}
+                              <span>
+                                {
+                                  (sum =
+                                    processors.value +
+                                    graphics.value +
+                                    memory.value +
+                                    storage.value)
+                                }{" "}
+                              </span>
                             </li>
                           </ul>
                         </div>
@@ -281,14 +332,23 @@ class ProductModify extends Component {
                         <div className="your-order-info order-total">
                           <ul>
                             <li>
-                              Total Price <span>Rs.152220 </span>
+                              Total Price{" "}
+                              <span>{Number(product.price) + sum} </span>
                             </li>
                           </ul>
                         </div>
+                        <small>
+                          <span className="text-danger">
+                            To remove an item from the list, please select the
+                            first option from the respective select list.{" "}
+                          </span>
+                        </small>
                       </div>
                     </div>
                     <div className="Place-order mt-40">
-                      <a href="#">Finish</a>
+                      <Link href={`/products/show?id=${product._id}`}>
+                        <a href="#">Finish</a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -304,9 +364,19 @@ class ProductModify extends Component {
 const mapStateToProps = state => ({
   loading: state.loader.loading,
   product: state.products.product,
-  searchedProducts: state.products.searchedProducts
+  searchedProducts: state.products.searchedProducts,
+  processors: state.price.processor,
+  graphics: state.price.graphic,
+  memory: state.price.memory,
+  storage: state.price.storage
 });
 
-export default connect(mapStateToProps, { getProduct, getProductByName })(
-  withRouter(ProductModify)
-);
+export default connect(mapStateToProps, {
+  getProduct,
+  getProductByName,
+  toggleLoader,
+  getGraphicPrice,
+  getMemoryPrice,
+  getProcessorPrice,
+  getStoragePrice
+})(withRouter(ProductModify));

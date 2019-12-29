@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Router from "next/router";
 
 import Layout from "../layouts/basicLayout/layout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,6 +11,9 @@ import {
 
 class wishlist extends Component {
   componentDidMount() {
+    if (!this.props.auth.isAuthenticated) {
+      Router.push("/auth/login");
+    }
     this.props.getWishlist();
   }
   onClick = id => {
@@ -82,6 +86,7 @@ class wishlist extends Component {
   }
 }
 const mapStateToProps = state => ({
+  auth: state.auth,
   wishlist: state.user.wishlist,
   loading: state.loader.loading
 });

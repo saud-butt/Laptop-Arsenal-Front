@@ -1,18 +1,23 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Router from "next/router";
 
 import { likeReview, unlikeReview } from "../../store/actions/reviewActions";
 
 class ReviewCard extends Component {
   onLikeClick(id) {
-    this.props.likeReview(id);
+    if (this.props.auth.isAuthenticated) {
+      this.props.likeReview(id);
+    } else {
+      Router.push("/auth/login");
+    }
   }
   onUnLikeClick(id) {
     this.props.unlikeReview(id);
   }
   render() {
-    const { model, cover, alt, text, author, likes, id, href } = this.props;
+    const { model, cover, alt, author, likes, id, href } = this.props;
     return (
       <div className="col grid-item">
         <div className="blog-wrap mb-45">
@@ -23,12 +28,11 @@ class ReviewCard extends Component {
           </div>
           <div className="blog-content-2">
             <h3>
-              <a href="#">{model}</a>
+              <a href={href}>{model}</a>
             </h3>
-            <p>{text}</p>
             <div className="blog-meta">
               <div className="blog-author">
-                <a href="#">By: {author}</a>
+                <a href={href}>By: {author}</a>
               </div>
               <div className="blog-like">
                 <a onClick={this.onLikeClick.bind(this, id)}>
@@ -47,7 +51,9 @@ class ReviewCard extends Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  auth: state.auth
+});
 
 export default connect(mapStateToProps, { likeReview, unlikeReview })(
   ReviewCard

@@ -34,19 +34,19 @@ class CommentItem extends Component {
           <div className="dec-review-content">
             <p>{comment.text}</p>
             <div className="review-content-bottom">
-              <div className="review-like">
+              <div className="review-like ">
                 {comment.user === auth.user.id ? (
-                  <a
+                  <button
                     onClick={this.onDeleteClick.bind(
                       this,
                       reviewId,
                       comment._id
                     )}
                     type="button"
-                    className="btn btn-danger mr-1"
+                    className="btn btn-danger mr-1 "
                   >
                     <FontAwesomeIcon icon="trash-alt" />
-                  </a>
+                  </button>
                 ) : null}
               </div>
             </div>{" "}

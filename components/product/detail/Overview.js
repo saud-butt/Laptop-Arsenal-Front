@@ -1,12 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Router from "next/router";
 
 import { addToWishlist } from "../../../store/actions/userActions";
 import Images from "./Images";
 
 class Overview extends Component {
   onClick = id => {
-    this.props.addToWishlist(id);
+    if (this.props.isAuthenticated) {
+      this.props.addToWishlist(id);
+    } else {
+      Router.push("/auth/login");
+    }
   };
   render() {
     const { images, name, link, id, price, brand } = this.props;
@@ -51,7 +56,8 @@ class Overview extends Component {
   }
 }
 
-export default connect(
-  null,
-  { addToWishlist }
-)(Overview);
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { addToWishlist })(Overview);

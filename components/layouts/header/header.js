@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import Style from "./header.scss";
 import { logoutUser } from "../../../store/actions/authActions";
 import { clearCurrentUser } from "../../../store/actions/userActions";
 
@@ -39,7 +38,7 @@ class Header extends Component {
     );
 
     return (
-      <header className={`header-area transparent-bar ${Style.sticky} pt-10`}>
+      <header className={`header-area transparent-bar pt-10`}>
         <div className="main-header-wrap">
           <div className="container">
             <div className="row align-items-center">
@@ -58,75 +57,33 @@ class Header extends Component {
                     <ul>
                       <li className="angle-shape">
                         <Link href="/products">
-                          <a>Laptops</a>
+                          <a href="/products">Laptops</a>
                         </Link>
-                        <ul className="submenu">
-                          <li>
-                            <a href="index.html">Acer</a>
-                          </li>
-                          <li>
-                            <a href="index-2.html">Apple </a>
-                          </li>
-                          <li>
-                            <a href="index-3.html">Asus </a>
-                          </li>
-                          <li>
-                            <a href="index-4.html">Dell </a>
-                          </li>
-                          <li>
-                            <a href="index-5.html">GigaByte </a>
-                          </li>
-                          <li>
-                            <a href="index-6.html">Razer </a>
-                          </li>
-                          <li>
-                            <a href="index-7.html">Lenovo </a>
-                          </li>
-                          <li>
-                            <a href="index-8.html">MSI </a>
-                          </li>
-                          <li>
-                            <a href="index-9.html">Samsung </a>
-                          </li>
-                        </ul>
                       </li>
                       <li className="angle-shape">
-                        <a href="shop.html">Tablets </a>
-                        <ul className="submenu">
-                          <li>
-                            <a href="index.html">Acer</a>
-                          </li>
-
-                          <li>
-                            <a href="index-3.html">Asus </a>
-                          </li>
-                          <li>
-                            <a href="index-4.html">Dell </a>
-                          </li>
-
-                          <li>
-                            <a href="index-7.html">Lenovo </a>
-                          </li>
-
-                          <li>
-                            <a href="index-9.html">Samsung </a>
-                          </li>
-                        </ul>
+                        <Link href="/products?category=tablet">
+                          <a href="/products?category=tablet">Tablets </a>
+                        </Link>
                       </li>
 
                       <li className="angle-shape">
                         <Link href="/products/compare">
-                          <a>Compare</a>
+                          <a href="/products/compare">Compare</a>
                         </Link>
                       </li>
                       <li className="angle-shape">
                         <Link href="/reviews">
-                          <a>Reviews</a>
+                          <a href="/reviews">Reviews</a>
                         </Link>
                       </li>
                       <li className="angle-shape">
                         <Link href="/contact">
-                          <a>Contact Us</a>
+                          <a href="/contact">Contact Us</a>
+                        </Link>
+                      </li>
+                      <li className="angle-shape">
+                        <Link href="/about">
+                          <a href="/about">About Us</a>
                         </Link>
                       </li>
                     </ul>

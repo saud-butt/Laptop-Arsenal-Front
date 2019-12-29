@@ -4,7 +4,8 @@ import {
   GET_RELATED_PRODUCT,
   GET_PRODUCT_BY_NAME,
   COMPARE_PRODUCTS,
-  GET_PRODUCTS_BY_BRAND
+  GET_PRODUCTS_BY_BRAND,
+  GET_PRODUCTS_BY_CATEGORY
 } from "../actions/types";
 
 const initialState = {
@@ -38,7 +39,14 @@ export default function(state = initialState, action) {
     case GET_PRODUCTS_BY_BRAND:
       return {
         ...state,
-        products: action.payload
+        products: action.payload,
+        pagination: action.pagination
+      };
+    case GET_PRODUCTS_BY_CATEGORY:
+      return {
+        ...state,
+        products: action.payload,
+        pagination: action.pagination
       };
     case GET_PRODUCT_BY_NAME:
       return {

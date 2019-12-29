@@ -11,6 +11,16 @@ class ListCard extends Component {
   };
   render() {
     const { brand, name, href, src, alt, title, price, id } = this.props;
+    const { isAuthenticated } = this.props.auth;
+    let heart = null;
+
+    if (isAuthenticated) {
+      heart = (
+        <a title="Wishlist" onClick={() => this.onClick(id)}>
+          <FontAwesomeIcon icon={["far", "heart"]} />
+        </a>
+      );
+    }
     return (
       <div className="product-wrap mb-35">
         <div className="product-img mb-15">
@@ -21,9 +31,7 @@ class ListCard extends Component {
             <a title="Modify" href={`/products/modify?id=${id}`}>
               <FontAwesomeIcon icon="screwdriver" />
             </a>
-            <a title="Wishlist" onClick={() => this.onClick(id)}>
-              <FontAwesomeIcon icon={["far", "heart"]} />
-            </a>
+            {heart}
             <a title="Compare" href={`/products/compare?id=${id}`}>
               <FontAwesomeIcon icon="dice-d20" />
             </a>
@@ -59,7 +67,8 @@ ListCard.propTypes = {
   id: PropTypes.string
 };
 
-export default connect(
-  null,
-  { addToWishlist }
-)(ListCard);
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, { addToWishlist })(ListCard);

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import Router from "next/router";
 
 import { createReview } from "../../store/actions/reviewActions";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
@@ -28,16 +29,20 @@ class CreateReview extends Component {
 
     const { user } = this.props.auth;
     const { product } = this.props;
-    const newReview = {
-      text: this.state.text,
-      author: user.name,
-      avatar: user.avatar,
-      id: product._id,
-      model: product.model,
-      cover: product.cover
-    };
+    if (this.props.auth.isAuthenticated) {
+      const newReview = {
+        text: this.state.text,
+        author: user.name,
+        avatar: user.avatar,
+        id: product._id,
+        model: product.model,
+        cover: product.cover
+      };
+      this.props.createReview(newReview);
+    } else {
+      Router.push("/auth/login");
+    }
 
-    this.props.createReview(newReview);
     this.setState({ text: "" });
   }
 

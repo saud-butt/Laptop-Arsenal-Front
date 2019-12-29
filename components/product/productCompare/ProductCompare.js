@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import $ from "jquery";
 
 import ReactSelect from "../../reactSelect/ReactSelect";
 import {
@@ -21,6 +22,14 @@ class Compare extends Component {
     } else {
       this.props.toggleLoader(false);
     }
+    $(document).ready(function() {
+      $("html, body").animate(
+        {
+          scrollTop: $(".table").offset().top
+        },
+        "slow"
+      );
+    });
   }
   onChange = (selectedProduct, key) => {
     this.props.getProduct(selectedProduct.value, true, key);
@@ -135,30 +144,7 @@ class Compare extends Component {
                               </a>
                             </td>
                           </tr>
-                          <tr>
-                            <td className="first-column">Description</td>
-                            <td className="pro-desc">
-                              <p>
-                                Samsome Note Book Pro 5 is an the best Laptop on
-                                this budgeted. You can satisfied after usign
-                                this laptop.{" "}
-                              </p>
-                            </td>
-                            <td className="pro-desc">
-                              <p>
-                                Samsome Note Book Pro 5 is an the best Laptop on
-                                this budgeted. You can satisfied after usign
-                                this laptop.{" "}
-                              </p>
-                            </td>
-                            <td className="pro-desc">
-                              <p>
-                                Samsome Note Book Pro 5 is an the best Laptop on
-                                this budgeted. You can satisfied after usign
-                                this laptop.{" "}
-                              </p>
-                            </td>
-                          </tr>
+
                           <tr>
                             <td className="first-column">Display</td>
                             <td className="pro-price">
@@ -329,9 +315,15 @@ class Compare extends Component {
                           </tr>
                           <tr>
                             <td className="first-column">Dimensions</td>
-                            <td className="pro-stock">{compare1.dimensions}</td>
-                            <td className="pro-stock">{compare2.dimensions}</td>
-                            <td className="pro-stock">{compare3.dimensions}</td>
+                            <td className="pro-stock">
+                              {ProductHelper.getSpecs(compare1.dimensions)}
+                            </td>
+                            <td className="pro-stock">
+                              {ProductHelper.getSpecs(compare2.dimensions)}
+                            </td>
+                            <td className="pro-stock">
+                              {ProductHelper.getSpecs(compare3.dimensions)}
+                            </td>
                           </tr>
                           <tr>
                             <td className="first-column">Color</td>
@@ -341,11 +333,11 @@ class Compare extends Component {
                           </tr>
                           <tr>
                             <td className="first-column">Price</td>
-                            <td className="pro-stock">{compare1.price}</td>
-                            <td className="pro-stock">{compare2.price}</td>
-                            <td className="pro-stock">{compare3.price}</td>
+                            <td className="pro-stock">Rs.{compare1.price}</td>
+                            <td className="pro-stock">Rs.{compare2.price}</td>
+                            <td className="pro-stock">Rs.{compare3.price}</td>
                           </tr>
-                          <tr>
+                          {/* <tr>
                             <td className="first-column">Remove</td>
                             <td className="pro-remove">
                               <button>
@@ -362,7 +354,7 @@ class Compare extends Component {
                                 <FontAwesomeIcon icon="trash-alt" />
                               </button>
                             </td>
-                          </tr>
+                          </tr> */}
                         </tbody>
                       </table>
                     </div>

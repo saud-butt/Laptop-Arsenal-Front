@@ -1,10 +1,12 @@
 import React, { Component } from "react";
+import Nouislider from "react-nouislider";
 
 import { connect } from "react-redux";
 
 import {
   filterProducts,
-  getProductsByBrand
+  getProductsByBrand,
+  getProductsByCategory
 } from "../../../store/actions/productActions";
 
 class Filter extends Component {
@@ -16,6 +18,7 @@ class Filter extends Component {
       price: { gte: 200, lte: 10000, apply: false }
     }
   };
+
   onChange = e => {
     const { target } = e;
     const filters = {
@@ -25,10 +28,15 @@ class Filter extends Component {
     this.setState({ filters });
   };
 
-  // onClick = (e, brand) => {
-  //   // e.preventDefault();
-  //   this.props.getProductsByBrand(brand);
-  // };
+  onClick = (e, brand) => {
+    e.preventDefault();
+    this.props.getProductsByBrand(brand);
+  };
+
+  onCategoryClick = (e, category) => {
+    e.preventDefault();
+    this.props.getProductsByCategory(category);
+  };
 
   onSubmit = e => {
     e.preventDefault();
@@ -68,7 +76,7 @@ class Filter extends Component {
             </div>
           </div>
           <div className="sidebar-widget shop-sidebar-border pt-40">
-            <h4 className="sidebar-title">Search By Categories</h4>
+            <h4 className="sidebar-title">Search By Companies</h4>
             <div className="shop-catigory mt-20">
               <ul id="faq">
                 <li>
@@ -76,179 +84,92 @@ class Filter extends Component {
                   <a
                     data-toggle="collapse"
                     data-parent="#faq"
-                    href="#"
-                    //onClick={this.onClick("acer")}
+                    href="/products?brand=acer"
+                    onClick={e => this.onClick(e, "acer")}
                   >
                     Acer
                     <i className="la la-angle-down" />
                   </a>
-                  <ul
-                    id="shop-catigory-1"
-                    className="panel-collapse collapse show"
-                  >
-                    <li>
-                      <a href="#">Standard Laptops </a>
-                    </li>
-                    <li>
-                      <a href="#">Gaming Laptops</a>
-                    </li>
-                    <li>
-                      <a href="#">2 in 1 </a>
-                    </li>
-                  </ul>
                 </li>
                 <li>
                   {" "}
                   <a
                     data-toggle="collapse"
                     data-parent="#faq"
-                    href="#shop-catigory-2"
+                    href="#"
+                    onClick={e => this.onClick(e, "asus")}
                   >
                     Asus <i className="la la-angle-down" />
                   </a>
-                  <ul id="shop-catigory-2" className="panel-collapse collapse">
-                    <li>
-                      <a href="#">Standard Laptops </a>
-                    </li>
-                    <li>
-                      <a href="#">2 in 1</a>
-                    </li>
-                  </ul>
                 </li>
                 <li>
                   {" "}
                   <a
                     data-toggle="collapse"
                     data-parent="#faq"
-                    href="#shop-catigory-2"
+                    href="#"
+                    onClick={e => this.onClick(e, "apple")}
                   >
                     Apple <i className="la la-angle-down" />
                   </a>
-                  <ul id="shop-catigory-2" className="panel-collapse collapse">
-                    <li>
-                      <a href="#">MacBook Air </a>
-                    </li>
-                    <li>
-                      <a href="#">MacBook Pro</a>
-                    </li>
-                  </ul>
                 </li>
                 <li>
                   {" "}
-                  <a href="#." onClick={e => this.onBrandClick(e, "dell")}>
+                  <a href="#." onClick={e => this.onClick(e, "dell")}>
                     Dell <i className="la la-angle-down" />
                   </a>
-                  <ul id="shop-catigory-3" className="panel-collapse collapse">
-                    <li>
-                      <a href="#">Home</a>
-                    </li>
-                    <li>
-                      <a href="#">Work</a>
-                    </li>
-                    <li>
-                      <a href="#">2 in 1</a>
-                    </li>
-                    <li>
-                      <a href="#">Alienware</a>
-                    </li>
-                  </ul>
                 </li>
                 <li>
                   {" "}
                   <a
                     data-toggle="collapse"
                     data-parent="#faq"
-                    href="#shop-catigory-3"
+                    href="#"
+                    onClick={e => this.onClick(e, "gigabyte")}
                   >
                     GigaByte <i className="la la-angle-down" />
                   </a>
-                  <ul id="shop-catigory-3" className="panel-collapse collapse">
-                    <li>
-                      <a href="#">Standard Laptops</a>
-                    </li>
-                    <li>
-                      <a href="#">Gaming Laptops</a>
-                    </li>
-                  </ul>
                 </li>
                 <li>
                   {" "}
                   <a
                     data-toggle="collapse"
                     data-parent="#faq"
-                    href="#shop-catigory-3"
+                    href="#"
+                    onClick={e => this.onClick(e, "hp")}
                   >
                     HP <i className="la la-angle-down" />
                   </a>
-                  <ul id="shop-catigory-3" className="panel-collapse collapse">
-                    <li>
-                      <a href="#">Standard Laptops</a>
-                    </li>
-                    <li>
-                      <a href="#">Work Laptops</a>
-                    </li>
-                    <li>
-                      <a href="#">Primium Laptops</a>
-                    </li>
-                    <li>
-                      <a href="#">2 in 1</a>
-                    </li>
-                    <li>
-                      <a href="#">Workstations</a>
-                    </li>
-                    <li>
-                      <a href="#">Omen</a>
-                    </li>
-                  </ul>
                 </li>
                 <li>
                   {" "}
                   <a
                     data-toggle="collapse"
                     data-parent="#faq"
-                    href="#shop-catigory-3"
+                    href="#"
+                    onClick={e => this.onClick(e, "lenovo")}
                   >
                     Lenovo <i className="la la-angle-down" />
                   </a>
-                  <ul id="shop-catigory-3" className="panel-collapse collapse">
-                    <li>
-                      <a href="#">Standard Laptops</a>
-                    </li>
-                    <li>
-                      <a href="#">Workstations</a>
-                    </li>
-                    <li>
-                      <a href="#">2 in 1</a>
-                    </li>
-                  </ul>
                 </li>
                 <li>
                   {" "}
                   <a
                     data-toggle="collapse"
                     data-parent="#faq"
-                    href="#shop-catigory-3"
+                    href="#"
+                    onClick={e => this.onClick(e, "msi")}
                   >
                     MSI <i className="la la-angle-down" />
                   </a>
-                  <ul id="shop-catigory-3" className="panel-collapse collapse">
-                    <li>
-                      <a href="#">Standard Laptops</a>
-                    </li>
-                    <li>
-                      <a href="#">Workstations</a>
-                    </li>
-                    <li>
-                      <a href="#">Gaming Laptops</a>
-                    </li>
-                  </ul>
                 </li>
                 <li>
                   {" "}
                   <a
                     data-toggle="collapse"
                     data-parent="#faq"
-                    href="#shop-catigory-3"
+                    href="#"
+                    onClick={e => this.onClick(e, "razer")}
                   >
                     Razer <i className="la la-angle-down" />
                   </a>
@@ -256,84 +177,78 @@ class Filter extends Component {
               </ul>
             </div>
           </div>
-          <div className="shop-price-filter mt-35 shop-sidebar-border pt-40 sidebar-widget">
+          <div className="sidebar-widget pt-40 mt-40 shop-sidebar-border">
+            <h4 className="sidebar-title">Search By Categories</h4>
+            <div className="sidebar-widget-tag mt-20">
+              <ul>
+                <li>
+                  <a
+                    href="/products?category=gaming"
+                    onClick={e => this.onCategoryClick(e, "gaming")}
+                  >
+                    Gaming
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/products?category=standard"
+                    onClick={e => this.onCategoryClick(e, "standard")}
+                  >
+                    Standard
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/products?category=tablet"
+                    onClick={e => this.onCategoryClick(e, "tablet")}
+                  >
+                    2 in 1
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          {/* <div className="sidebar-widget pt-40 mt-40 shop-sidebar-border">
+            <h4 className="sidebar-title">Search By RAM </h4>
+            <div className="sidebar-widget-tag mt-20">
+              <ul>
+                <li>
+                  <a href="#">4 GB</a>
+                </li>
+                <li>
+                  <a href="#">8 GB</a>
+                </li>
+                <li>
+                  <a href="#">16 GB ></a>
+                </li>
+              </ul>
+            </div>
+          </div> */}
+          {/* <div className="shop-price-filter mt-35 shop-sidebar-border pt-40 sidebar-widget">
             <h4 className="sidebar-title">Price Filter</h4>
             <div className="price-filter mt-20">
               <div id="slider-range" />
               <div className="price-slider-amount">
                 <div className="label-input">
-                  <input
-                    type="text"
-                    id="amount"
-                    name="price"
-                    placeholder="Add Your Price"
+                  <Nouislider
+                    range={{ min: 10000, max: 300000 }}
+                    start={[10000, 300000]}
+                    step={1}
+                    tooltips={true}
+                    // connect={"lower"}
                   />
                 </div>
-                <button type="button">Filter</button>
               </div>
             </div>
-          </div>
-
-          <div className="sidebar-widget shop-sidebar-border pt-40 mt-40">
-            <h4 className="sidebar-title">Refine By </h4>
-            <div className="sidebar-widget-list mt-20">
-              <ul>
-                <li>
-                  <div className="sidebar-widget-list-left">
-                    <input type="checkbox" />{" "}
-                    <a href="#">
-                      New <span>4</span>{" "}
-                    </a>
-                    <span className="checkmark" />
-                  </div>
-                </li>
-                <li>
-                  <div className="sidebar-widget-list-left">
-                    <input type="checkbox" value="" />{" "}
-                    <a href="#">
-                      Top Rated <span>5</span>
-                    </a>
-                    <span className="checkmark" />
-                  </div>
-                </li>
-                <li>
-                  <div className="sidebar-widget-list-left">
-                    <input type="checkbox" value="" />{" "}
-                    <a href="#">
-                      Featured <span>6</span>{" "}
-                    </a>
-                    <span className="checkmark" />
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="sidebar-widget pt-40 mt-40 shop-sidebar-border">
-            <h4 className="sidebar-title">Popular Tags </h4>
-            <div className="sidebar-widget-tag mt-20">
-              <ul>
-                <li>
-                  <a href="#">Gaming</a>
-                </li>
-                <li>
-                  <a href="#">Workstations</a>
-                </li>
-                <li>
-                  <a href="#">Hp</a>
-                </li>
-                <li>
-                  <a href="#">2 in 1</a>
-                </li>
-                <li>
-                  <a href="#">Dell</a>
-                </li>
-              </ul>
-            </div>
-          </div>
+          </div> */}
         </div>
       </div>
     );
   }
 }
 
-export default connect(null, { filterProducts, getProductsByBrand })(Filter);
+export default connect(null, {
+  filterProducts,
+  getProductsByBrand,
+  getProductsByCategory
+})(Filter);

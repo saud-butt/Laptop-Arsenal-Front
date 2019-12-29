@@ -42,7 +42,14 @@ export default class CustomHead extends Head {
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossOrigin="anonymous"
         />
-
+        <link
+          href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.0.3/nouislider.css"
+          rel="stylesheet"
+        />
+        <link
+          href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.0.3/nouislider.js"
+          rel="stylesheet"
+        />
         <link href="/static/styles/carousal.min.css" rel="stylesheet" />
         <link href="/static/styles/style.css" rel="stylesheet" />
         <link

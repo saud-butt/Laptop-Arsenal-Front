@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Link from "next/link";
 import { withRouter } from "next/router";
 import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import $ from "jquery";
 
 import Layout from "../layouts/basicLayout/layout";
 import CommentForm from "./CommentForm";
@@ -15,6 +14,14 @@ class Review extends Component {
   componentDidMount() {
     const id = this.props.router.query.id;
     this.props.getReview(id);
+    $(document).ready(function() {
+      $("html, body").animate(
+        {
+          scrollTop: $("#des-details2").offset().top
+        },
+        "slow"
+      );
+    });
   }
   onLikeClick(id) {
     this.props.likeReview(id);
@@ -30,7 +37,7 @@ class Review extends Component {
     if (review) {
       reviewContent = (
         <>
-          <h3>Review:</h3>
+          <h3>Reviews:</h3>
           <div className=" row">
             <div className="col-xl-3 col-lg-4 col-md-5">
               <div className="dec-review-img-wrap">
@@ -40,9 +47,6 @@ class Review extends Component {
                     src={review.avatar}
                     alt={review.model}
                   />
-                </div>
-                <div className="dec-client-name">
-                  <h4 className="text-capitalize">By: {review.author}</h4>
                 </div>
               </div>
             </div>
@@ -58,6 +62,28 @@ class Review extends Component {
             id={review._id}
           />
           <br />
+          <div className="container text-justify">
+            <p>{review.text1}</p>
+            <p>{review.text2}</p>
+          </div>
+          <div className="container text-justify">
+            <p>{review.text3}</p>
+            <p>{review.text4}</p>
+          </div>
+          <div className="container">
+            <img src={review.pic1} />
+          </div>
+          <div className="container text-justify">
+            <p>{review.text5}</p>
+            <p>{review.text6}</p>
+            <p>{review.text7}</p>
+          </div>
+          <img src={review.pic2} />
+          <div className="container text-justify">
+            <p>{review.text8}</p>
+            <p>{review.text9}</p>
+            <p>{review.text10}</p>
+          </div>
           <h3> Comments:</h3>
           <CommentFeed reviewId={review._id} comments={review.comments} />
           <br />

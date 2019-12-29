@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import Router from "next/router";
 
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
 import { addComment } from "../../store/actions/reviewActions";
@@ -29,13 +30,17 @@ class CommentForm extends Component {
     const { user } = this.props.auth;
     const { reviewId } = this.props;
 
-    const newComment = {
-      text: this.state.text,
-      name: user.name,
-      avatar: user.avatar
-    };
+    if (this.props.auth.isAuthenticated) {
+      const newComment = {
+        text: this.state.text,
+        name: user.name,
+        avatar: user.avatar
+      };
 
-    this.props.addComment(reviewId, newComment);
+      this.props.addComment(reviewId, newComment);
+    } else {
+      Router.push("/auth/login");
+    }
     this.setState({ text: "" });
   }
 

@@ -4,9 +4,11 @@ import Layout from "../layouts/basicLayout/layout";
 import Link from "next/link";
 import PropTypes from "prop-types";
 import Router from "next/router";
+import $ from "jquery";
 
 import { toggleLoader } from "../../store/actions/loading";
 import { registerUser } from "../../store/actions/authActions";
+import TextFieldGroup from "../common/TextFieldGroup";
 
 class Register extends Component {
   constructor() {
@@ -27,6 +29,15 @@ class Register extends Component {
       Router.push("/");
     }
     this.props.toggleLoader(false);
+
+    $(document).ready(function() {
+      $("html, body").animate(
+        {
+          scrollTop: $(".login-register-tab-list").offset().top
+        },
+        "slow"
+      );
+    });
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
@@ -76,14 +87,15 @@ class Register extends Component {
                       <div className="login-form-container">
                         <div className="login-register-form">
                           <form noValidate onSubmit={this.onSubmit}>
-                            <input
+                            <TextFieldGroup
                               placeholder="Name"
                               name="name"
                               value={this.state.name}
                               onChange={this.onChange}
                               error={errors.name}
                             />
-                            <input
+
+                            <TextFieldGroup
                               placeholder="Email Address"
                               name="email"
                               type="email"
@@ -91,7 +103,7 @@ class Register extends Component {
                               onChange={this.onChange}
                               error={errors.email}
                             />
-                            <input
+                            <TextFieldGroup
                               placeholder="Password"
                               name="password"
                               type="password"
@@ -99,7 +111,7 @@ class Register extends Component {
                               onChange={this.onChange}
                               error={errors.password}
                             />
-                            <input
+                            <TextFieldGroup
                               placeholder="Confirm Password"
                               name="password2"
                               type="password"
@@ -107,6 +119,7 @@ class Register extends Component {
                               onChange={this.onChange}
                               error={errors.password}
                             />
+
                             <div className="button-box">
                               <button type="submit">Register</button>
                             </div>
@@ -135,7 +148,6 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(
-  mapStateToProps,
-  { toggleLoader, registerUser }
-)(Register);
+export default connect(mapStateToProps, { toggleLoader, registerUser })(
+  Register
+);

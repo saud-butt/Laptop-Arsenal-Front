@@ -89,12 +89,10 @@ class LaptopArsenal extends App {
     const { Component, pageProps, store, loading } = this.props;
 
     return (
-      <Container>
-        <Provider store={store}>
-          <Loader />
-          <Component {...pageProps} />
-        </Provider>
-      </Container>
+      <Provider store={store}>
+        <Loader />
+        <Component {...pageProps} />
+      </Provider>
     );
   }
 }

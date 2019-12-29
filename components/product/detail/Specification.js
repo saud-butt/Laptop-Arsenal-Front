@@ -126,7 +126,7 @@ const Specification = ({ product }) => {
             </tr>
             <tr>
               <td className="width1">Dimensions</td>
-              <td>{dimensions}</td>
+              <td>{ProductHelper.getSpecs(dimensions)}</td>
             </tr>
             <tr>
               <td className="width1">Color</td>

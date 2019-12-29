@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "next/router";
+import $ from "jquery";
 
 import Layout from "../../layouts/basicLayout/layout";
 import {
@@ -22,6 +23,15 @@ class ProductDetail extends Component {
       this.props.getProduct(id);
       this.props.getProductReview(id);
     }
+
+    $(document).ready(function() {
+      $("html, body").animate(
+        {
+          scrollTop: $(".scroll").offset().top
+        },
+        "slow"
+      );
+    });
   }
   componentDidUpdate() {
     const { loadRelatedProducts } = this.state;
@@ -53,7 +63,11 @@ class ProductDetail extends Component {
           <Related brand={brand} />
         </>
       );
-    return <Layout>{over}</Layout>;
+    return (
+      <Layout>
+        <div className="scroll">{over}</div>
+      </Layout>
+    );
   }
 }
 

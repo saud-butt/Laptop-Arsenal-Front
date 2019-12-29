@@ -1,18 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import $ from "jquery";
 
-import Layout from "../layouts/basicLayout/layout";
 import { toggleLoader } from "../../store/actions/loading";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
-import InputGroup from "../common/InputGroup";
-import TextFieldGroup from "../common/TextFieldGroup";
 import { createRequest } from "../../store/actions/contactActions";
-
+import Layout from "../layouts/basicLayout/layout";
 class ContactUs extends Component {
-  componentDidMount() {
-    this.props.toggleLoader(false);
-  }
   constructor(props) {
     super(props);
     this.state = {
@@ -25,6 +20,18 @@ class ContactUs extends Component {
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.toggleLoader(false);
+    $(document).ready(function() {
+      $("html, body").animate(
+        {
+          scrollTop: $(".contact-info-wrap").offset().top
+        },
+        "slow"
+      );
+    });
   }
 
   componentWillReceiveProps(newProps) {

@@ -7,6 +7,7 @@ import {
   GET_RELATED_PRODUCT,
   GET_PRODUCT_BY_NAME,
   COMPARE_PRODUCTS,
+  GET_PRODUCTS_BY_CATEGORY,
   GET_PRODUCTS_BY_BRAND
 } from "./types";
 
@@ -42,7 +43,7 @@ export const getProduct = (id, compare = false, key = null) => dispatch => {
     .then(res => {
       if (compare) {
         dispatch({
-          type: GET_PRODUCT,
+          type: COMPARE_PRODUCTS,
           payload: res.data,
           key: key
         });
@@ -94,15 +95,46 @@ export const getProductsByBrand = (brand, page = 1, limit = 12) => dispatch => {
       `http://localhost:5000/api/products/brand/${brand}?page=${page}&limit=${limit}`
     )
     .then(res => {
+      const { docs, ...pagination } = res.data.products;
       dispatch({
         type: GET_PRODUCTS_BY_BRAND,
-        payload: res.data.products.docs
+        payload: docs,
+        pagination: { ...pagination }
       });
       dispatch(toggleLoader(false));
     })
     .catch(err => {
       dispatch({
         type: GET_PRODUCTS_BY_BRAND,
+        payload: []
+      });
+      dispatch(toggleLoader(false));
+    });
+};
+
+// Get products by category
+export const getProductsByCategory = (
+  category,
+  page = 1,
+  limit = 12
+) => dispatch => {
+  dispatch(toggleLoader(true));
+  axios
+    .get(
+      `http://localhost:5000/api/products/category/${category}?page=${page}&limit=${limit}`
+    )
+    .then(res => {
+      const { docs, ...pagination } = res.data.products;
+      dispatch({
+        type: GET_PRODUCTS_BY_CATEGORY,
+        payload: docs,
+        pagination: { ...pagination }
+      });
+      dispatch(toggleLoader(false));
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_PRODUCTS_BY_CATEGORY,
         payload: []
       });
       dispatch(toggleLoader(false));

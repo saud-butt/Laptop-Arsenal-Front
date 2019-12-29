@@ -6,6 +6,7 @@ import productReducer from "./productReducer";
 import userReducer from "./userReducer";
 import errorReducer from "./errorRdeucer";
 import reviewReducer from "./reviewReducer";
+import priceReducer from "./priceReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -13,5 +14,6 @@ export default combineReducers({
   products: productReducer,
   user: userReducer,
   reviews: reviewReducer,
-  errors: errorReducer
+  errors: errorReducer,
+  price: priceReducer
 });

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Router from "next/router";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -11,7 +12,11 @@ import {
 
 class Review extends Component {
   onLikeClick(id) {
-    this.props.likeReview(id);
+    if (this.props.auth.isAuthenticated) {
+      this.props.likeReview(id);
+    } else {
+      Router.push("/auth/login");
+    }
   }
   onUnLikeClick(id) {
     this.props.unlikeReview(id);
@@ -81,7 +86,8 @@ class Review extends Component {
 }
 
 const mapStateToProps = state => ({
-  reviews: state.reviews.reviews
+  reviews: state.reviews.reviews,
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, {

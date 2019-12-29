@@ -1,9 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import $ from "jquery";
+import { withRouter } from "next/router";
 
 import Layout from "../../layouts/basicLayout/layout";
-import { getAllProducts } from "../../../store/actions/productActions";
+import {
+  getAllProducts,
+  getProductsByBrand,
+  getProductsByCategory
+} from "../../../store/actions/productActions";
 import ListCard from "../list/listCard";
 import Paginate from "../../pagination/paginate";
 import SelectListGroup from "../../selectListGroup/selectListGroup";
@@ -13,15 +19,45 @@ class ListItem extends Component {
   constructor(props) {
     super(props);
     this.onChange = this.onChange.bind(this);
+    this.onClick = this.onClick.bind(this);
+  }
+
+  componentDidMount() {
+    const brand = this.props.router.query.brand;
+    const category = this.props.router.query.category;
+    if (brand) {
+      this.props.getProductsByBrand(brand);
+    } else if (category) {
+      this.props.getProductsByCategory(category);
+    } else {
+      this.props.getAllProducts();
+    }
+
+    $(document).ready(function() {
+      $("html, body").animate(
+        {
+          scrollTop: $(".view-mode").offset().top
+        },
+        "slow"
+      );
+    });
   }
 
   onClick = data => {
-    this.props.getAllProducts(data.selected + 1);
+    const brand = this.props.router.query.brand;
+    const category = this.props.router.query.category;
+    if (brand) {
+      this.props.getProductsByBrand(data.selected + 1);
+    } else if (category) {
+      this.props.getProductsByCategory(data.selected + 1);
+    } else {
+      this.props.getAllProducts(data.selected + 1);
+    }
   };
 
-  onChange(e) {
+  onChange = e => {
     this.props.getAllProducts(e.selected, (e.limit = e.target.value));
-  }
+  };
 
   render() {
     const { pagination, products } = this.props;
@@ -49,10 +85,6 @@ class ListItem extends Component {
       { label: "36", value: "36" },
       { label: "48", value: "48" },
       { label: "60", value: "60" }
-    ];
-    const options1 = [
-      { label: "Latest", value: "Latest" },
-      { label: "Price", value: "Price" }
     ];
 
     return (
@@ -84,15 +116,6 @@ class ListItem extends Component {
                           options={options}
                         />
                       </div>
-                      <div className="product-shorting shorting-style">
-                        <label> Sort by:</label>
-                        <SelectListGroup
-                          name="sort by"
-                          value={limit}
-                          onChange={this.onChange}
-                          options={options1}
-                        />
-                      </div>
                     </div>
                   </div>
                   <div className="shop-bottom-area">
@@ -104,6 +127,7 @@ class ListItem extends Component {
                         <Paginate
                           onClick={this.onClick}
                           pageCount={totalPages}
+                          activePage={page}
                         />
                       </div>
                     </div>
@@ -124,4 +148,8 @@ const mapStateToProps = state => ({
   loader: state.loader
 });
 
-export default connect(mapStateToProps, { getAllProducts })(ListItem);
+export default connect(mapStateToProps, {
+  getAllProducts,
+  getProductsByBrand,
+  getProductsByCategory
+})(withRouter(ListItem));

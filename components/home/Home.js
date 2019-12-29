@@ -61,18 +61,17 @@ class Home extends Component {
           <Link href="/user/wishlist">
             <a title="Wishlist">Wishlist</a>
           </Link>
-          <Link>
-            <a title="My Account">
-              <img
-                className="rounded-circle"
-                src={user.avatar}
-                alt={user.name}
-                style={{ width: "25px", marginRight: "5px" }}
-                title="You must have a Gravatar connected to your email to display image"
-              />
-              {user.name}
-            </a>
-          </Link>
+
+          <a title="My Account">
+            <img
+              className="rounded-circle"
+              src={user.avatar}
+              alt={user.name}
+              style={{ width: "25px", marginRight: "5px" }}
+              title="You must have a Gravatar connected to your email to display image"
+            />
+            {user.name}
+          </a>
 
           <a href="" onClick={this.onLogoutClick.bind(this)}>
             Logout <FontAwesomeIcon icon="sign-out-alt" />
@@ -106,24 +105,6 @@ class Home extends Component {
                     </div>
                     <div className="col-lg-8">
                       <div className="setting-wrap-2">
-                        <div className="setting-content2-left">
-                          <a className="currency-dropdown-active" href="#">
-                            USD <i className="la la-angle-down" />
-                          </a>
-                          <div className="currency-dropdown">
-                            <ul>
-                              <li>
-                                <a href="#">USD</a>
-                              </li>
-                              <li>
-                                <a href="#">Euro</a>
-                              </li>
-                              <li>
-                                <a href="#">Rs.</a>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
                         <div className="setting-content2-right">
                           {isAuthenticated ? authLinks : guestLinks}
                         </div>
@@ -177,244 +158,49 @@ class Home extends Component {
                               alt="icon"
                             />
                             {"  "}
-                            Dropdown Button
+                            Companies
                           </Dropdown.Toggle>
 
                           <Dropdown.Menu>
-                            <Dropdown.Item
-                              href="#/action-1"
-                              className="dropdown-item"
-                            >
-                              Acer
-                              <Dropdown.Item href="#/action-5">
-                                In Acer
-                              </Dropdown.Item>
+                            <Dropdown.Item className="dropdown-item">
+                              <Link href="/products?brand=acer"> Acer</Link>
                             </Dropdown.Item>
-                            <Dropdown.Item href="#/action-2">
-                              Asus
+                            <Dropdown.Item>
+                              {" "}
+                              <Link href="/products?brand=asus">Asus</Link>
                             </Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">
-                              Apple
+                            <Dropdown.Item>
+                              {" "}
+                              <Link href="/products?brand=apple">Apple</Link>
                             </Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">
-                              Dell
+                            <Dropdown.Item>
+                              {" "}
+                              <Link href="/products?brand=dell">Dell</Link>
                             </Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">
-                              GigaByte
+                            <Dropdown.Item>
+                              <Link href="/products?brand=gigabyte">
+                                GigaByte
+                              </Link>
                             </Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">HP</Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">
-                              Lenovo
+                            <Dropdown.Item>
+                              {" "}
+                              <Link href="/products?brand=hp">HP</Link>
                             </Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">MSI</Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">
-                              Razer
+                            <Dropdown.Item>
+                              <Link href="/products?brand=lenovo"> Lenovo</Link>
+                            </Dropdown.Item>
+                            <Dropdown.Item>
+                              {" "}
+                              <Link href="/products?brand=msi">MSI</Link>
+                            </Dropdown.Item>
+                            <Dropdown.Item>
+                              <Link href="/products?brand=razer">Razer</Link>
                             </Dropdown.Item>
                           </Dropdown.Menu>
                         </Dropdown>
                       </div>
                     </div>
-                    {/* <div className="col-lg-4">
-                      <div className="category-menu-wrap dropdown">
-                        <h3 className="showcat">
-                          <button
-                            href="#"
-                            className="btn dropdown-toggle "
-                            type="button"
-                            id="dropdownMenuButton"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                          >
-                            <img
-                              className="category-menu-non-stick "
-                              src="../../static/assets/images/icon-img/category-menu.png"
-                              alt="icon"
-                            />
-                            {"  "}All Companies
-                          </button>
-                        </h3>
-                        <div
-                          className="category-menu hidecat dropdown-menu"
-                          aria-labelledby="dropdownMenuButton"
-                        >
-                          <nav>
-                            <ul>
-                              <li className="cr-dropdown">
-                                <a href="#" class="dropdown-item">
-                                  Acer <span className="la la-angle-right" />
-                                </a>
-                                <div className="category-menu-dropdown ct-menu-res-height-1">
-                                  <div className="single-category-menu ct-menu-mrg-bottom category-menu-border">
-                                    <ul>
-                                      <li>
-                                        <a href="shop.html">Standard Laptops</a>
-                                      </li>
-                                      <li>
-                                        <a href="shop.html">Gaming Laptops</a>
-                                      </li>
-                                      <li>
-                                        <a href="shop.html">2 in 1</a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </li>
-                              <li className="cr-dropdown">
-                                <a href="#" class="dropdown-item">
-                                  Asus <span className="la la-angle-right" />
-                                </a>
-                                <div className="category-menu-dropdown ct-menu-res-height-2">
-                                  <div className="single-category-menu">
-                                    <ul>
-                                      <li>
-                                        <a href="shop.html">Standard Laptops</a>
-                                      </li>
-                                      <li>
-                                        <a href="shop.html">2 in 1</a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </li>
-                              <li className="cr-dropdown">
-                                <a href="#" class="dropdown-item">
-                                  Apple <span className="la la-angle-right" />
-                                </a>
-                                <div className="category-menu-dropdown ct-menu-res-height-1">
-                                  <div className="single-category-menu ct-menu-mrg-bottom category-menu-border">
-                                    <ul>
-                                      <li>
-                                        <a href="shop.html">MacBook Air</a>
-                                      </li>
-                                      <li>
-                                        <a href="shop.html">MacBook Pro</a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </li>
-                              <li className="cr-dropdown">
-                                <a href="#" class="dropdown-item">
-                                  Dell <span className="la la-angle-right" />
-                                </a>
-                                <div className="category-menu-dropdown ct-menu-res-height-2">
-                                  <div className="single-category-menu">
-                                    <ul>
-                                      <li>
-                                        <a href="#">Home</a>
-                                      </li>
-                                      <li>
-                                        <a href="#">Work</a>
-                                      </li>
-                                      <li>
-                                        <a href="#">2 in 1</a>
-                                      </li>
-                                      <li>
-                                        <a href="#">Alienware</a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </li>
-                              <li className="cr-dropdown">
-                                <a href="#" class="dropdown-item">
-                                  GigaByte{" "}
-                                  <span className="la la-angle-right" />
-                                </a>
-                                <div className="category-menu-dropdown ct-menu-res-height-2">
-                                  <div className="single-category-menu">
-                                    <ul>
-                                      <li>
-                                        <a href="#">Standard Laptops</a>
-                                      </li>
-                                      <li>
-                                        <a href="#">Gaming Laptops</a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </li>
-                              <li className="cr-dropdown">
-                                <a href="#" class="dropdown-item">
-                                  HP <span className="la la-angle-right" />
-                                </a>
-                                <div className="category-menu-dropdown ct-menu-res-height-2">
-                                  <div className="single-category-menu">
-                                    <ul>
-                                      <li>
-                                        <a href="#">Standard Laptops</a>
-                                      </li>
-                                      <li>
-                                        <a href="#">Work Laptops</a>
-                                      </li>
-                                      <li>
-                                        <a href="#">Primium Laptops</a>
-                                      </li>
 
-                                      <li>
-                                        <a href="#">2 in 1</a>
-                                      </li>
-                                      <li>
-                                        <a href="#">Workstations</a>
-                                      </li>
-                                      <li>
-                                        <a href="#">Omen</a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </li>
-                              <li className="cr-dropdown">
-                                <a href="#" class="dropdown-item">
-                                  Lenovo <span className="la la-angle-right" />
-                                </a>
-                                <div className="category-menu-dropdown ct-menu-res-height-2">
-                                  <div className="single-category-menu">
-                                    <ul>
-                                      <li>
-                                        <a href="#">Standard Laptops</a>
-                                      </li>
-                                      <li>
-                                        <a href="#">Workstations</a>
-                                      </li>
-                                      <li>
-                                        <a href="#">2 in 1</a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </li>
-                              <li className="cr-dropdown">
-                                <a href="#" class="dropdown-item">
-                                  MSI <span className="la la-angle-right" />
-                                </a>
-                                <div className="category-menu-dropdown ct-menu-res-height-2">
-                                  <div className="single-category-menu">
-                                    <ul>
-                                      <li>
-                                        <a href="#">Standard Laptops</a>
-                                      </li>
-                                      <li>
-                                        <a href="#">Workstations</a>
-                                      </li>
-                                      <li>
-                                        <a href="#">Gaming Laptops</a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </li>
-                              <li className="cr-dropdown">
-                                <a href="#" class="dropdown-item">
-                                  Razer <span className="la la-angle-right" />
-                                </a>
-                              </li>
-                            </ul>
-                          </nav>
-                        </div>
-                      </div>
-                    </div> */}
                     <div className="col-md-8 d-flex justify-content-end">
                       <div className="main-menu menu-common-style menu-lh-5 menu-margin-4 menu-font-2 menu-font-2-white res-hm8-margin">
                         <nav>
@@ -427,12 +213,12 @@ class Home extends Component {
                             </li>
                             <li className="angle-shape">
                               <Link href="/products">
-                                <a href="shop.html">Laptops</a>
+                                <a href="#">Laptops</a>
                               </Link>
                             </li>
 
                             <li className="angle-shape">
-                              <Link href="/products">
+                              <Link href="/products?category=tablet">
                                 <a className="menu-title" href="#">
                                   Tablets
                                 </a>
@@ -447,7 +233,9 @@ class Home extends Component {
                             </li>
                             <li className="angle-shape">
                               <Link href="/contact">
-                                <a href="shop.html">Contact Us </a>
+                                <a className="menu-title" href="#">
+                                  Contact Us{" "}
+                                </a>
                               </Link>
                             </li>
                           </ul>
@@ -497,54 +285,48 @@ class Home extends Component {
                   </div>
                   <div className="col-xl-8 col-lg-9 col-md-10 col-sm-10">
                     <div className="product-tab-list-4 nav">
-                      <a className="active comp" href="#product-10">
+                      <a className=" comp" href="#">
                         <h5>Dell </h5>
                       </a>
                       <a
                         className="comp"
-                        href="#product-11"
+                        href="#"
                         onClick={() => this.onClick("msi")}
                       >
                         <h5>MSI</h5>
                       </a>
+
                       <a
                         className="comp"
-                        href="#product-12"
-                        onClick={() => this.onClick("apple")}
-                      >
-                        <h5>Apple</h5>
-                      </a>
-                      <a
-                        className="comp"
-                        href="#product-13"
+                        href="#"
                         onClick={() => this.onClick("hp")}
                       >
                         <h5>HP </h5>
                       </a>
                       <a
                         className="comp"
-                        href="#product-14"
+                        href="#"
                         onClick={() => this.onClick("razer")}
                       >
                         <h5>Razer</h5>
                       </a>
                       <a
                         className="comp"
-                        href="#product-15"
+                        href="#"
                         onClick={() => this.onClick("lenovo")}
                       >
                         <h5>Lenovo</h5>
                       </a>
                       <a
                         className="comp"
-                        href="#product-16"
+                        href="#"
                         onClick={() => this.onClick("acer")}
                       >
                         <h5>Acer</h5>
                       </a>
                       <a
                         className="comp"
-                        href="#product-17"
+                        href="#"
                         onClick={() => this.onClick("gigabyte")}
                       >
                         <h5>GigaByte</h5>
@@ -563,8 +345,8 @@ class Home extends Component {
           <div className="brand-logo-area pb-70">
             <div className="container">
               <div className="brand-logo bg-gray-3">
-                <div className="row brand-logo-active-2">
-                  <div className="single-brand-logo col">
+                <div className="row ">
+                  <div className="single-brand-logo col-3">
                     <a href="https://us-store.acer.com">
                       <img
                         className="logo-img"
@@ -574,16 +356,16 @@ class Home extends Component {
                     </a>
                   </div>
 
-                  <div className="single-brand-logo col">
+                  <div className="single-brand-logo col-3">
                     <a href="https://www.asus.com">
                       <img
                         className="logo-img"
-                        src="../../static/images/Asus-Logo.png"
+                        src="../../static/images/asus-logo.png"
                         alt="Asus"
                       />
                     </a>
                   </div>
-                  <div className="single-brand-logo col">
+                  <div className="single-brand-logo col-3">
                     <a href="https://www.razer.com">
                       <img
                         className="logo-img"
@@ -593,7 +375,7 @@ class Home extends Component {
                     </a>
                   </div>
 
-                  <div className="single-brand-logo col">
+                  <div className="single-brand-logo col-3">
                     <a href="https://www.dell.com.pk">
                       <img
                         className="logo-img"
@@ -602,17 +384,17 @@ class Home extends Component {
                       />
                     </a>
                   </div>
-                  <div className="single-brand-logo col">
+                  <div className="single-brand-logo col-3">
                     <a href="https://www.gigabyte.com">
                       <img
                         className="logo-img"
-                        src="../../static/images/gigabyte-logo.png"
+                        src="../../static/images/gigabyte-logo 1.png"
                         alt="GigaByte"
                       />
                     </a>
                   </div>
 
-                  <div className="single-brand-logo col">
+                  <div className="single-brand-logo col-3">
                     <a href="https://www.lenovo.com/pk/en?Redirect=False">
                       <img
                         className="logo-img"
@@ -621,16 +403,8 @@ class Home extends Component {
                       />
                     </a>
                   </div>
-                  <div className="single-brand-logo col">
-                    <a href="https://www.apple.com">
-                      <img
-                        className="logo-img"
-                        src="../../static/images/Apple_logo.png"
-                        alt="Apple"
-                      />
-                    </a>
-                  </div>
-                  <div className="single-brand-logo col">
+
+                  <div className="single-brand-logo col-3">
                     <a href="https://www.msi.com/index.php">
                       <img
                         className="logo-img"
@@ -639,11 +413,11 @@ class Home extends Component {
                       />
                     </a>
                   </div>
-                  <div className="single-brand-logo col">
+                  <div className="col-3">
                     <a href="https://store.hp.com/us/en">
                       <img
                         className="logo-img col"
-                        src="../../static/images/hp-logo.png"
+                        src="../../static/images/hp-logo1.png"
                         alt="HP"
                       />
                     </a>

@@ -4,9 +4,12 @@ import Layout from "../layouts/basicLayout/layout";
 import Link from "next/link";
 import PropTypes from "prop-types";
 import Router from "next/router";
+import $ from "jquery";
+import ReCAPTCHA from "react-google-recaptcha";
 
 import { loginUser } from "../../store/actions/authActions";
 import { toggleLoader } from "../../store/actions/loading";
+import TextFieldGroup from "../common/TextFieldGroup";
 
 class Login extends Component {
   constructor() {
@@ -14,11 +17,12 @@ class Login extends Component {
     this.state = {
       email: "",
       password: "",
+      ishuman: false,
       errors: {}
     };
-
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onCaptchaClick = this.onCaptchaClick.bind(this);
   }
 
   componentDidMount() {
@@ -26,6 +30,15 @@ class Login extends Component {
       Router.push("/");
     }
     this.props.toggleLoader(false);
+
+    $(document).ready(function() {
+      $("html, body").animate(
+        {
+          scrollTop: $(".login-register-tab-list").offset().top
+        },
+        "slow"
+      );
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -40,16 +53,27 @@ class Login extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    const userData = {
-      email: this.state.email,
-      password: this.state.password
-    };
 
-    this.props.loginUser(userData);
+    if (this.state.ishuman) {
+      const userData = {
+        email: this.state.email,
+        password: this.state.password
+      };
+
+      this.props.loginUser(userData);
+    } else {
+      alert("Check: I am not a robot");
+    }
   }
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
+  }
+
+  onCaptchaClick() {
+    this.setState({
+      ishuman: true
+    });
   }
 
   render() {
@@ -79,7 +103,7 @@ class Login extends Component {
                         <div className="login-form-container">
                           <div className="login-register-form">
                             <form onSubmit={this.onSubmit}>
-                              <input
+                              <TextFieldGroup
                                 placeholder="Email Address"
                                 name="email"
                                 type="email"
@@ -87,7 +111,7 @@ class Login extends Component {
                                 onChange={this.onChange}
                                 error={errors.email}
                               />
-                              <input
+                              <TextFieldGroup
                                 placeholder="Password"
                                 name="password"
                                 type="password"
@@ -95,6 +119,12 @@ class Login extends Component {
                                 onChange={this.onChange}
                                 error={errors.password}
                               />
+
+                              <ReCAPTCHA
+                                sitekey="6Ldzd8cUAAAAAEu_wuuaKw6uM-cy1i0SuRGopiiX"
+                                onChange={this.onCaptchaClick}
+                              />
+
                               <div className="button-box">
                                 <div className="login-toggle-btn"></div>
                                 <button type="submit">Login</button>
