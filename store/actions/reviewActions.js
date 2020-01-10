@@ -8,7 +8,7 @@ import {
   LIKE_REVIEW,
   UNLIKE_REVIEW,
   GET_REVIEW_BY_PRODUCTID,
-  GET_REVIEW_BY_USERID,
+  GET_REVIEW_BY_NAME,
   GET_ERRORS,
   CLEAR_ERRORS,
   DELETE_REVIEW
@@ -139,6 +139,29 @@ export const getProductReview = id => dispatch => {
         payload: null
       });
       dispatch(toggleLoader(false));
+    });
+};
+
+// Get product by name
+export const getReviewByName = name => dispatch => {
+  axios
+    .get(`http://localhost:5000/api/reviews/name/${name}`)
+    .then(res => {
+      dispatch({
+        type: GET_REVIEW_BY_NAME,
+        payload: res.data.map(review => {
+          return {
+            label: review.name,
+            value: review._id
+          };
+        })
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_REVIEW_BY_NAME,
+        payload: []
+      });
     });
 };
 

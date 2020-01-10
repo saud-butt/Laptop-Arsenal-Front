@@ -5,7 +5,7 @@ import {
   UNLIKE_REVIEW,
   DELETE_REVIEW,
   GET_REVIEW_BY_PRODUCTID,
-  GET_REVIEW_BY_USERID,
+  GET_REVIEW_BY_NAME,
   GET_REVIEW
 } from "../actions/types";
 
@@ -34,6 +34,11 @@ export default function(state = initialState, action) {
         reviews: [action.payload, ...state.reviews]
       };
     case GET_REVIEW_BY_PRODUCTID:
+      return {
+        ...state,
+        reviews: action.payload
+      };
+    case GET_REVIEW_BY_NAME:
       return {
         ...state,
         reviews: action.payload

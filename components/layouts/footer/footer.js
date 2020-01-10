@@ -74,10 +74,10 @@ export default () => {
                 <div className="footer-list-3">
                   <ul>
                     <li>
-                      <a href="#">Login</a>
+                      <a href="/auth/register">Login</a>
                     </li>
                     <li>
-                      <a href="#">Wishlist</a>
+                      <a href="/user/wishlist">Wishlist</a>
                     </li>
                   </ul>
                 </div>

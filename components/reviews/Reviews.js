@@ -5,7 +5,10 @@ import $ from "jquery";
 
 import ReviewCard from "./ReviewCard";
 import Layout from "../layouts/basicLayout/layout";
-import { getAllReviews } from "../../store/actions/reviewActions";
+import {
+  getAllReviews,
+  getReviewByName
+} from "../../store/actions/reviewActions";
 import Paginate from "../pagination/paginate";
 import SelectListGroup from "../selectListGroup/selectListGroup";
 
@@ -21,6 +24,14 @@ class Reviews extends Component {
       );
     });
   }
+
+  onSearch = (e, name) => {
+    e.preventDefault();
+    this.props.getReviewByName(name);
+  };
+  onChange = name => {
+    this.getReviewByName(name);
+  };
 
   onClick = data => {
     this.props.getAllReviews(data.selected + 1);
@@ -55,52 +66,76 @@ class Reviews extends Component {
       { label: "60", value: "60" }
     ];
     return (
-      <Layout>
-        <div className="shop-area pt-90 pb-90">
-          <h1 className="text-center">Reviews</h1>
-          <div className="container">
-            <div className="row flex-row-reverse">
-              <div className="col">
-                <div className="shop-topbar-wrapper">
-                  {" "}
-                  <div className="shop-topbar-left">
-                    <div className="view-mode nav">
-                      <a className="active" href="#" data-toggle="tab">
-                        <FontAwesomeIcon icon="th" />
-                      </a>
+      <>
+        <Layout>
+          <div className="shop-area pt-90 pb-90">
+            <h1 className="text-center">
+              Reviews
+              {/* <form class="form-inline float-right">
+                <i class="fas fa-search" aria-hidden="true"></i>
+                <input
+                  class="form-control form-control-sm ml-3 w-75"
+                  type="text"
+                  placeholder="Search here..."
+                  name="name"
+                  onChange={this.onSearch}
+                />
+                {/* <input
+                  type="text"
+                  placeholder="Search here..."
+                  name="name"
+                  value={name}
+                  onChange={this.onChange}
+                /> 
+              </form> */}
+            </h1>
+            <div className="container">
+              <div className="row flex-row-reverse">
+                <div className="col">
+                  <div className="shop-topbar-wrapper">
+                    {" "}
+                    <div className="shop-topbar-left">
+                      <div className="view-mode nav">
+                        <a className="active" href="#" data-toggle="tab">
+                          <FontAwesomeIcon icon="th" />
+                        </a>
+                      </div>
+                      <p>
+                        Page: {page} Showing {start} - {end} of {totalDocs}{" "}
+                        results
+                      </p>
                     </div>
-                    <p>
-                      Page: {page} Showing {start} - {end} of {totalDocs}{" "}
-                      results
-                    </p>
+                    <div className="product-sorting-wrapper">
+                      <div className="product-shorting shorting-style">
+                        <label>View:</label>
+                        <SelectListGroup
+                          name="view"
+                          value={limit}
+                          onChange={this.onChange}
+                          options={options}
+                        />
+                      </div>
+                    </div>
                   </div>
-                  <div className="product-sorting-wrapper">
-                    <div className="product-shorting shorting-style">
-                      <label>View:</label>
-                      <SelectListGroup
-                        name="view"
-                        value={limit}
-                        onChange={this.onChange}
-                        options={options}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="shop-bottom-area">
-                  <div className="tab-content jump">
-                    <div id="shop-1" className="tab-pane active">
-                      <div className="row">{reviewData}</div>
-                    </div>
-                    <div className="pagination-style text-center">
-                      <Paginate onClick={this.onClick} pageCount={totalPages} />
+                  <div className="shop-bottom-area">
+                    <div className="tab-content jump">
+                      <div id="shop-1" className="tab-pane active">
+                        <div className="row">{reviewData}</div>
+                      </div>
+                      <div className="pagination-style text-center">
+                        <Paginate
+                          onClick={this.onClick}
+                          pageCount={totalPages}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </Layout>
+        </Layout>
+      </>
     );
   }
 }
@@ -109,5 +144,6 @@ const mapStateToProps = state => ({
   pagination: state.reviews.pagination
 });
 export default connect(mapStateToProps, {
-  getAllReviews
+  getAllReviews,
+  getReviewByName
 })(Reviews);

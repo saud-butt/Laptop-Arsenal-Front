@@ -37,14 +37,14 @@ class ListCard extends Component {
             </a>
           </div>
         </div>
-        <div className="product-content">
+        <div className="product-content text-capitalize">
           <span>{brand}</span>
           <h4>
             <a href={href}>{name}</a>
           </h4>
           <div className="price-addtocart">
             <div className="product-price">
-              <span>{price}</span>
+              <span>Rs.{price}</span>
             </div>
             <div className="product-addtocart">
               <a href={href}>{title}</a>

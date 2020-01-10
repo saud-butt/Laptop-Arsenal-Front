@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Nouislider from "react-nouislider";
+//import Nouislider from "react-nouislider";
 
 import { connect } from "react-redux";
 

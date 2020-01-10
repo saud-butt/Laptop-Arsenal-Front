@@ -285,7 +285,11 @@ class Home extends Component {
                   </div>
                   <div className="col-xl-8 col-lg-9 col-md-10 col-sm-10">
                     <div className="product-tab-list-4 nav">
-                      <a className=" comp" href="#">
+                      <a
+                        className=" comp"
+                        href="#"
+                        onClick={() => this.onClick("dell")}
+                      >
                         <h5>Dell </h5>
                       </a>
                       <a

@@ -11,9 +11,11 @@ import {
 
 class wishlist extends Component {
   componentDidMount() {
-    if (!this.props.auth.isAuthenticated) {
-      Router.push("/auth/login");
-    }
+    // if (this.props.auth.isAuthenticated == true) {
+    //   this.props.getWishlist();
+    // } else {
+    //   Router.push("/auth/login");
+    // }
     this.props.getWishlist();
   }
   onClick = id => {
@@ -21,36 +23,38 @@ class wishlist extends Component {
   };
   render() {
     const { wishlist, loading } = this.props;
-
-    const items = loading
-      ? "Loading"
-      : wishlist.map((item, index) => (
-          <tr>
-            <td className="product-thumbnail">
-              <a href={`/products/show?id=${item._id}`}>
-                <img
-                  src={item.cover}
-                  alt={item.name}
-                  style={{ height: "70px", width: "90px" }}
-                />
-              </a>
-            </td>
-            <td className="product-name">
-              <a href={`/products/show?id=${item._id}`}>{item.name}</a>
-            </td>
-            <td className="product-price-cart">
-              <span className="amount">RS.{item.price}</span>
-            </td>
-            <td className="product-wishlist-cart">
-              <a href={`/products/compare?id=${item._id}`}>Add to compare</a>
-            </td>
-            <td className=" pro-remove">
-              <button onClick={() => this.onClick(item._id)}>
-                <FontAwesomeIcon icon="trash-alt" />
-              </button>
-            </td>
-          </tr>
-        ));
+    let items;
+    if (wishlist) {
+      items = loading
+        ? "Loading"
+        : wishlist.map((item, index) => (
+            <tr>
+              <td className="product-thumbnail">
+                <a href={`/products/show?id=${item._id}`}>
+                  <img
+                    src={item.cover}
+                    alt={item.name}
+                    style={{ height: "70px", width: "90px" }}
+                  />
+                </a>
+              </td>
+              <td className="product-name">
+                <a href={`/products/show?id=${item._id}`}>{item.name}</a>
+              </td>
+              <td className="product-price-cart">
+                <span className="amount">RS.{item.price}</span>
+              </td>
+              <td className="product-wishlist-cart">
+                <a href={`/products/compare?id=${item._id}`}>Add to compare</a>
+              </td>
+              <td className=" pro-remove">
+                <button onClick={() => this.onClick(item._id)}>
+                  <FontAwesomeIcon icon="trash-alt" />
+                </button>
+              </td>
+            </tr>
+          ));
+    }
 
     return (
       <>

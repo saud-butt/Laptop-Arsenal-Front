@@ -73,10 +73,20 @@ class ProductModify extends Component {
   //   this.props.createProfile(productData, this.props.history);
   // }
 
-  onSelect = e => {
+  sum = (value, sum) => {
+    //console.log(sum);
+    // console.log(value);
+    sum = sum + value;
+    // console.log(sum);
+  };
+
+  onSelect = (e, sum) => {
     this.setState({ [e.target.name]: e.target.value });
     if (e.target.name == "processor") {
       this.props.getProcessorPrice(e.target.value);
+      console.log(sum);
+      this.sum(this.props.processors.value, sum);
+      //this.sum(2, 3);
     } else if (e.target.name == "graphic") {
       this.props.getGraphicPrice(e.target.value);
     } else if (e.target.name == "memory") {
@@ -217,7 +227,7 @@ class ProductModify extends Component {
                     <div className="row">
                       <div className="col-lg-12">
                         <div className="billing-info mb-20 ">
-                          <label>Model </label>
+                          <label className="font-weight-bold">Model </label>
                           <ReactSelect
                             className="input-text"
                             onChange={this.onChange}
@@ -230,20 +240,20 @@ class ProductModify extends Component {
                       </div>
                       <div className="col-lg-12">
                         <div className="billing-select mb-20">
-                          <label>Processor</label>
+                          <label className="font-weight-bold">Processor</label>
                           {ProductHelper.getSpecs(product.processor)}
-
+                          {/* {console.log(sum)} */}
                           <SelectListGroup
                             name="processor"
                             value={this.state.processor}
-                            onChange={this.onSelect}
+                            onChange={e => this.onSelect(e, sum)}
                             options={processorOptions}
                           />
                         </div>
                       </div>
                       <div className="col-lg-12">
                         <div className="billing-select mb-20">
-                          <label>Graphics </label>
+                          <label className="font-weight-bold">Graphics </label>
                           {ProductHelper.getSpecs(product.graphics)}
 
                           <SelectListGroup
@@ -256,7 +266,7 @@ class ProductModify extends Component {
                       </div>
                       <div className="col-lg-12">
                         <div className="billing-select mb-20">
-                          <label>RAM </label>
+                          <label className="font-weight-bold">RAM </label>
                           {ProductHelper.getSpecs(product.memory)}
 
                           <SelectListGroup
@@ -269,7 +279,7 @@ class ProductModify extends Component {
                       </div>
                       <div className="col-lg-12">
                         <div className="billing-select mb-20">
-                          <label>Hard disk </label>
+                          <label className="font-weight-bold">Hard disk </label>
                           {ProductHelper.getSpecs(product.storage)}
 
                           <SelectListGroup

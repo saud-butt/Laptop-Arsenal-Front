@@ -56,12 +56,12 @@ class Header extends Component {
                   <nav>
                     <ul>
                       <li className="angle-shape">
-                        <Link href="/products">
+                        <Link>
                           <a href="/products">Laptops</a>
                         </Link>
                       </li>
                       <li className="angle-shape">
-                        <Link href="/products?category=tablet">
+                        <Link>
                           <a href="/products?category=tablet">Tablets </a>
                         </Link>
                       </li>

@@ -12,6 +12,7 @@ import { getProductReview } from "../../../store/actions/reviewActions";
 import Related from "../detail/Related";
 import Description from "../detail/Description";
 import Overview from "../detail/Overview";
+import { toggleLoader } from "../../../store/actions/loading";
 
 class ProductDetail extends Component {
   state = {
@@ -22,6 +23,8 @@ class ProductDetail extends Component {
     if (id) {
       this.props.getProduct(id);
       this.props.getProductReview(id);
+    } else {
+      this.props.toggleLoader(false);
     }
 
     $(document).ready(function() {
@@ -81,5 +84,6 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   getProduct,
   getRelatedProduct,
-  getProductReview
+  getProductReview,
+  toggleLoader
 })(withRouter(ProductDetail));
